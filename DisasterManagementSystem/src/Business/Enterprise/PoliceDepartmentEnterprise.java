@@ -5,10 +5,18 @@
  */
 package Business.Enterprise;
 
-/**
- *
- * @author akhilrane
- */
-public class PoliceDepartmentEnterprise {
+import Business.Role.Role;
+import java.util.ArrayList;
+
+public class PoliceDepartmentEnterprise extends Enterprise{
+
+    public PoliceDepartmentEnterprise(String name) {
+        super(name, EnterpriseType.PoliceDepartment);
+    }
+    
+    @Override
+    public ArrayList<Role> getSupportedRole() {
+        return null;
+    }
     
 }
