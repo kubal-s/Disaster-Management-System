@@ -20,9 +20,10 @@ public abstract class Role {
         FoodPackager("Food Packager"),
         DeliveryMan("Delivery Man"),
         PoliceAdmin("Police Admin"),
-        PoliceStaff("Police Staff"),
+        PoliceOfficer("Police Officer"),
         NGOAdmin("NGO Admin"),
-        Volunteer("Volunteer");
+        Volunteer("Volunteer"),
+        CityAdmin("City Admin");
         
         private String value;
         private RoleType(String value){

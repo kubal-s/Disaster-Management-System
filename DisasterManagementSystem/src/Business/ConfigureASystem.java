@@ -21,9 +21,13 @@ public class ConfigureASystem {
         //create user account
         
         
-        Employee employee = system.getEmployeeDirectory().createEmployee("RRH");
+        Employee employee1 = system.getEmployeeDirectory().createEmployee("RRH");
         
-        UserAccount ua = system.getUserAccountDirectory().createUserAccount("sysadmin", "sysadmin", employee, new SystemAdminRole());
+        UserAccount ua1 = system.getUserAccountDirectory().createUserAccount("sysadmin", "sysadmin", employee1, new SystemAdminRole());
+        
+        Employee employee2 = system.getEmployeeDirectory().createEmployee("RRH");
+        
+        UserAccount ua2 = system.getUserAccountDirectory().createUserAccount("abc", "abc", employee2, new SystemAdminRole());
         
         return system;
     }
