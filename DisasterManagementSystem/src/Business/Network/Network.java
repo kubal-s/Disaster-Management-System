@@ -6,6 +6,9 @@
 package Business.Network;
 
 import Business.Enterprise.EnterpriseDirectory;
+import Business.UserAccount.UserAccount;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,10 +16,14 @@ import Business.Enterprise.EnterpriseDirectory;
  */
 public class Network {
     private String name;
+    private String cityName;
+    private UserAccount cityAdmin;
+    private List<String> zipCodes;
     private EnterpriseDirectory enterpriseDirectory;
     
     public Network(){
         enterpriseDirectory=new EnterpriseDirectory();
+        zipCodes = new ArrayList<String>();
     }
     public String getName() {
         return name;
@@ -26,6 +33,33 @@ public class Network {
         this.name = name;
     }
 
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public UserAccount getCityAdmin() {
+        return cityAdmin;
+    }
+
+    public void setCityAdmin(UserAccount cityAdmin) {
+        this.cityAdmin = cityAdmin;
+    }
+
+    public List<String> getZipCodes() {
+        return zipCodes;
+    }
+
+    public void setZipCodes(List<String> zipCodes) {
+        this.zipCodes = zipCodes;
+    }
+
+    public void addZipCode(String zipCode){
+        this.zipCodes.add(zipCode);
+    }
     public EnterpriseDirectory getEnterpriseDirectory() {
         return enterpriseDirectory;
     }
