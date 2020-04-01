@@ -8,9 +8,11 @@ package userinterface.systemadminrole;
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Employee.Employee;
+import Business.Network.Network;
 import Business.Role.SystemAdminRole;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,6 +27,7 @@ public class SystemAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
      */
     JPanel userProcessContainer;
     EcoSystem ecosystem;
+    private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     public SystemAdminRoleWorkAreaJPanel() {
         initComponents();
     }
@@ -33,6 +36,7 @@ public class SystemAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         initComponents();
         this.userProcessContainer=userProcessContainer;
         this.ecosystem=ecosystem;
+        populate();
     }
 
     /**
@@ -47,6 +51,8 @@ public class SystemAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDirectory = new javax.swing.JTable();
         btnRegisterCity = new javax.swing.JButton();
+        btnUpdateCity = new javax.swing.JButton();
+        btnDeleteCity = new javax.swing.JButton();
 
         tblDirectory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -76,6 +82,20 @@ public class SystemAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnUpdateCity.setText("Update City");
+        btnUpdateCity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateCityActionPerformed(evt);
+            }
+        });
+
+        btnDeleteCity.setText("Delete City");
+        btnDeleteCity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteCityActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,8 +103,11 @@ public class SystemAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnRegisterCity)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnDeleteCity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnUpdateCity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRegisterCity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -94,31 +117,73 @@ public class SystemAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRegisterCity)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnUpdateCity)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDeleteCity)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegisterCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterCityActionPerformed
         // TODO add your handling code here:
-        JPanel addMenuJPanel = new RegisterCityJPanel(userProcessContainer,ecosystem);
-        userProcessContainer.add("addItemToMenu",addMenuJPanel);
+        JPanel registerCityJPanel = new RegisterCityJPanel(userProcessContainer,ecosystem);
+        userProcessContainer.add("registerCity",registerCityJPanel);
         CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
         cardLayout.next(this.userProcessContainer);
     }//GEN-LAST:event_btnRegisterCityActionPerformed
+
+    private void btnUpdateCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateCityActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblDirectory.getSelectedRow();
+        if(selectedRow>=0){
+            Network network = ((Network)tblDirectory.getValueAt(selectedRow, 1));
+            //Item selectedItem = restaurant.getMenu().getItemFromName(selectedItemName);
+            JPanel updateCityJPanel = new UpdateCityJPanel(userProcessContainer,ecosystem, network);
+            userProcessContainer.add("updateCity",updateCityJPanel);
+            CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
+            cardLayout.next(this.userProcessContainer);
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
+    }//GEN-LAST:event_btnUpdateCityActionPerformed
+
+    private void btnDeleteCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCityActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblDirectory.getSelectedRow();
+        if(selectedRow>=0){
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete??","Warning",selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                Network network = (Network)tblDirectory.getValueAt(selectedRow, 1);
+                for(Network n: this.ecosystem.getNetworkList()){
+                    if(n.getName().equals(network.getName())){
+                        this.ecosystem.getNetworkList().remove(n);
+                        break;
+                    }
+                }                
+                dB4OUtil.storeSystem(this.ecosystem);
+                populate();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
+    }//GEN-LAST:event_btnDeleteCityActionPerformed
     public void populate(){
         DefaultTableModel dtm = (DefaultTableModel)tblDirectory.getModel();
         dtm.setRowCount(0);   
-//        for(Item i: currentResturant.getMenu().getItems()){
-//            System.out.println(i.getName());
-//            Object[] row = new Object[dtm.getColumnCount()];
-//            row[0]=i;
-//            row[1]=i.getPrice();
-//            dtm.addRow(row);
-//        }
+        for(Network network: this.ecosystem.getNetworkList()){
+            Object[] row = new Object[dtm.getColumnCount()];
+            row[0]= network.getCityName();
+            row[1]= network;
+            dtm.addRow(row);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeleteCity;
     private javax.swing.JButton btnRegisterCity;
+    private javax.swing.JButton btnUpdateCity;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDirectory;
     // End of variables declaration//GEN-END:variables
