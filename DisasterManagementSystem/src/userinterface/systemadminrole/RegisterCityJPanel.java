@@ -190,7 +190,7 @@ public class RegisterCityJPanel extends javax.swing.JPanel {
                 .addComponent(btnAddZipCode)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAddCity)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

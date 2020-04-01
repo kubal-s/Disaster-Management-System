@@ -5,12 +5,17 @@
  */
 package userinterface.systemadminrole;
 
+import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
+import Business.Employee.Employee;
 import Business.Network.Network;
+import Business.Role.CityAdminRole;
+import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,7 +28,8 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
      */
     JPanel userProcessContainer;
     EcoSystem ecosystem;
-    Network network;
+    Network network,tempNetwork;
+    private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     public UpdateCityJPanel() {
         initComponents();
     }
@@ -33,6 +39,9 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
         this.userProcessContainer = userProcessContainer;
         this.ecosystem = ecosystem;
         this.network = network;
+        this.tempNetwork = new Network();
+        this.tempNetwork.setZipCodes(this.network.getZipCodes());
+        populate();
     }
 
     /**
@@ -59,7 +68,7 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
         tblDirectory = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btnAddCity1 = new javax.swing.JButton();
+        btnDeleteZipCode = new javax.swing.JButton();
 
         jLabel6.setText("Add Zip Code");
 
@@ -125,10 +134,10 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
 
         jLabel2.setText("City Admin Name");
 
-        btnAddCity1.setText("Update City");
-        btnAddCity1.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteZipCode.setText("Delete ZipCode");
+        btnDeleteZipCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddCity1ActionPerformed(evt);
+                btnDeleteZipCodeActionPerformed(evt);
             }
         });
 
@@ -137,11 +146,9 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBack)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnAddCity, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -162,8 +169,9 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                 .addComponent(txtZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnAddZipCode)))
-                        .addComponent(btnAddCity1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                        .addComponent(btnAddCity, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDeleteZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,11 +201,11 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
                     .addComponent(txtZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addComponent(btnAddZipCode)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAddCity)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAddCity1)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addComponent(btnDeleteZipCode)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAddCity)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -211,8 +219,9 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter city name!");
             return;
         }
+        
         for(Network n:this.ecosystem.getNetworkList()){
-            if(n.getCityName().equals(txtCityName.getText())){
+            if(n.getCityName().equals(txtCityName.getText())&&!network.getCityName().equals(txtCityName.getText())){
                 JOptionPane.showMessageDialog(null,"This city already exist..enter a different city!");
                 return;
             }
@@ -226,12 +235,12 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter city admin username!");
             return;
         }
-//        for(UserAccount ua:this.ecosystem.getUserAccountDirectory().getUserAccountList()){
-//            if(ua.getUsername().equals(txtCityAdminUserName.getText())){
-//                JOptionPane.showMessageDialog(null,"Username already exists... please enter a different username!");
-//                return;
-//            }
-//        }
+        for(UserAccount ua:this.ecosystem.getUserAccountDirectory().getUserAccountList()){
+            if(ua.getUsername().equals(txtCityAdminUserName.getText())&&!network.getCityAdmin().getUsername().equals(txtCityAdminUserName.getText())){
+                JOptionPane.showMessageDialog(null,"Username already exists... please enter a different username!");
+                return;
+            }
+        }
         if(txtCityAdminPassword.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter city admin password!");
             return;
@@ -242,19 +251,41 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
         String username = txtCityAdminUserName.getText();
         String password = txtCityAdminPassword.getText();
 
-//        Employee employee = ecosystem.getEmployeeDirectory().createEmployee(name);
-//        UserAccount userAccount = ecosystem.getUserAccountDirectory().createUserAccount(username, password, employee, new CityAdminRole());
-//
-//        this.network = this.ecosystem.createAndAddNetwork();
-//        this.network.setCityName(txtCityName.getText());
-//        this.network.setCityAdmin(userAccount);
-//        this.network.setName(disasterMangmt);
-//        this.network.setZipCodes(this.tempNetwork.getZipCodes());
-//        dB4OUtil.storeSystem(ecosystem);
+        
+        Employee employee = new Employee();
+        employee.setName(name);
+        UserAccount userAccount = new UserAccount();
+        userAccount.setEmployee(employee);
+        userAccount.setPassword(password);
+        userAccount.setUsername(username);
+        userAccount.setRole(new CityAdminRole());
+        
+        for(Employee e: this.ecosystem.getEmployeeDirectory().getEmployeeList()){
+            if(e.getId() == network.getCityAdmin().getEmployee().getId()){
+                e.setName(name);
+            }
+        }
+        for(UserAccount ua:this.ecosystem.getUserAccountDirectory().getUserAccountList()){
+            if(ua.getUsername().equals(network.getCityAdmin().getUsername())){
+                ua.setUsername(username);
+                ua.setPassword(password);
+            }
+        }
+
+                for(Network n: this.ecosystem.getNetworkList()){
+                    if(n.getName().equals(network.getName())){
+                        n.setCityName(txtCityName.getText());
+                        n.setName(disasterMangmt);
+                        n.setZipCodes(tempNetwork.getZipCodes());
+                        break;
+                    }
+                }  
+
+       dB4OUtil.storeSystem(ecosystem);
 //
 //        isEditable(false);
 
-        JOptionPane.showMessageDialog(null,"City added successfully!");
+        JOptionPane.showMessageDialog(null,"City updated successfully!");
         return;
     }//GEN-LAST:event_btnAddCityActionPerformed
 
@@ -268,9 +299,9 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter zip code!");
             return;
         }
-//        this.tempNetwork.addZipCode(txtZipCode.getText());
-//        txtZipCode.setText("");
-//        populate();
+        this.tempNetwork.addZipCode(txtZipCode.getText());
+        txtZipCode.setText("");
+        populateZipCode();
     }//GEN-LAST:event_btnAddZipCodeActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -287,16 +318,50 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void btnAddCity1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCity1ActionPerformed
+    private void btnDeleteZipCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteZipCodeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddCity1ActionPerformed
-
+        int selectedRow = tblDirectory.getSelectedRow();
+        if(selectedRow>=0){
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete??","Warning",selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                String zipCode = (String)tblDirectory.getValueAt(selectedRow, 0);
+                for(String zc: this.tempNetwork.getZipCodes()){
+                    if(zc.equals(zipCode)){
+                        this.tempNetwork.getZipCodes().remove(zc);
+                        break;
+                    }
+                }                
+                //dB4OUtil.storeSystem(this.ecosystem);
+                populateZipCode();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
+    }//GEN-LAST:event_btnDeleteZipCodeActionPerformed
+    
+    public void populate(){
+        txtCityName.setText(network.getCityName());
+        txtCityAdminName.setText(network.getCityAdmin().getEmployee().getName());
+        txtCityAdminUserName.setText(network.getCityAdmin().getUsername());
+        txtCityAdminPassword.setText(network.getCityAdmin().getPassword());
+        populateZipCode();
+    }
+    public void populateZipCode(){
+        DefaultTableModel dtm = (DefaultTableModel)tblDirectory.getModel();
+        dtm.setRowCount(0);   
+        for(String zipCode: this.tempNetwork.getZipCodes()){
+            Object[] row = new Object[dtm.getColumnCount()];
+            row[0]= zipCode;
+            dtm.addRow(row);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCity;
-    private javax.swing.JButton btnAddCity1;
     private javax.swing.JButton btnAddZipCode;
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnDeleteZipCode;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
