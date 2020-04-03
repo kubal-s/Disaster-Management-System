@@ -46,6 +46,7 @@ public class ViewFoodRequestJPanel extends javax.swing.JPanel {
         lblMessage = new javax.swing.JLabel();
         lblStatus = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
+        jLabel5 = new javax.swing.JLabel();
 
         jButton1.setText("Back");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -66,7 +67,7 @@ public class ViewFoodRequestJPanel extends javax.swing.JPanel {
 
         jLabel7.setText("Status:");
 
-        jLabel8.setText("Message");
+        jLabel8.setText("Message:");
 
         btnAssignToPackagingOrganization.setText("Send for Packaging");
 
@@ -90,6 +91,8 @@ public class ViewFoodRequestJPanel extends javax.swing.JPanel {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jLabel5.setText("Packaging Organization:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,7 +110,8 @@ public class ViewFoodRequestJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel6)
                     .addComponent(jLabel9)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel5))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAssignToPackagingOrganization)
@@ -120,7 +124,7 @@ public class ViewFoodRequestJPanel extends javax.swing.JPanel {
                     .addComponent(lblDateRequested)
                     .addComponent(lblRequestID)
                     .addComponent(lblSender))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +163,9 @@ public class ViewFoodRequestJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel7)
                     .addComponent(lblStatus))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAssignToPackagingOrganization)
                 .addContainerGap(41, Short.MAX_VALUE))
@@ -179,6 +185,7 @@ public class ViewFoodRequestJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
