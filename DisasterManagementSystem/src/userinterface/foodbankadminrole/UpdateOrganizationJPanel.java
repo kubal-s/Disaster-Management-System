@@ -9,12 +9,12 @@ package userinterface.foodbankadminrole;
  *
  * @author akhil
  */
-public class UpdatePackagingOrganizationJPanel extends javax.swing.JPanel {
+public class UpdateOrganizationJPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form UpdatePackagingOrganizationJPanel
+     * Creates new form UpdateDeliveryManOrganizationJPanel
      */
-    public UpdatePackagingOrganizationJPanel() {
+    public UpdateOrganizationJPanel() {
         initComponents();
     }
 
@@ -28,6 +28,7 @@ public class UpdatePackagingOrganizationJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         btnAdminPassword = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         btnAdd = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -37,12 +38,15 @@ public class UpdatePackagingOrganizationJPanel extends javax.swing.JPanel {
         btnOrganizationName = new javax.swing.JTextField();
         btnAdminName = new javax.swing.JTextField();
         btnAdminUsername = new javax.swing.JTextField();
+        lblOrganizationType = new javax.swing.JLabel();
 
         btnAdminPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdminPasswordActionPerformed(evt);
             }
         });
+
+        jLabel5.setText(" Organization Type");
 
         btnAdd.setText("Add");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -58,7 +62,7 @@ public class UpdatePackagingOrganizationJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setText("Packaging Organization Name ");
+        jLabel1.setText(" Organization Name ");
 
         jLabel2.setText("Admin Name");
 
@@ -84,6 +88,8 @@ public class UpdatePackagingOrganizationJPanel extends javax.swing.JPanel {
             }
         });
 
+        lblOrganizationType.setText("jLabel6");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,29 +97,34 @@ public class UpdatePackagingOrganizationJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAdd)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnBack)
-                                .addComponent(jLabel1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnBack)
+                        .addComponent(jLabel1))
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnAdd)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnOrganizationName, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(62, Short.MAX_VALUE))
+                            .addComponent(btnAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblOrganizationType))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(btnBack)
-                .addGap(18, 18, 18)
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(lblOrganizationType))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(btnOrganizationName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -131,7 +142,7 @@ public class UpdatePackagingOrganizationJPanel extends javax.swing.JPanel {
                     .addComponent(btnAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAdd)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addGap(0, 79, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -171,5 +182,7 @@ public class UpdatePackagingOrganizationJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblOrganizationType;
     // End of variables declaration//GEN-END:variables
 }

@@ -30,16 +30,11 @@ public class FoodBankAdminWorkAreaJPanel extends javax.swing.JPanel {
         btnViewRequestDetails = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblRequestDirectory = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblPackagingOrganization = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tblDeliveryMan = new javax.swing.JTable();
+        tblOrganizationDirectory = new javax.swing.JTable();
         btnAddDeliveryMan = new javax.swing.JButton();
         btnUpdateDeliveryMan = new javax.swing.JButton();
         btnDeleteDeliveryMan = new javax.swing.JButton();
-        btnAddPackagingOrganization = new javax.swing.JButton();
-        btnUpdatePackagingOrganization = new javax.swing.JButton();
-        btnDeletePackagingOrganization = new javax.swing.JButton();
 
         btnViewRequestDetails.setText("View Request Details");
         btnViewRequestDetails.addActionListener(new java.awt.event.ActionListener() {
@@ -69,7 +64,7 @@ public class FoodBankAdminWorkAreaJPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tblRequestDirectory);
 
-        tblPackagingOrganization.setModel(new javax.swing.table.DefaultTableModel(
+        tblOrganizationDirectory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -77,28 +72,7 @@ public class FoodBankAdminWorkAreaJPanel extends javax.swing.JPanel {
                 {null, null}
             },
             new String [] {
-                "Packaging Organization Name", "Packaging Organization Admin"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane3.setViewportView(tblPackagingOrganization);
-
-        tblDeliveryMan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Delivery Man Organization", "Delivery Man Admin"
+                "Organization Type", "Organization Name"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -109,9 +83,9 @@ public class FoodBankAdminWorkAreaJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(tblDeliveryMan);
+        jScrollPane4.setViewportView(tblOrganizationDirectory);
 
-        btnAddDeliveryMan.setText("Add");
+        btnAddDeliveryMan.setText("Add Organization");
         btnAddDeliveryMan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddDeliveryManActionPerformed(evt);
@@ -132,63 +106,40 @@ public class FoodBankAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnAddPackagingOrganization.setText("Add");
-
-        btnUpdatePackagingOrganization.setText("Update");
-        btnUpdatePackagingOrganization.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdatePackagingOrganizationActionPerformed(evt);
-            }
-        });
-
-        btnDeletePackagingOrganization.setText("Delete");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(644, 644, 644)
-                .addComponent(btnViewRequestDetails))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnViewRequestDetails)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAddDeliveryMan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnUpdateDeliveryMan, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnDeleteDeliveryMan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnDeletePackagingOrganization, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnUpdatePackagingOrganization, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addComponent(btnAddPackagingOrganization, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 832, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnDeleteDeliveryMan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnUpdateDeliveryMan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnAddDeliveryMan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 832, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnViewRequestDetails)
                 .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddDeliveryMan)
-                    .addComponent(btnAddPackagingOrganization))
+                .addComponent(btnAddDeliveryMan)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnUpdateDeliveryMan)
-                    .addComponent(btnUpdatePackagingOrganization))
+                .addComponent(btnUpdateDeliveryMan)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDeleteDeliveryMan)
-                    .addComponent(btnDeletePackagingOrganization))
-                .addGap(0, 32, Short.MAX_VALUE))
+                .addComponent(btnDeleteDeliveryMan)
+                .addGap(0, 26, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -208,24 +159,15 @@ public class FoodBankAdminWorkAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeleteDeliveryManActionPerformed
 
-    private void btnUpdatePackagingOrganizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePackagingOrganizationActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdatePackagingOrganizationActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddDeliveryMan;
-    private javax.swing.JButton btnAddPackagingOrganization;
     private javax.swing.JButton btnDeleteDeliveryMan;
-    private javax.swing.JButton btnDeletePackagingOrganization;
     private javax.swing.JButton btnUpdateDeliveryMan;
-    private javax.swing.JButton btnUpdatePackagingOrganization;
     private javax.swing.JButton btnViewRequestDetails;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable tblDeliveryMan;
-    private javax.swing.JTable tblPackagingOrganization;
+    private javax.swing.JTable tblOrganizationDirectory;
     private javax.swing.JTable tblRequestDirectory;
     // End of variables declaration//GEN-END:variables
 }
