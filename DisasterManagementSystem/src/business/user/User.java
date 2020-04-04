@@ -2,27 +2,51 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Business.Employee;
+package business.user;
+
+import business.address.Address;
 
 /**
  *
  * @author raunak
  */
-public class Employee {
+public class User {
     
     private String name;
     private int id;
     private static int count = 1;
+    private String phone;
+    private Address address;
 
-    public Employee() {
+    public User() {
         id = count;
         count++;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    
+    
     public int getId() {
         return id;
     }
-
+    
+    
+    
     public void setName(String name) {
         this.name = name;
     }
@@ -35,7 +59,5 @@ public class Employee {
     @Override
     public String toString() {
         return name;
-    }
-    
-    
+    }       
 }

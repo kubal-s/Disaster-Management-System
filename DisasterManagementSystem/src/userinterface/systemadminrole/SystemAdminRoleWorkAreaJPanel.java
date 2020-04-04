@@ -7,7 +7,7 @@ package userinterface.systemadminrole;
 
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
-import Business.Employee.Employee;
+import business.user.User;
 import Business.Network.Network;
 import Business.Role.SystemAdminRole;
 import Business.UserAccount.UserAccount;

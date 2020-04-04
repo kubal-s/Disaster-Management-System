@@ -23,7 +23,8 @@ public abstract class Role {
         PoliceOfficer("Police Officer"),
         NGOAdmin("NGO Admin"),
         Volunteer("Volunteer"),
-        CityAdmin("City Admin");
+        CityAdmin("City Admin"),
+        VictimRole("Victim");
         
         private String value;
         private RoleType(String value){

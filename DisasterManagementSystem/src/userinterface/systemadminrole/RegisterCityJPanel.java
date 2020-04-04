@@ -7,7 +7,7 @@ package userinterface.systemadminrole;
 
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
-import Business.Employee.Employee;
+import business.user.User;
 import Business.Network.Network;
 import Business.Role.CityAdminRole;
 import Business.UserAccount.UserAccount;
@@ -264,8 +264,8 @@ public class RegisterCityJPanel extends javax.swing.JPanel {
         String username = txtCityAdminUserName.getText();
         String password = txtCityAdminPassword.getText();
         
-        Employee employee = ecosystem.getEmployeeDirectory().createEmployee(name);
-        UserAccount userAccount = ecosystem.getUserAccountDirectory().createUserAccount(username, password, employee, new CityAdminRole());
+        User user = ecosystem.getUserDirectory().createUser(name);
+        UserAccount userAccount = ecosystem.getUserAccountDirectory().createUserAccount(username, password, user, new CityAdminRole());
         
         this.network = this.ecosystem.createAndAddNetwork();
         this.network.setCityName(txtCityName.getText());
