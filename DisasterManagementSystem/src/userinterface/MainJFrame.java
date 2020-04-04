@@ -9,6 +9,7 @@ import Business.DB4OUtil.DB4OUtil;
 import Business.Enterprise.Enterprise;
 import Business.Network.Network;
 import Business.Organization.Organization;
+import Business.Role.VictimRole;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -50,6 +51,9 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         loginJLabel = new javax.swing.JLabel();
         logoutJButton = new javax.swing.JButton();
+        registerVictimButton = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         container = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -73,6 +77,17 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        registerVictimButton.setText("Register ");
+        registerVictimButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerVictimButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Need Help?");
+
+        jLabel5.setText("Please register below");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -89,7 +104,10 @@ public class MainJFrame extends javax.swing.JFrame {
                             .addComponent(logoutJButton, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                             .addGap(26, 26, 26)
                             .addComponent(loginJLabel)))
-                    .addComponent(loginJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(loginJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(registerVictimButton)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -109,7 +127,13 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(logoutJButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(loginJLabel)
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addGap(10, 10, 10)
+                .addComponent(registerVictimButton)
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -200,6 +224,12 @@ public class MainJFrame extends javax.swing.JFrame {
         dB4OUtil.storeSystem(system);
     }//GEN-LAST:event_logoutJButtonActionPerformed
 
+    private void registerVictimButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerVictimButtonActionPerformed
+         CardLayout layout=(CardLayout)container.getLayout();
+         container.add(VictimRole.createRegistrationArea(container));
+         layout.next(container);
+    }//GEN-LAST:event_registerVictimButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -238,12 +268,15 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel container;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JButton loginJButton;
     private javax.swing.JLabel loginJLabel;
     private javax.swing.JButton logoutJButton;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JButton registerVictimButton;
     private javax.swing.JTextField userNameJTextField;
     // End of variables declaration//GEN-END:variables
 }

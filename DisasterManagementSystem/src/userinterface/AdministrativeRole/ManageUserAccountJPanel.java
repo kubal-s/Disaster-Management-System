@@ -4,7 +4,7 @@
  */
 package userinterface.AdministrativeRole;
 
-import Business.Employee.Employee;
+import business.user.User;
 import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
 import Business.Role.Role;
@@ -43,10 +43,10 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         }
     }
     
-    public void populateEmployeeComboBox(Organization organization){
+    public void populateUserComboBox(Organization organization){
         employeeJComboBox.removeAllItems();
         
-        for (Employee employee : organization.getEmployeeDirectory().getEmployeeList()){
+        for (User employee : organization.getUserDirectory().getUserList()){
             employeeJComboBox.addItem(employee);
         }
     }
@@ -245,7 +245,7 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
         String userName = nameJTextField.getText();
         String password = passwordJTextField.getText();
         Organization organization = (Organization) organizationJComboBox.getSelectedItem();
-        Employee employee = (Employee) employeeJComboBox.getSelectedItem();
+        User employee = (User) employeeJComboBox.getSelectedItem();
         Role role = (Role) roleJComboBox.getSelectedItem();
         
         organization.getUserAccountDirectory().createUserAccount(userName, password, employee, role);
@@ -263,7 +263,7 @@ public class ManageUserAccountJPanel extends javax.swing.JPanel {
     private void organizationJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationJComboBoxActionPerformed
         Organization organization = (Organization) organizationJComboBox.getSelectedItem();
         if (organization != null){
-            populateEmployeeComboBox(organization);
+            populateUserComboBox(organization);
             populateRoleComboBox(organization);
         }
     }//GEN-LAST:event_organizationJComboBoxActionPerformed

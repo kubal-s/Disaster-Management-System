@@ -7,7 +7,7 @@ package userinterface.systemadminrole;
 
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
-import Business.Employee.Employee;
+import business.user.User;
 import Business.Network.Network;
 import Business.Role.CityAdminRole;
 import Business.UserAccount.UserAccount;
@@ -252,16 +252,16 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
         String password = txtCityAdminPassword.getText();
 
         
-        Employee employee = new Employee();
-        employee.setName(name);
+        User user = new User();
+        user.setName(name);
         UserAccount userAccount = new UserAccount();
-        userAccount.setEmployee(employee);
+        userAccount.setUser(user);
         userAccount.setPassword(password);
         userAccount.setUsername(username);
         userAccount.setRole(new CityAdminRole());
         
-        for(Employee e: this.ecosystem.getEmployeeDirectory().getEmployeeList()){
-            if(e.getId() == network.getCityAdmin().getEmployee().getId()){
+        for(User e: this.ecosystem.getUserDirectory().getUserList()){
+            if(e.getId() == network.getCityAdmin().getUser().getId()){
                 e.setName(name);
             }
         }
@@ -342,7 +342,7 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
     
     public void populate(){
         txtCityName.setText(network.getCityName());
-        txtCityAdminName.setText(network.getCityAdmin().getEmployee().getName());
+        txtCityAdminName.setText(network.getCityAdmin().getUser().getName());
         txtCityAdminUserName.setText(network.getCityAdmin().getUsername());
         txtCityAdminPassword.setText(network.getCityAdmin().getPassword());
         populateZipCode();

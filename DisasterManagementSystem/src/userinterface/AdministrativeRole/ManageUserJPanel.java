@@ -4,7 +4,7 @@
  */
 package userinterface.AdministrativeRole;
 
-import Business.Employee.Employee;
+import business.user.User;
 import Business.Organization.Organization;
 import Business.Organization.OrganizationDirectory;
 import java.awt.CardLayout;
@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author raunak
  */
-public class ManageEmployeeJPanel extends javax.swing.JPanel {
+public class ManageUserJPanel extends javax.swing.JPanel {
 
     private OrganizationDirectory organizationDir;
     private JPanel userProcessContainer;
@@ -23,7 +23,7 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ManageOrganizationJPanel
      */
-    public ManageEmployeeJPanel(JPanel userProcessContainer,OrganizationDirectory organizationDir) {
+    public ManageUserJPanel(JPanel userProcessContainer,OrganizationDirectory organizationDir) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.organizationDir = organizationDir;
@@ -53,10 +53,10 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
         
         model.setRowCount(0);
         
-        for (Employee employee : organization.getEmployeeDirectory().getEmployeeList()){
+        for (User user : organization.getUserDirectory().getUserList()){
             Object[] row = new Object[2];
-            row[0] = employee.getId();
-            row[1] = employee.getName();
+            row[0] = user.getId();
+            row[1] = user.getName();
             model.addRow(row);
         }
     }
@@ -200,7 +200,7 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
         Organization organization = (Organization) organizationEmpJComboBox.getSelectedItem();
         String name = nameJTextField.getText();
         
-        organization.getEmployeeDirectory().createEmployee(name);
+        organization.getUserDirectory().createUser(name);
         populateTable(organization);
         
     }//GEN-LAST:event_addJButtonActionPerformed
