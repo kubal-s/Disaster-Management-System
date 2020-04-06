@@ -35,6 +35,18 @@ public class EnterpriseDirectory {
             enterprise=new HospitalEnterprise(name);
             enterpriseList.add(enterprise);
         }
+        else if(type==Enterprise.EnterpriseType.FoodBank){
+            enterprise=new FoodBankEnterprise(name);
+            enterpriseList.add(enterprise);
+        }
+        else if(type==Enterprise.EnterpriseType.NonGovernmentOrganization){
+            enterprise=new NonGovernmentOrganizationEnterprise(name);
+            enterpriseList.add(enterprise);
+        }
+        else if(type==Enterprise.EnterpriseType.PoliceDepartment){
+            enterprise=new PoliceDepartmentEnterprise(name);
+            enterpriseList.add(enterprise);
+        }
         return enterprise;
     }
 }

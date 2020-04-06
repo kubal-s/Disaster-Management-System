@@ -1,5 +1,24 @@
 package userinterface.cityadminrole;
 
+import Business.DB4OUtil.DB4OUtil;
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import Business.Role.FoodBankAdminRole;
+import Business.Role.HospitalAdminRole;
+import Business.Role.NGOAdminRole;
+import Business.Role.PoliceAdminRole;
+import Business.Role.Role;
+import Business.UserAccount.UserAccount;
+import business.user.User;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,8 +34,20 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
     /**
      * Creates new form CreateEnterpriseJPanel
      */
-    public CreateEnterpriseJPanel() {
+    JPanel userProcessContainer;
+    EcoSystem ecosystem;
+    Enterprise.EnterpriseType temEnterpriseType;
+    List<String> zipCodes;
+    Network currentNetwork;
+    UserAccount cityAdminUserAccount;
+    private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+    public CreateEnterpriseJPanel(JPanel userProcessContainer, EcoSystem ecosystem, UserAccount cityAdminUserAccount) {
         initComponents();
+        this.userProcessContainer=userProcessContainer;
+        this.ecosystem=ecosystem;
+        this.cityAdminUserAccount = cityAdminUserAccount;
+        this.zipCodes = null;
+        initialize();
     }
 
     /**
@@ -28,23 +59,28 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtEnterpriseName = new javax.swing.JTextField();
-        txtAdminName = new javax.swing.JTextField();
-        txtAdminPassword = new javax.swing.JTextField();
+        txtEnterpriseAdminName = new javax.swing.JTextField();
+        txtEnterpriseAdminPassword = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        txtAdminUsername = new javax.swing.JTextField();
-        btnAdd = new javax.swing.JButton();
+        comboxEnterpriseType = new javax.swing.JComboBox();
+        txtEnterpriseAdminUsername = new javax.swing.JTextField();
+        btnCreateEnterprise = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblZipCodesDirectory = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblAddedZipCodesDirec = new javax.swing.JTable();
+        btnAddZipCode = new javax.swing.JButton();
 
-        jButton1.setText("Back");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
@@ -62,32 +98,94 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
             }
         });
 
-        txtAdminName.addActionListener(new java.awt.event.ActionListener() {
+        txtEnterpriseAdminName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAdminNameActionPerformed(evt);
+                txtEnterpriseAdminNameActionPerformed(evt);
             }
         });
 
-        txtAdminPassword.addActionListener(new java.awt.event.ActionListener() {
+        txtEnterpriseAdminPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAdminPasswordActionPerformed(evt);
+                txtEnterpriseAdminPasswordActionPerformed(evt);
             }
         });
 
         jLabel5.setText("Enterprise Type");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        txtAdminUsername.addActionListener(new java.awt.event.ActionListener() {
+        comboxEnterpriseType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboxEnterpriseType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAdminUsernameActionPerformed(evt);
+                comboxEnterpriseTypeActionPerformed(evt);
             }
         });
 
-        btnAdd.setText("Add");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+        txtEnterpriseAdminUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
+                txtEnterpriseAdminUsernameActionPerformed(evt);
+            }
+        });
+
+        btnCreateEnterprise.setText("Submit Enterprise");
+        btnCreateEnterprise.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateEnterpriseActionPerformed(evt);
+            }
+        });
+
+        tblZipCodesDirectory.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ZipCode", "Add "
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblZipCodesDirectory);
+
+        tblAddedZipCodesDirec.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ZipCode"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tblAddedZipCodesDirec);
+
+        btnAddZipCode.setText("Add Zip Code");
+        btnAddZipCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddZipCodeActionPerformed(evt);
             }
         });
 
@@ -96,100 +194,249 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAdd)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabel5)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel2))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtEnterpriseName)
-                                .addComponent(txtAdminName, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBack)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboxEnterpriseType, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(131, 131, 131)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEnterpriseAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEnterpriseAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEnterpriseAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEnterpriseName, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAddZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCreateEnterprise))))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(btnBack)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtEnterpriseName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAdd)
-                .addGap(0, 44, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCreateEnterprise, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(comboxEnterpriseType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtEnterpriseName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtEnterpriseAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtEnterpriseAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtEnterpriseAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAddZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(13, 13, 13))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        this.userProcessContainer.remove(this);
+        CardLayout layout =(CardLayout) this.userProcessContainer.getLayout();
+        Component [] comps = this.userProcessContainer.getComponents();
+        for(Component comp : comps){
+            if(comp instanceof CityAdminRoleWorkAreaJPanel){
+                CityAdminRoleWorkAreaJPanel carwajp =(CityAdminRoleWorkAreaJPanel) comp;
+                carwajp.populate();
+            }
+        }
+        layout.previous(userProcessContainer);
+    }//GEN-LAST:event_btnBackActionPerformed
 
     private void txtEnterpriseNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnterpriseNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEnterpriseNameActionPerformed
 
-    private void txtAdminNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAdminNameActionPerformed
+    private void txtEnterpriseAdminNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnterpriseAdminNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtAdminNameActionPerformed
+    }//GEN-LAST:event_txtEnterpriseAdminNameActionPerformed
 
-    private void txtAdminPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAdminPasswordActionPerformed
+    private void txtEnterpriseAdminPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnterpriseAdminPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtAdminPasswordActionPerformed
+    }//GEN-LAST:event_txtEnterpriseAdminPasswordActionPerformed
 
-    private void txtAdminUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAdminUsernameActionPerformed
+    private void txtEnterpriseAdminUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnterpriseAdminUsernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtAdminUsernameActionPerformed
+    }//GEN-LAST:event_txtEnterpriseAdminUsernameActionPerformed
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+    private void btnCreateEnterpriseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateEnterpriseActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddActionPerformed
+        if(txtEnterpriseName.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter enterprise name!");
+            return;
+        }        
+        for(Network n:this.ecosystem.getNetworkList()){
+            if(n.getName().equals(this.currentNetwork.getName())){
+                for(Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()){
+                    if(e.getName().equals(txtEnterpriseName.getText())){
+                        JOptionPane.showMessageDialog(null,"Enterprise name already exists... please enter a different name!");
+                        return;
+                    }
+                }
+            }
+        }
+        if(txtEnterpriseAdminName.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter admin name!");
+            return;
+        }
+        if(txtEnterpriseAdminUsername.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter admin username!");
+            return;
+        }
+        for(UserAccount ua:this.ecosystem.getUserAccountDirectory().getUserAccountList()){
+            if(ua.getUsername().equals(txtEnterpriseAdminUsername.getText())){
+                JOptionPane.showMessageDialog(null,"Username already exists... please enter a different username!");
+                return;
+            }
+        }
+        if(txtEnterpriseAdminPassword.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter admin password!");
+            return;
+        }
+        String enterpriseName = txtEnterpriseName.getText();
+        String enterpriseAdminName = txtEnterpriseAdminName.getText();
+        String enterpriseAdminPassword = txtEnterpriseAdminPassword.getText();
+        String enterpriseAdminUsername  = txtEnterpriseAdminUsername.getText();
+        Role role = null;
+        User user = ecosystem.getUserDirectory().createUser(enterpriseAdminName);
+        if(temEnterpriseType.equals(Enterprise.EnterpriseType.FoodBank)){
+            role = new FoodBankAdminRole();
+        }
+        else if(temEnterpriseType.equals(Enterprise.EnterpriseType.Hospital)){
+            role = new HospitalAdminRole();
+        }
+        else if(temEnterpriseType.equals(Enterprise.EnterpriseType.NonGovernmentOrganization)){
+            role = new NGOAdminRole();
+        }
+        else if(temEnterpriseType.equals(Enterprise.EnterpriseType.PoliceDepartment)){
+            role = new PoliceAdminRole();
+        }
+        
+        for(Network n:this.ecosystem.getNetworkList()){
+            if(n.getName().equals(this.currentNetwork.getName())){
+                
+                Enterprise enterprise = n.getEnterpriseDirectory().createAndAddEnterprise(enterpriseName, temEnterpriseType);
+                enterprise.getUserAccountDirectory().createUserAccount(enterpriseAdminUsername, enterpriseAdminPassword, user, role);
+                enterprise.setZipCodes(zipCodes);
+                break;
+            }
+        }
 
+        dB4OUtil.storeSystem(ecosystem);
+        
+        clearSelections();
+        
+        JOptionPane.showMessageDialog(null,"Enterprise added successfully!");
+        return;
+    }//GEN-LAST:event_btnCreateEnterpriseActionPerformed
+    public void initialize(){
+        for(Network n:this.ecosystem.getNetworkList()){
+            if(n.getCityAdmin().getUsername().equals(this.cityAdminUserAccount.getUsername())){
+                this.currentNetwork = n;
+                break;
+            }
+        }
+        DefaultTableModel dtm = (DefaultTableModel)tblZipCodesDirectory.getModel();
+        dtm.setRowCount(0);
+        for(String zc : this.currentNetwork.getZipCodes()){
+            Object[] row = new Object[dtm.getColumnCount()];
+            row[0]= zc;
+            row[1]= false;
+            dtm.addRow(row);
+        }
+        comboxEnterpriseType.removeAllItems();
+        for(Enterprise.EnterpriseType enterpriseType: Enterprise.EnterpriseType.values()){
+            comboxEnterpriseType.addItem(enterpriseType);
+        }
+    }
+    private void comboxEnterpriseTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboxEnterpriseTypeActionPerformed
+        // TODO add your handling code here:
+        this.temEnterpriseType = (Enterprise.EnterpriseType)comboxEnterpriseType.getSelectedItem();
+    }//GEN-LAST:event_comboxEnterpriseTypeActionPerformed
 
+    private void btnAddZipCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddZipCodeActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel dtm = (DefaultTableModel)tblZipCodesDirectory.getModel();
+        this.zipCodes = new ArrayList<String>();
+        for(int row = 0;row < dtm.getRowCount();row++) {
+            if(dtm.getValueAt(row,1).equals(true)){
+                this.zipCodes.add((String)dtm.getValueAt(row,0));
+            }
+        }
+        populateAddZipCode();
+    }//GEN-LAST:event_btnAddZipCodeActionPerformed
+    public void isEditable(boolean b){
+        txtEnterpriseAdminName.setEditable(b);
+        txtEnterpriseAdminPassword.setEditable(b);
+        txtEnterpriseAdminUsername.setEditable(b);
+        txtEnterpriseName.setEditable(b);
+//        txtDisasterManagmt.setEnabled(b);
+    }
+
+    public void populateAddZipCode(){
+        DefaultTableModel dtm = (DefaultTableModel)tblAddedZipCodesDirec.getModel();
+        dtm.setRowCount(0);
+        for(String zc : this.zipCodes){
+            Object[] row = new Object[dtm.getColumnCount()];
+            row[0]= zc;
+            dtm.addRow(row);
+        }
+    }
+    public void clearSelections(){
+        txtEnterpriseAdminName.setText("");
+        txtEnterpriseAdminPassword.setText("");
+        txtEnterpriseAdminUsername.setText("");
+        txtEnterpriseName.setText("");
+        DefaultTableModel dtm = (DefaultTableModel)tblAddedZipCodesDirec.getModel();
+        dtm.setRowCount(0);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JButton btnAddZipCode;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnCreateEnterprise;
+    private javax.swing.JComboBox comboxEnterpriseType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField txtAdminName;
-    private javax.swing.JTextField txtAdminPassword;
-    private javax.swing.JTextField txtAdminUsername;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable tblAddedZipCodesDirec;
+    private javax.swing.JTable tblZipCodesDirectory;
+    private javax.swing.JTextField txtEnterpriseAdminName;
+    private javax.swing.JTextField txtEnterpriseAdminPassword;
+    private javax.swing.JTextField txtEnterpriseAdminUsername;
     private javax.swing.JTextField txtEnterpriseName;
     // End of variables declaration//GEN-END:variables
 }

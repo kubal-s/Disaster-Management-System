@@ -7,6 +7,8 @@ package Business.Enterprise;
 
 import Business.Organization.Organization;
 import Business.Organization.OrganizationDirectory;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -16,6 +18,7 @@ public abstract class Enterprise extends Organization{
     
     private EnterpriseType enterpriseType;
     private OrganizationDirectory organizationDirectory;
+    List<String> zipCodes;
 
     public OrganizationDirectory getOrganizationDirectory() {
         return organizationDirectory;
@@ -53,5 +56,15 @@ public abstract class Enterprise extends Organization{
         super(name);
         this.enterpriseType=type;
         organizationDirectory=new OrganizationDirectory();
+        zipCodes = new ArrayList<String>();
     }
+
+    public List<String> getZipCodes() {
+        return zipCodes;
+    }
+
+    public void setZipCodes(List<String> zipCodes) {
+        this.zipCodes = zipCodes;
+    }
+    
 }
