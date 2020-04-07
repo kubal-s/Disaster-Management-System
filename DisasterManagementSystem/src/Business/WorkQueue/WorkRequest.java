@@ -4,32 +4,44 @@
  */
 package Business.WorkQueue;
 
+import Business.Enterprise.Enterprise;
 import Business.UserAccount.UserAccount;
+import business.address.Address;
 import java.util.Date;
 
-/**
- *
- * @author raunak
- */
-public abstract class WorkRequest {
 
-    private String message;
+public class WorkRequest {
+    private String summary;
+    private String description;
     private UserAccount sender;
     private UserAccount receiver;
     private String status;
     private Date requestDate;
     private Date resolveDate;
+    private int peopleAffected;
+    private int requestID;
+    private static int requestIDCount = 1;
+    private Enterprise.EnterpriseType requestedEnterprise;
+    private Address address;
     
     public WorkRequest(){
         requestDate = new Date();
     }
 
-    public String getMessage() {
-        return message;
+    public String getSummary() {
+        return summary;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public UserAccount getSender() {
@@ -70,5 +82,45 @@ public abstract class WorkRequest {
 
     public void setResolveDate(Date resolveDate) {
         this.resolveDate = resolveDate;
+    }
+
+    public int getPeopleAffected() {
+        return peopleAffected;
+    }
+
+    public void setPeopleAffected(int peopleAffected) {
+        this.peopleAffected = peopleAffected;
+    }
+
+    public int getRequestID() {
+        return requestID;
+    }
+
+    public void setRequestID(int requestID) {
+        this.requestID = requestID;
+    }
+
+    public static int getRequestIDCount() {
+        return requestIDCount;
+    }
+
+    public static void setRequestIDCount(int requestIDCount) {
+        WorkRequest.requestIDCount = requestIDCount;
+    }
+
+    public Enterprise.EnterpriseType getRequestedEnterprise() {
+        return requestedEnterprise;
+    }
+
+    public void setRequestedEnterprise(Enterprise.EnterpriseType requestedEnterprise) {
+        this.requestedEnterprise = requestedEnterprise;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

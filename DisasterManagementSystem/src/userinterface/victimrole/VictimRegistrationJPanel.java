@@ -21,12 +21,12 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
      * Creates new form VictimJPanel
      */
     private JPanel userProcessContainer;
-    private EcoSystem disasterManagementSystem;
+    private EcoSystem ecosystem;
     
     public VictimRegistrationJPanel(JPanel userProcessContainer) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
-        this.disasterManagementSystem = DB4OUtil.getInstance().retrieveSystem();
+        ecosystem = DB4OUtil.getInstance().retrieveSystem();
     }
     
     private void clearVictimRegistrationFields(){
@@ -165,9 +165,7 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(victimNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(victimNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(46, 46, 46)
                                 .addComponent(jLabel1))
@@ -191,11 +189,8 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
                                     .addComponent(victimStateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(victimCityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(victimUnitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(victimPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(victimUsernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(victimPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(victimUsernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(140, 140, 140)
                         .addComponent(submitVictimRegistration))
@@ -224,9 +219,9 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(victimStreetTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(victimStreetTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -284,8 +279,8 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
         victimUserAccount.setRole(new VictimRole());
         victimUserAccount.setUser(victim);
         
-        if (disasterManagementSystem.getUserAccountDirectory().checkIfUsernameIsUnique(victimUsername)){
-            disasterManagementSystem.getUserAccountDirectory().getUserAccountList().add(victimUserAccount);
+        if (ecosystem.getUserAccountDirectory().checkIfUsernameIsUnique(victimUsername)){
+            ecosystem.getUserAccountDirectory().getUserAccountList().add(victimUserAccount);
             statusTextField.setText("Successfuly Registered");
             statusTextField.setForeground(Color.BLUE);
         }
@@ -294,6 +289,8 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
             statusTextField.setForeground(Color.RED);
         }    
         clearVictimRegistrationFields();
+        ecosystem.getUserAccountDirectory().getUserAccountList().add(victimUserAccount);
+        DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_submitVictimRegistrationActionPerformed
 
     private void victimUsernameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_victimUsernameTextFieldActionPerformed
