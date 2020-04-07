@@ -10,6 +10,7 @@ import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Enterprise.NonGovernmentOrganizationEnterprise;
 import Business.Network.Network;
+import Business.Organization.Organization;
 import Business.Role.Role;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
@@ -196,8 +197,14 @@ public class NgoAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                             this.currentEnterprise = e;
                             for(UserAccount vol : e.getUserAccountDirectory().getUserAccountList()){
                                 if(vol.getUsername().equals(volunteer.getUsername())){
-                                    e.getUserAccountDirectory().getUserAccountList().remove(vol);
-                                    break outerloop;
+                                    for(Organization o: e.getOrganizationDirectory().getOrganizationList()){
+                                        if(o.getName().equals(Organization.Type.Volunteer.getValue())){
+                                            o.getUserAccountDirectory().getUserAccountList().remove(vol);
+                                            e.getUserAccountDirectory().getUserAccountList().remove(vol);
+                                            break outerloop;
+                                        }
+                                    }
+
                                 }
                             }
                         }
