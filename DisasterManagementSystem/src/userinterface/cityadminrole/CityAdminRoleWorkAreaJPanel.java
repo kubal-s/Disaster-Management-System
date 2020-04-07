@@ -5,6 +5,7 @@
  */
 package userinterface.cityadminrole;
 
+import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Network.Network;
@@ -26,11 +27,20 @@ public class CityAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     JPanel userProcessContainer;
     EcoSystem ecosystem;
     UserAccount userAccount;
+    Network currentNetwork;
+    private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     public CityAdminRoleWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
         initComponents();
         this.userProcessContainer=userProcessContainer;
         this.ecosystem=ecosystem;
         this.userAccount = userAccount;
+        for(Network n:this.ecosystem.getNetworkList()){
+            if(n.getCityAdmin().getUsername().equals(this.userAccount.getUsername())){
+                this.currentNetwork = n;
+                break;
+            }
+        }
+        
         populate();
     }
 
@@ -130,6 +140,28 @@ public class CityAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnDeleteEnterpriseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteEnterpriseActionPerformed
         // TODO add your handling code here:
+        int selectedRow = tblDirectory.getSelectedRow();
+        if(selectedRow>=0){
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete??","Warning",selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                Enterprise enterprise = (Enterprise)tblDirectory.getValueAt(selectedRow, 1);
+                for(Network n: this.ecosystem.getNetworkList()){
+                    if(n.getName().equals(this.currentNetwork.getName())){
+                        for(Enterprise e: n.getEnterpriseDirectory().getEnterpriseList()){
+                            if(e.getName().equals(enterprise.getName())){
+                                n.getEnterpriseDirectory().getEnterpriseList().remove(e);
+                                break;
+                            }
+                        }
+                    }
+                }                
+                dB4OUtil.storeSystem(this.ecosystem);
+                populate();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_btnDeleteEnterpriseActionPerformed
 
     private void btnUpdateEnterpriseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateEnterpriseActionPerformed
