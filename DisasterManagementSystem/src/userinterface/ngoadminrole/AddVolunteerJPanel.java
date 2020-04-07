@@ -9,6 +9,7 @@ import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Network.Network;
+import Business.Organization.Organization;
 import Business.Role.Role;
 import Business.Role.VolunteerRole;
 import Business.UserAccount.UserAccount;
@@ -208,8 +209,15 @@ public class AddVolunteerJPanel extends javax.swing.JPanel {
             for(Enterprise e: n.getEnterpriseDirectory().getEnterpriseList()){
                 if(e.getName().equals(this.currentEnterprise.getName())){
                     e.getUserAccountDirectory().addUserAccount(ua);
+                    for(Organization o :e.getOrganizationDirectory().getOrganizationList()){
+                        if(o.getName().equals(Organization.Type.Volunteer.getValue())){
+                            o.getUserAccountDirectory().addUserAccount(ua);
+                            System.out.println(o.getUserAccountDirectory().getUserAccountList());
+                            break outerloop;
+                        }
+                    }
 //                    e.getUserAccountDirectory().createUserAccount(txtVolunteerUsername.getText(),txtVolunteerPassword.getText() , user, role);
-                    break outerloop;
+                    
                 }
             }
         }

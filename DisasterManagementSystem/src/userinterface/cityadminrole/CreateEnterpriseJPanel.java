@@ -478,6 +478,7 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
             Organization ngoAdminOrganization = enterprise.getOrganizationDirectory().createOrganization(Organization.Type.NGOAdmin);
             ngoAdminOrganization.getUserAccountDirectory().addUserAccount(admin);
             Organization ngoVolunteersOrganization = enterprise.getOrganizationDirectory().createOrganization(Organization.Type.Volunteer);
+           
         }
     }
 }

@@ -9,6 +9,7 @@ import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Network.Network;
+import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -151,6 +152,7 @@ public class CityAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                     if(n.getName().equals(this.currentNetwork.getName())){
                         for(Enterprise e: n.getEnterpriseDirectory().getEnterpriseList()){
                             if(e.getName().equals(enterprise.getName())){
+                                e.getOrganizationDirectory().getOrganizationList().clear();
                                 n.getEnterpriseDirectory().getEnterpriseList().remove(e);
                                 break outerloop;
                             }
