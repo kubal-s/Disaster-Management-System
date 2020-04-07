@@ -87,11 +87,11 @@ public class NgoAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 {null, null, null}
             },
             new String [] {
-                "Volunteer Username", "Volunteer Name", "Volunteer phone No."
+                "Volunteer Username", "Volunteer Name", "Phone No."
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

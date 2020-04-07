@@ -16,6 +16,7 @@ public class FoodBankEnterprise extends Enterprise{
     
     public FoodBankEnterprise(String name) {
         super(name, EnterpriseType.FoodBank);
+        this.foodPackets = 0;
     }
    
     @Override
