@@ -13,6 +13,11 @@ import javax.swing.JPanel;
 
 public class FoodBankAdminRole extends Role {
 
+    public FoodBankAdminRole() {
+        super(RoleType.FoodBankAdmin);
+    }
+
+
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

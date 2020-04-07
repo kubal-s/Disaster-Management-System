@@ -5,6 +5,7 @@
  */
 package Business.Enterprise;
 
+import Business.Role.HospitalAdminRole;
 import Business.Role.Role;
 import java.util.ArrayList;
 
@@ -16,6 +17,11 @@ public class HospitalEnterprise extends Enterprise {
     @Override
     public ArrayList<Role> getSupportedRole() {
         return null;
+    }
+    
+        @Override
+    public Role getAdminRole() {
+        return new HospitalAdminRole();
     }
     
 }

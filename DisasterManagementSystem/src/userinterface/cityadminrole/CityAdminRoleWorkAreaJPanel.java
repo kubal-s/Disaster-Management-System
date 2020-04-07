@@ -5,11 +5,13 @@
  */
 package userinterface.cityadminrole;
 
+import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Network.Network;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,11 +27,20 @@ public class CityAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     JPanel userProcessContainer;
     EcoSystem ecosystem;
     UserAccount userAccount;
+    Network currentNetwork;
+    private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     public CityAdminRoleWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
         initComponents();
         this.userProcessContainer=userProcessContainer;
         this.ecosystem=ecosystem;
         this.userAccount = userAccount;
+        for(Network n:this.ecosystem.getNetworkList()){
+            if(n.getCityAdmin().getUsername().equals(this.userAccount.getUsername())){
+                this.currentNetwork = n;
+                break;
+            }
+        }
+        
         populate();
     }
 
@@ -46,7 +57,7 @@ public class CityAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         tblDirectory = new javax.swing.JTable();
         btnCreateEnterprise = new javax.swing.JButton();
         btnUpdateEnterprise = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnDeleteEnterprise = new javax.swing.JButton();
 
         tblDirectory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,11 +88,16 @@ public class CityAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         });
 
         btnUpdateEnterprise.setText("Update");
-
-        jButton2.setText("Delete");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdateEnterprise.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnUpdateEnterpriseActionPerformed(evt);
+            }
+        });
+
+        btnDeleteEnterprise.setText("Delete");
+        btnDeleteEnterprise.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteEnterpriseActionPerformed(evt);
             }
         });
 
@@ -93,7 +109,7 @@ public class CityAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDeleteEnterprise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnUpdateEnterprise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCreateEnterprise))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -109,7 +125,7 @@ public class CityAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnUpdateEnterprise)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(btnDeleteEnterprise)
                 .addGap(0, 18, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -122,9 +138,46 @@ public class CityAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         cardLayout.next(this.userProcessContainer);
     }//GEN-LAST:event_btnCreateEnterpriseActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnDeleteEnterpriseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteEnterpriseActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        int selectedRow = tblDirectory.getSelectedRow();
+        if(selectedRow>=0){
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete??","Warning",selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                Enterprise enterprise = (Enterprise)tblDirectory.getValueAt(selectedRow, 1);
+                for(Network n: this.ecosystem.getNetworkList()){
+                    if(n.getName().equals(this.currentNetwork.getName())){
+                        for(Enterprise e: n.getEnterpriseDirectory().getEnterpriseList()){
+                            if(e.getName().equals(enterprise.getName())){
+                                n.getEnterpriseDirectory().getEnterpriseList().remove(e);
+                                break;
+                            }
+                        }
+                    }
+                }                
+                dB4OUtil.storeSystem(this.ecosystem);
+                populate();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
+    }//GEN-LAST:event_btnDeleteEnterpriseActionPerformed
+
+    private void btnUpdateEnterpriseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateEnterpriseActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblDirectory.getSelectedRow();
+        if(selectedRow>=0){
+            Enterprise enterprise = ((Enterprise)tblDirectory.getValueAt(selectedRow, 1));
+            //Item selectedItem = restaurant.getMenu().getItemFromName(selectedItemName);
+            JPanel updateEnterpriseJPanel = new UpdateEnterpriseJPanel(userProcessContainer,ecosystem,userAccount,enterprise);
+            userProcessContainer.add("UpdateEnterprise",updateEnterpriseJPanel);
+            CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
+            cardLayout.next(this.userProcessContainer);
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
+    }//GEN-LAST:event_btnUpdateEnterpriseActionPerformed
 
         public void populate(){
         DefaultTableModel dtm = (DefaultTableModel)tblDirectory.getModel();
@@ -133,8 +186,8 @@ public class CityAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             if(network.getCityAdmin().getUsername().equals(this.userAccount.getUsername())){
                 for(Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()){
                     Object[] row = new Object[dtm.getColumnCount()];
-                    row[0]= e;
-                    row[1]= e.getEnterpriseType();
+                    row[0]= e.getEnterpriseType();
+                    row[1]= e;
                     dtm.addRow(row);
                 }
             }
@@ -143,8 +196,8 @@ public class CityAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreateEnterprise;
+    private javax.swing.JButton btnDeleteEnterprise;
     private javax.swing.JButton btnUpdateEnterprise;
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDirectory;
     // End of variables declaration//GEN-END:variables

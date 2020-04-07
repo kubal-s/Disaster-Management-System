@@ -17,7 +17,13 @@ import userinterface.cityadminrole.CityAdminRoleWorkAreaJPanel;
  * @author akhil
  */
 public class CityAdminRole extends Role{
-      @Override
+
+    
+    public CityAdminRole() {
+        super(RoleType.CityAdmin);
+    }
+    
+    @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem system) {
         return new CityAdminRoleWorkAreaJPanel(userProcessContainer, system ,account); //To change body of generated methods, choose Tools | Templates.
     }  

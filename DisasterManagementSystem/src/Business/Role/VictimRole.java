@@ -16,6 +16,10 @@ import userinterface.victimrole.VictimWorkAreaJPanel;
 
 public class VictimRole extends Role{
 
+    public VictimRole() {
+        super(RoleType.VictimRole);
+    }
+
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
         return new VictimWorkAreaJPanel(userProcessContainer, account);

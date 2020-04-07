@@ -5,6 +5,23 @@
  */
 package userinterface.cityadminrole;
 
+import Business.DB4OUtil.DB4OUtil;
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import Business.Role.Role;
+import Business.UserAccount.UserAccount;
+import business.user.User;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author akhil
@@ -14,9 +31,23 @@ public class UpdateEnterpriseJPanel extends javax.swing.JPanel {
     /**
      * Creates new form UpdateEnterpriseJPanel
      */
-    public UpdateEnterpriseJPanel() {
+    JPanel userProcessContainer;
+    EcoSystem ecosystem;
+    UserAccount cityAdminUserAccount;
+    Network currentNetwork;
+    private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+    Set<String> zipCodes;
+    Enterprise currentEnterprise;
+    
+    public UpdateEnterpriseJPanel(JPanel userProcessContainer, EcoSystem ecosystem, UserAccount cityAdminUserAccount,Enterprise enterprise) {
         initComponents();
-        
+        this.userProcessContainer=userProcessContainer;
+        this.ecosystem=ecosystem;
+        this.cityAdminUserAccount = cityAdminUserAccount;
+        this.currentEnterprise = enterprise;
+        this.zipCodes = new HashSet<String>();
+        this.zipCodes = this.currentEnterprise.getZipCodes();
+        initialize();
     }
 
     /**
@@ -28,19 +59,417 @@ public class UpdateEnterpriseJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        txtEnterpriseName = new javax.swing.JTextField();
+        btnAddZipCode = new javax.swing.JButton();
+        txtEnterpriseAdminName = new javax.swing.JTextField();
+        txtEnterpriseAdminPassword = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtEnterpriseAdminUsername = new javax.swing.JTextField();
+        btnBack = new javax.swing.JButton();
+        btnCreateEnterprise = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblZipCodesDirectory = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblAddedZipCodesDirec = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        lblEnterpriseType = new javax.swing.JLabel();
+        btnRemoveZipCode = new javax.swing.JButton();
+
+        txtEnterpriseName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEnterpriseNameActionPerformed(evt);
+            }
+        });
+
+        btnAddZipCode.setText("Add Zip Code");
+        btnAddZipCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddZipCodeActionPerformed(evt);
+            }
+        });
+
+        txtEnterpriseAdminName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEnterpriseAdminNameActionPerformed(evt);
+            }
+        });
+
+        txtEnterpriseAdminPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEnterpriseAdminPasswordActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Enterprise Type");
+
+        txtEnterpriseAdminUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEnterpriseAdminUsernameActionPerformed(evt);
+            }
+        });
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
+        btnCreateEnterprise.setText("Submit Enterprise");
+        btnCreateEnterprise.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateEnterpriseActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Enterprise Name");
+
+        tblZipCodesDirectory.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ZipCode", "Add "
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblZipCodesDirectory);
+
+        jLabel2.setText("Admin Name");
+
+        jLabel3.setText("Admin Username");
+
+        tblAddedZipCodesDirec.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Existing ZipCode"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tblAddedZipCodesDirec);
+
+        jLabel4.setText("Admin Password");
+
+        lblEnterpriseType.setText("Enterprise Type");
+
+        btnRemoveZipCode.setText("Remove Zip Code");
+        btnRemoveZipCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveZipCodeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 444, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBack)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(34, 34, 34)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblEnterpriseType)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtEnterpriseAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtEnterpriseAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtEnterpriseAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtEnterpriseName, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnRemoveZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAddZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCreateEnterprise))))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 470, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(lblEnterpriseType))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtEnterpriseName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtEnterpriseAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtEnterpriseAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtEnterpriseAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAddZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRemoveZipCode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(btnCreateEnterprise)
+                .addGap(31, 31, 31))
         );
     }// </editor-fold>//GEN-END:initComponents
- 
+
+    private void txtEnterpriseNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnterpriseNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEnterpriseNameActionPerformed
+
+    private void btnAddZipCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddZipCodeActionPerformed
+        DefaultTableModel dtm = (DefaultTableModel)tblZipCodesDirectory.getModel();
+//        this.zipCodes = new HashSet<String>();
+        for(int row = 0;row < dtm.getRowCount();row++) {
+            if(dtm.getValueAt(row,1).equals(true)){
+                this.zipCodes.add((String)dtm.getValueAt(row,0));
+            }
+        }
+        populateAddZipCode();
+    }//GEN-LAST:event_btnAddZipCodeActionPerformed
+    public void populateAddZipCode(){
+//        DefaultTableModel dtm = (DefaultTableModel)tblAddedZipCodesDirec.getModel();
+//        System.out.println(this.currentEnterprise.getZipCodes());
+//        this.zipCodes.addAll(this.currentEnterprise.getZipCodes());
+        DefaultTableModel dtm1 = (DefaultTableModel)tblAddedZipCodesDirec.getModel();
+        dtm1.setRowCount(0);
+        for(String zc : this.zipCodes){
+            Object[] row = new Object[dtm1.getColumnCount()];
+            row[0]= zc;
+            dtm1.addRow(row);
+        }
+    }
+    private void txtEnterpriseAdminNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnterpriseAdminNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEnterpriseAdminNameActionPerformed
+
+    private void txtEnterpriseAdminPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnterpriseAdminPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEnterpriseAdminPasswordActionPerformed
+
+    private void txtEnterpriseAdminUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnterpriseAdminUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEnterpriseAdminUsernameActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        this.userProcessContainer.remove(this);
+        CardLayout layout =(CardLayout) this.userProcessContainer.getLayout();
+        Component [] comps = this.userProcessContainer.getComponents();
+        for(Component comp : comps){
+            if(comp instanceof CityAdminRoleWorkAreaJPanel){
+                CityAdminRoleWorkAreaJPanel carwajp =(CityAdminRoleWorkAreaJPanel) comp;
+                carwajp.populate();
+            }
+        }
+        layout.previous(userProcessContainer);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnCreateEnterpriseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateEnterpriseActionPerformed
+        // TODO add your handling code here:
+        
+        if(txtEnterpriseName.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter enterprise name!");
+            return;
+        }        
+        for(Network n:this.ecosystem.getNetworkList()){
+            if(n.getName().equals(this.currentNetwork.getName())){
+                for(Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()){
+                    if(e.getName().equals(txtEnterpriseName.getText())&&!this.currentEnterprise.getName().equals(txtEnterpriseName.getText())){
+                        JOptionPane.showMessageDialog(null,"Enterprise name already exists... please enter a different name!");
+                        return;
+                    }
+                }
+            }
+        }
+        if(txtEnterpriseAdminName.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter admin name!");
+            return;
+        }
+        if(txtEnterpriseAdminUsername.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter admin username!");
+            return;
+        }
+        for(UserAccount ua:this.ecosystem.getUserAccountDirectory().getUserAccountList()){
+            if(ua.getUsername().equals(txtEnterpriseAdminUsername.getText())&&!this.currentEnterprise.getUserAccount().getUsername().equals(txtEnterpriseAdminUsername.getText())){
+                JOptionPane.showMessageDialog(null,"Username already exists... please enter a different username!");
+                return;
+            }
+        }
+        if(txtEnterpriseAdminPassword.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter admin password!");
+            return;
+        }
+        String enterpriseName = txtEnterpriseName.getText();
+        String enterpriseAdminName = txtEnterpriseAdminName.getText();
+        String enterpriseAdminPassword = txtEnterpriseAdminPassword.getText();
+        String enterpriseAdminUsername  = txtEnterpriseAdminUsername.getText();
+        
+        for(UserAccount ua: this.ecosystem.getUserAccountDirectory().getUserAccountList()){
+            if(ua.getUsername().equals(this.currentEnterprise.getUserAccount().getUsername())){
+                ua.getUser().setName(enterpriseAdminName);
+                ua.setUsername(enterpriseAdminUsername);
+                ua.setPassword(enterpriseAdminPassword);
+                break;
+            }
+        }
+        
+        for(Network n:this.ecosystem.getNetworkList()){
+            if(n.getName().equals(this.currentNetwork.getName())){
+                for(Enterprise e: n.getEnterpriseDirectory().getEnterpriseList()){
+                    if(e.getName().equals(this.currentEnterprise.getName())){
+                        e.setName(enterpriseName);
+                        e.setZipCodes(this.zipCodes);
+                        break;
+                    }
+                }
+            }
+        }
+
+        dB4OUtil.storeSystem(ecosystem);
+        
+        isEnabled(false);
+        
+        JOptionPane.showMessageDialog(null,"Enterprise updated successfully!");
+        return;
+    }//GEN-LAST:event_btnCreateEnterpriseActionPerformed
+    public void isEnabled(boolean b){
+        txtEnterpriseAdminName.setEnabled(b);
+        txtEnterpriseAdminPassword.setEnabled(b);
+        txtEnterpriseAdminUsername.setEnabled(b);
+        txtEnterpriseName.setEnabled(b);
+        DefaultTableModel dtm2 = (DefaultTableModel)tblZipCodesDirectory.getModel();
+        dtm2.setRowCount(0);
+        for(String zc : this.currentNetwork.getZipCodes()){
+            Object[] row = new Object[dtm2.getColumnCount()];
+            row[0]= zc;
+            row[1]=false;
+            dtm2.addRow(row);
+        }
+        tblZipCodesDirectory.setEnabled(b);
+        tblAddedZipCodesDirec.setEnabled(b);
+//        txtDisasterManagmt.setEnabled(b);
+    }
+    private void btnRemoveZipCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveZipCodeActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblAddedZipCodesDirec.getSelectedRow();
+        if(selectedRow>=0){
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete??","Warning",selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                String szc = (String)tblAddedZipCodesDirec.getValueAt(selectedRow, 0);
+                for(String zc: this.zipCodes){
+                    if(zc.equals(szc)){
+                        this.zipCodes.remove(zc);
+                        break;
+                    }
+                }                
+//                dB4OUtil.storeSystem(this.ecosystem);
+                populateAddZipCode();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
+    }//GEN-LAST:event_btnRemoveZipCodeActionPerformed
+    public void initialize(){
+        for(Network n:this.ecosystem.getNetworkList()){
+            if(n.getCityAdmin().getUsername().equals(this.cityAdminUserAccount.getUsername())){
+                this.currentNetwork = n;
+                break;
+            }
+        }
+
+        lblEnterpriseType.setText(this.currentEnterprise.getEnterpriseType().getValue());
+        txtEnterpriseAdminName.setText(this.currentEnterprise.getUserAccount().getUser().getName());
+        txtEnterpriseAdminPassword.setText(this.currentEnterprise.getUserAccount().getPassword());
+        txtEnterpriseAdminUsername.setText(this.currentEnterprise.getUserAccount().getUsername());
+        txtEnterpriseName.setText(this.currentEnterprise.getName());
+        DefaultTableModel dtm1 = (DefaultTableModel)tblAddedZipCodesDirec.getModel();
+        dtm1.setRowCount(0);
+        for(String zc : this.currentEnterprise.getZipCodes()){
+            Object[] row = new Object[dtm1.getColumnCount()];
+            row[0]= zc;
+            dtm1.addRow(row);
+        }
+        DefaultTableModel dtm2 = (DefaultTableModel)tblZipCodesDirectory.getModel();
+        dtm2.setRowCount(0);
+        for(String zc : this.currentNetwork.getZipCodes()){
+            Object[] row = new Object[dtm2.getColumnCount()];
+            row[0]= zc;
+            row[1]=false;
+            dtm2.addRow(row);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddZipCode;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnCreateEnterprise;
+    private javax.swing.JButton btnRemoveZipCode;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblEnterpriseType;
+    private javax.swing.JTable tblAddedZipCodesDirec;
+    private javax.swing.JTable tblZipCodesDirectory;
+    private javax.swing.JTextField txtEnterpriseAdminName;
+    private javax.swing.JTextField txtEnterpriseAdminPassword;
+    private javax.swing.JTextField txtEnterpriseAdminUsername;
+    private javax.swing.JTextField txtEnterpriseName;
     // End of variables declaration//GEN-END:variables
 }
