@@ -4,6 +4,7 @@ import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Network.Network;
+import Business.Organization.Organization;
 import Business.Role.FoodBankAdminRole;
 import Business.Role.HospitalAdminRole;
 import Business.Role.NGOAdminRole;
@@ -349,8 +350,9 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
         UserAccount ua = this.ecosystem.getUserAccountDirectory().createUserAccount(enterpriseAdminUsername,enterpriseAdminPassword , user, role);
         for(Network n:this.ecosystem.getNetworkList()){
             if(n.getName().equals(this.currentNetwork.getName())){
-                
+      
                 Enterprise enterprise = n.getEnterpriseDirectory().createAndAddEnterprise(enterpriseName, temEnterpriseType);
+                createAdminOrganization(enterprise,ua); 
                 enterprise.setUserAccount(ua);
 //                enterprise.getUserAccountDirectory().createUserAccount(enterpriseAdminUsername, enterpriseAdminPassword, user, role);
                 enterprise.setZipCodes(zipCodes);
@@ -453,4 +455,30 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtEnterpriseAdminUsername;
     private javax.swing.JTextField txtEnterpriseName;
     // End of variables declaration//GEN-END:variables
+
+    private void createAdminOrganization(Enterprise enterprise,UserAccount admin) {
+        if(enterprise.getEnterpriseType().equals(Enterprise.EnterpriseType.Hospital)){
+            Organization hospitalAdminOrganization = enterprise.getOrganizationDirectory().createOrganization(Organization.Type.HospitalAdmin);
+            hospitalAdminOrganization.getUserAccountDirectory().addUserAccount(admin);
+            Organization hospitalDoctorOrganization = enterprise.getOrganizationDirectory().createOrganization(Organization.Type.Doctor);
+            Organization hospitalStaffOrganization  = enterprise.getOrganizationDirectory().createOrganization(Organization.Type.HospitalStaff);
+        } 
+        else if(enterprise.getEnterpriseType().equals(Enterprise.EnterpriseType.FoodBank)){
+            Organization foodBankAdminOrganization = enterprise.getOrganizationDirectory().createOrganization(Organization.Type.FoodBankAdmin);
+            foodBankAdminOrganization.getUserAccountDirectory().addUserAccount(admin);
+            Organization deliveryManOrganization = enterprise.getOrganizationDirectory().createOrganization(Organization.Type.Delivery);
+            Organization packagingOrganization = enterprise.getOrganizationDirectory().createOrganization(Organization.Type.FoodPackaging);
+        }
+        else if(enterprise.getEnterpriseType().equals(Enterprise.EnterpriseType.PoliceDepartment)){
+            Organization policeAdminOrganization = enterprise.getOrganizationDirectory().createOrganization(Organization.Type.PoliceAdmin);
+            policeAdminOrganization.getUserAccountDirectory().addUserAccount(admin);
+            Organization policeOfficerOrganization = enterprise.getOrganizationDirectory().createOrganization(Organization.Type.PoliceOfficer);
+        }       
+        else if(enterprise.getEnterpriseType().equals(Enterprise.EnterpriseType.NonGovernmentOrganization)){
+            Organization ngoAdminOrganization = enterprise.getOrganizationDirectory().createOrganization(Organization.Type.NGOAdmin);
+            ngoAdminOrganization.getUserAccountDirectory().addUserAccount(admin);
+            Organization ngoVolunteersOrganization = enterprise.getOrganizationDirectory().createOrganization(Organization.Type.Volunteer);
+           
+        }
+    }
 }

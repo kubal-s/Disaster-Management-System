@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class FoodBankAdminOrganization extends Organization {
 
     public FoodBankAdminOrganization() {
-        super(Organization.Type.FoodBankAdmin.getValue());
+    super(Organization.Type.FoodBankAdmin.getValue());
     }
     
     

@@ -10,6 +10,7 @@ import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Enterprise.NonGovernmentOrganizationEnterprise;
 import Business.Network.Network;
+import Business.Organization.Organization;
 import Business.Role.Role;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
@@ -86,11 +87,11 @@ public class NgoAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 {null, null, null}
             },
             new String [] {
-                "Volunteer Username", "Volunteer Name", "Volunteer phone No."
+                "Volunteer Username", "Volunteer Name", "Phone No."
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -196,8 +197,14 @@ public class NgoAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                             this.currentEnterprise = e;
                             for(UserAccount vol : e.getUserAccountDirectory().getUserAccountList()){
                                 if(vol.getUsername().equals(volunteer.getUsername())){
-                                    e.getUserAccountDirectory().getUserAccountList().remove(vol);
-                                    break outerloop;
+                                    for(Organization o: e.getOrganizationDirectory().getOrganizationList()){
+                                        if(o.getName().equals(Organization.Type.Volunteer.getValue())){
+                                            o.getUserAccountDirectory().getUserAccountList().remove(vol);
+                                            e.getUserAccountDirectory().getUserAccountList().remove(vol);
+                                            break outerloop;
+                                        }
+                                    }
+
                                 }
                             }
                         }
