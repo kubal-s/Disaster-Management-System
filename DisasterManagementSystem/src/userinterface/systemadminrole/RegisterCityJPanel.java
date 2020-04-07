@@ -274,7 +274,8 @@ public class RegisterCityJPanel extends javax.swing.JPanel {
         this.network.setZipCodes(this.tempNetwork.getZipCodes());
         dB4OUtil.storeSystem(ecosystem);
         
-        isEditable(false);
+//        isEditable(false);
+        clearSelections();
         
         JOptionPane.showMessageDialog(null,"City added successfully!");
         return;
@@ -287,6 +288,15 @@ public class RegisterCityJPanel extends javax.swing.JPanel {
             row[0]=zipCode;
             dtm.addRow(row);
         }
+    }
+    public void clearSelections(){
+        txtCityAdminName.setText("");
+        txtCityAdminPassword.setText("");
+        txtCityAdminUserName.setText("");
+        txtCityName.setText("");
+        txtZipCode.setText("");
+        DefaultTableModel dtm = (DefaultTableModel)tblDirectory.getModel();
+        dtm.setRowCount(0);  
     }
     public void isEditable(boolean b){
         txtCityAdminName.setEditable(b);
