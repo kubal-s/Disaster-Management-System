@@ -9,10 +9,7 @@ import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Network.Network;
-import Business.Role.Role;
-import Business.Role.VolunteerRole;
 import Business.UserAccount.UserAccount;
-import business.user.User;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -22,21 +19,23 @@ import javax.swing.JPanel;
  *
  * @author akhil
  */
-public class AddVolunteerJPanel extends javax.swing.JPanel {
+public class UpdateVolunteerJPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form AddVolunteerJPanel
-     */    
+     * Creates new form UpdateVolunteerJPanel
+     */
     JPanel userProcessContainer;
     EcoSystem ecosystem;
     UserAccount ngoAdminAccount;
+    UserAccount volunteer;
     Enterprise currentEnterprise;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
-    public AddVolunteerJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
-        initComponents();    
+    public UpdateVolunteerJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount ngoAdmin,UserAccount volunteer) {
+        initComponents();
         this.userProcessContainer=userProcessContainer;
         this.ecosystem=ecosystem;
-        this.ngoAdminAccount = userAccount;
+        this.ngoAdminAccount = ngoAdmin;
+        this.volunteer = volunteer;
         initialize();
     }
 
@@ -99,7 +98,7 @@ public class AddVolunteerJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnAddVolunteer.setText("Add");
+        btnAddVolunteer.setText("Update");
         btnAddVolunteer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddVolunteerActionPerformed(evt);
@@ -111,7 +110,6 @@ public class AddVolunteerJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBack)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -128,7 +126,7 @@ public class AddVolunteerJPanel extends javax.swing.JPanel {
                                 .addComponent(txtVolunteerPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtVolunteerUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtVolunteerName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(95, 95, 95))
+                .addGap(0, 101, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,6 +154,20 @@ public class AddVolunteerJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        this.userProcessContainer.remove(this);
+        CardLayout layout =(CardLayout) this.userProcessContainer.getLayout();
+        Component [] comps = this.userProcessContainer.getComponents();
+        for(Component comp : comps){
+            if(comp instanceof NgoAdminRoleWorkAreaJPanel){
+                NgoAdminRoleWorkAreaJPanel narwajp =(NgoAdminRoleWorkAreaJPanel) comp;
+                narwajp.populateVolunteers();
+            }
+        }
+        layout.previous(userProcessContainer);
+    }//GEN-LAST:event_btnBackActionPerformed
+
     private void txtVolunteerUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVolunteerUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtVolunteerUsernameActionPerformed
@@ -177,13 +189,13 @@ public class AddVolunteerJPanel extends javax.swing.JPanel {
         if(txtVolunteerName.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter volunteer name!");
             return;
-        }        
+        }
         if(txtVolunteerUsername.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter volunteer username!");
             return;
         }
         for(UserAccount ua:this.ecosystem.getUserAccountDirectory().getUserAccountList()){
-            if(ua.getUsername().equals(txtVolunteerUsername.getText())){
+            if(ua.getUsername().equals(txtVolunteerUsername.getText())&&!this.volunteer.getUsername().equals(txtVolunteerUsername.getText())){
                 JOptionPane.showMessageDialog(null,"Username already exists... please enter a different username!");
                 return;
             }
@@ -196,65 +208,46 @@ public class AddVolunteerJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter volunteer password!");
             return;
         }
-
-        Role role = new VolunteerRole();
-        User user = ecosystem.getUserDirectory().createUser(txtVolunteerUsername.getText());
-        user.setPhone(txtVolunteerPhoneNo.getText());
-
-        
-        UserAccount ua = this.ecosystem.getUserAccountDirectory().createUserAccount(txtVolunteerUsername.getText(),txtVolunteerPassword.getText() , user, role);
-        outerloop:
-        for(Network n:this.ecosystem.getNetworkList()){
-            for(Enterprise e: n.getEnterpriseDirectory().getEnterpriseList()){
-                if(e.getName().equals(this.currentEnterprise.getName())){
-                    e.getUserAccountDirectory().addUserAccount(ua);
-//                    e.getUserAccountDirectory().createUserAccount(txtVolunteerUsername.getText(),txtVolunteerPassword.getText() , user, role);
-                    break outerloop;
-                }
+        for(UserAccount ua:this.ecosystem.getUserAccountDirectory().getUserAccountList()){
+            if(ua.getUsername().equals(this.volunteer.getUsername())){
+                ua.getUser().setName(txtVolunteerName.getText());
+                ua.getUser().setPhone(txtVolunteerPhoneNo.getText());
+                ua.setUsername(txtVolunteerUsername.getText());
+                ua.setPassword(txtVolunteerPassword.getText());
+                break;
             }
         }
 
         dB4OUtil.storeSystem(ecosystem);
-        
-        clearSelections();
-        
-        JOptionPane.showMessageDialog(null,"Volunteer added successfully!");
+
+        isEnabled(false);
+
+        JOptionPane.showMessageDialog(null,"Volunteer updated successfully!");
         return;
-    }                                                   
-    public void initialize(){
-        outerloop:
-        for(Network n:this.ecosystem.getNetworkList()){
-            for(Enterprise e :n.getEnterpriseDirectory().getEnterpriseList()){
-                if(e.getUserAccount().getUsername().equals(this.ngoAdminAccount.getUsername())){
-                    this.currentEnterprise = e;
-                    break outerloop;
+        }
+        public void initialize(){
+            txtVolunteerName.setText(this.volunteer.getUser().getName());
+            txtVolunteerPassword.setText(this.volunteer.getPassword());
+            txtVolunteerPhoneNo.setText(this.volunteer.getUser().getPhone());
+            txtVolunteerUsername.setText(this.volunteer.getUsername());
+            outerloop:
+            for(Network n:this.ecosystem.getNetworkList()){
+                for(Enterprise e :n.getEnterpriseDirectory().getEnterpriseList()){
+                    if(e.getUserAccount().getUsername().equals(this.ngoAdminAccount.getUsername())){
+                        this.currentEnterprise = e;
+                        break outerloop;
+                    }
                 }
             }
-        }
-
     }//GEN-LAST:event_btnAddVolunteerActionPerformed
 
-        public void clearSelections(){
-        txtVolunteerName.setText("");
-        txtVolunteerPassword.setText("");
-        txtVolunteerPhoneNo.setText("");
-        txtVolunteerUsername.setText("");
+    public void isEnabled(boolean b){
+        txtVolunteerName.setEnabled(b);
+        txtVolunteerPassword.setEnabled(b);
+        txtVolunteerPhoneNo.setEnabled(b);
+        txtVolunteerUsername.setEnabled(b);
+//        txtDisasterManagmt.setEnabled(b);
     }
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
-        this.userProcessContainer.remove(this);
-        CardLayout layout =(CardLayout) this.userProcessContainer.getLayout();
-        Component [] comps = this.userProcessContainer.getComponents();
-        for(Component comp : comps){
-            if(comp instanceof NgoAdminRoleWorkAreaJPanel){
-                NgoAdminRoleWorkAreaJPanel narwajp =(NgoAdminRoleWorkAreaJPanel) comp;
-                narwajp.populateVolunteers();
-            }
-        }
-        layout.previous(userProcessContainer);
-    }//GEN-LAST:event_btnBackActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddVolunteer;
     private javax.swing.JButton btnBack;

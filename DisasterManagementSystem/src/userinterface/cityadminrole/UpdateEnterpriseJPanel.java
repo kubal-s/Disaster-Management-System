@@ -364,14 +364,14 @@ public class UpdateEnterpriseJPanel extends javax.swing.JPanel {
                 break;
             }
         }
-        
+        outerloop :
         for(Network n:this.ecosystem.getNetworkList()){
             if(n.getName().equals(this.currentNetwork.getName())){
                 for(Enterprise e: n.getEnterpriseDirectory().getEnterpriseList()){
                     if(e.getName().equals(this.currentEnterprise.getName())){
                         e.setName(enterpriseName);
                         e.setZipCodes(this.zipCodes);
-                        break;
+                        break outerloop;
                     }
                 }
             }
