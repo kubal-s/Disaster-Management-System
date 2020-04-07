@@ -7,8 +7,12 @@ package Business.Enterprise;
 
 import Business.Organization.Organization;
 import Business.Organization.OrganizationDirectory;
+import Business.Role.Role;
+import Business.UserAccount.UserAccount;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -18,7 +22,8 @@ public abstract class Enterprise extends Organization{
     
     private EnterpriseType enterpriseType;
     private OrganizationDirectory organizationDirectory;
-    List<String> zipCodes;
+    UserAccount userAccount;
+    Set<String> zipCodes;
 
     public OrganizationDirectory getOrganizationDirectory() {
         return organizationDirectory;
@@ -56,15 +61,25 @@ public abstract class Enterprise extends Organization{
         super(name);
         this.enterpriseType=type;
         organizationDirectory=new OrganizationDirectory();
-        zipCodes = new ArrayList<String>();
+        zipCodes = new HashSet<String>();
     }
 
-    public List<String> getZipCodes() {
+    public Set<String> getZipCodes() {
         return zipCodes;
     }
 
-    public void setZipCodes(List<String> zipCodes) {
+    public void setZipCodes(Set<String> zipCodes) {
         this.zipCodes = zipCodes;
     }
+
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
+    }
+    
+    public abstract Role getAdminRole();
     
 }

@@ -5,6 +5,7 @@
  */
 package Business.Enterprise;
 
+import Business.Role.NGOAdminRole;
 import Business.Role.Role;
 import java.util.ArrayList;
 
@@ -16,5 +17,9 @@ public class NonGovernmentOrganizationEnterprise extends Enterprise{
     @Override
     public ArrayList<Role> getSupportedRole() {
         return null;
+    }
+        @Override
+    public Role getAdminRole() {
+        return new NGOAdminRole();
     }
 }

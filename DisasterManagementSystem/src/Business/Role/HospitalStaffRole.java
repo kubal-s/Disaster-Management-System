@@ -13,6 +13,10 @@ import javax.swing.JPanel;
 
 public class HospitalStaffRole extends Role {
 
+    public HospitalStaffRole() {
+        super(RoleType.HospitalStaff);
+    }
+
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

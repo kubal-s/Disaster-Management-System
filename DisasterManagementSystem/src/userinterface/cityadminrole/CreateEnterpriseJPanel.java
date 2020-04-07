@@ -14,7 +14,9 @@ import business.user.User;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -37,10 +39,12 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
     JPanel userProcessContainer;
     EcoSystem ecosystem;
     Enterprise.EnterpriseType temEnterpriseType;
-    List<String> zipCodes;
+    Set<String> zipCodes;
     Network currentNetwork;
     UserAccount cityAdminUserAccount;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+    
+    
     public CreateEnterpriseJPanel(JPanel userProcessContainer, EcoSystem ecosystem, UserAccount cityAdminUserAccount) {
         initComponents();
         this.userProcessContainer=userProcessContainer;
@@ -342,11 +346,13 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
             role = new PoliceAdminRole();
         }
         
+        UserAccount ua = this.ecosystem.getUserAccountDirectory().createUserAccount(enterpriseAdminUsername,enterpriseAdminPassword , user, role);
         for(Network n:this.ecosystem.getNetworkList()){
             if(n.getName().equals(this.currentNetwork.getName())){
                 
                 Enterprise enterprise = n.getEnterpriseDirectory().createAndAddEnterprise(enterpriseName, temEnterpriseType);
-                enterprise.getUserAccountDirectory().createUserAccount(enterpriseAdminUsername, enterpriseAdminPassword, user, role);
+                enterprise.setUserAccount(ua);
+//                enterprise.getUserAccountDirectory().createUserAccount(enterpriseAdminUsername, enterpriseAdminPassword, user, role);
                 enterprise.setZipCodes(zipCodes);
                 break;
             }
@@ -387,7 +393,7 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
     private void btnAddZipCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddZipCodeActionPerformed
         // TODO add your handling code here:
         DefaultTableModel dtm = (DefaultTableModel)tblZipCodesDirectory.getModel();
-        this.zipCodes = new ArrayList<String>();
+        this.zipCodes = new HashSet<String>();
         for(int row = 0;row < dtm.getRowCount();row++) {
             if(dtm.getValueAt(row,1).equals(true)){
                 this.zipCodes.add((String)dtm.getValueAt(row,0));
@@ -417,8 +423,16 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
         txtEnterpriseAdminPassword.setText("");
         txtEnterpriseAdminUsername.setText("");
         txtEnterpriseName.setText("");
-        DefaultTableModel dtm = (DefaultTableModel)tblAddedZipCodesDirec.getModel();
-        dtm.setRowCount(0);
+        DefaultTableModel dtm1 = (DefaultTableModel)tblAddedZipCodesDirec.getModel();
+        dtm1.setRowCount(0);
+        DefaultTableModel dtm2 = (DefaultTableModel)tblZipCodesDirectory.getModel();
+        dtm2.setRowCount(0);
+        for(String zc : this.currentNetwork.getZipCodes()){
+            Object[] row = new Object[dtm2.getColumnCount()];
+            row[0]= zc;
+            row[1]= false;
+            dtm2.addRow(row);
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddZipCode;

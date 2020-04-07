@@ -5,6 +5,7 @@
  */
 package Business.Enterprise;
 
+import Business.Role.FoodBankAdminRole;
 import Business.Role.Role;
 import java.util.ArrayList;
 
@@ -19,4 +20,12 @@ public class FoodBankEnterprise extends Enterprise{
     public ArrayList<Role> getSupportedRole() {
         return null;
     }
+
+    @Override
+    public Role getAdminRole() {
+        return new FoodBankAdminRole();
+    }
+    
+   
+    
 }
