@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 public class VolunteerRole extends Role{
 
     public VolunteerRole() {
-        super(RoleType.VictimRole);
+        super(RoleType.Volunteer);
     }
 
     @Override

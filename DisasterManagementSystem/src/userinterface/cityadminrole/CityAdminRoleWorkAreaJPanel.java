@@ -146,12 +146,13 @@ public class CityAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete??","Warning",selectionButton);
             if(selectionResult == JOptionPane.YES_OPTION){
                 Enterprise enterprise = (Enterprise)tblDirectory.getValueAt(selectedRow, 1);
+                outerloop :
                 for(Network n: this.ecosystem.getNetworkList()){
                     if(n.getName().equals(this.currentNetwork.getName())){
                         for(Enterprise e: n.getEnterpriseDirectory().getEnterpriseList()){
                             if(e.getName().equals(enterprise.getName())){
                                 n.getEnterpriseDirectory().getEnterpriseList().remove(e);
-                                break;
+                                break outerloop;
                             }
                         }
                     }

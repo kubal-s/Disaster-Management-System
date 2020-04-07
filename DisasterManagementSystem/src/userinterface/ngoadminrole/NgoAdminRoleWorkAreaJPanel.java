@@ -8,10 +8,12 @@ package userinterface.ngoadminrole;
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.NonGovernmentOrganizationEnterprise;
 import Business.Network.Network;
 import Business.Role.Role;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -160,32 +162,76 @@ public class NgoAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnUpdateVolunteerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateVolunteerActionPerformed
         // TODO add your handling code here:
+        int selectedRow = tblVolunteersDirectory.getSelectedRow();
+        if(selectedRow>=0){
+            UserAccount volunteer = ((UserAccount)tblVolunteersDirectory.getValueAt(selectedRow, 0));
+            //Item selectedItem = restaurant.getMenu().getItemFromName(selectedItemName);
+            JPanel updateVolunteerJPanel = new UpdateVolunteerJPanel(userProcessContainer,ecosystem,ngoAdminAccount,volunteer);
+            userProcessContainer.add("updateVolunteer",updateVolunteerJPanel);
+            CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
+            cardLayout.next(this.userProcessContainer);
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_btnUpdateVolunteerActionPerformed
 
     private void btnDeleteVolunteerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteVolunteerActionPerformed
         // TODO add your handling code here:
+        int selectedRow = tblVolunteersDirectory.getSelectedRow();
+        if(selectedRow>=0){
+            int selectionButton = JOptionPane.YES_NO_OPTION;
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete??","Warning",selectionButton);
+            if(selectionResult == JOptionPane.YES_OPTION){
+                UserAccount volunteer = (UserAccount)tblVolunteersDirectory.getValueAt(selectedRow, 0);
+                for(UserAccount ua:this.ecosystem.getUserAccountDirectory().getUserAccountList()){
+                    if(ua.getUsername().equals(volunteer.getUsername())){
+                        this.ecosystem.getUserAccountDirectory().getUserAccountList().remove(ua);
+                        break;
+                    }
+                }
+                outerloop :
+                for(Network n:this.ecosystem.getNetworkList()){
+                    for(Enterprise e :n.getEnterpriseDirectory().getEnterpriseList()){
+                        if(e.getUserAccount().getUsername().equals(this.ngoAdminAccount.getUsername())){
+                            this.currentEnterprise = e;
+                            for(UserAccount vol : e.getUserAccountDirectory().getUserAccountList()){
+                                if(vol.getUsername().equals(volunteer.getUsername())){
+                                    e.getUserAccountDirectory().getUserAccountList().remove(vol);
+                                    break outerloop;
+                                }
+                            }
+                        }
+                    }
+                }
+                dB4OUtil.storeSystem(this.ecosystem);
+                populateVolunteers();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Row!!");
+        }
     }//GEN-LAST:event_btnDeleteVolunteerActionPerformed
     
     public void populateVolunteers(){
         DefaultTableModel dtm = (DefaultTableModel)tblVolunteersDirectory.getModel();
         dtm.setRowCount(0);   
-        for(UserAccount n: this.currentEnterprise.getUserAccountDirectory().getUserAccountList()){
-            if(n.getRole().equals(Role.RoleType.Volunteer)){
+        for(UserAccount n: this.currentEnterprise.getUserAccountDirectory().getUserAccountList()){  
+            if(n.getRole().getRoleType().equals(Role.RoleType.Volunteer)){
                     Object[] row = new Object[dtm.getColumnCount()];
                     row[0]= n;
                     row[1]= n.getUser().getName();
-                    row[3] = n.getUser().getPhone();
+                    row[2] = n.getUser().getPhone();
                     dtm.addRow(row);
             }
             
         }
     }
     public void initialize(){
+        outerloop:
         for(Network n:this.ecosystem.getNetworkList()){
             for(Enterprise e :n.getEnterpriseDirectory().getEnterpriseList()){
                 if(e.getUserAccount().getUsername().equals(this.ngoAdminAccount.getUsername())){
                     this.currentEnterprise = e;
-                    break;
+                    break outerloop;
                 }
             }
         }
