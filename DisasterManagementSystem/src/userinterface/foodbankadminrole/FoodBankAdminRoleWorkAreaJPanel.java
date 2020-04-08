@@ -8,10 +8,12 @@ package userinterface.foodbankadminrole;
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
-import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Role.Role;
+import Business.Enterprise.FoodBankEnterprise;
+import Business.Network.Network;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -33,6 +35,7 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private Enterprise currentEnterprise;
     public FoodBankAdminRoleWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
         initComponents();
+        
         this.userProcessContainer=userProcessContainer;
         this.ecosystem=ecosystem;
         this.foodBankAdminAccount = userAccount;
@@ -51,8 +54,8 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        viewFoodPackets = new javax.swing.JButton();
+        lblFoodPacketCount = new javax.swing.JLabel();
+        editFoodPackets = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRequestDirectory = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -65,31 +68,33 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         btnDeletePackager = new javax.swing.JButton();
         btnUpdatePackager = new javax.swing.JButton();
         btnAddPackager = new javax.swing.JButton();
+        btnProcess = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
 
-        jLabel1.setText("Available Food Packets");
+        jLabel1.setText("Available Food Packets:");
 
-        jLabel2.setText("count");
+        lblFoodPacketCount.setText("0");
 
-        viewFoodPackets.setText("View");
-        viewFoodPackets.addActionListener(new java.awt.event.ActionListener() {
+        editFoodPackets.setText("Edit");
+        editFoodPackets.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewFoodPacketsActionPerformed(evt);
+                editFoodPacketsActionPerformed(evt);
             }
         });
 
         tblRequestDirectory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Sender", "Status"
+                "RequestID", "Sender", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -182,34 +187,53 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnProcess.setText("Process");
+        btnProcess.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProcessActionPerformed(evt);
+            }
+        });
+
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(viewFoodPackets))
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnAddDeliveryMan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnDeleteDeliveryMan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnUpdateDeliveryMan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnAddPackager, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnDeletePackager, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnUpdatePackager, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addComponent(btnProcess)
+                        .addGap(39, 39, 39)
+                        .addComponent(btnCancel))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(18, 18, 18)
+                            .addComponent(lblFoodPacketCount)
+                            .addGap(18, 18, 18)
+                            .addComponent(editFoodPackets))
+                        .addComponent(jScrollPane1)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnAddDeliveryMan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnDeleteDeliveryMan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnUpdateDeliveryMan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGap(34, 34, 34)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnAddPackager, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnDeletePackager, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnUpdatePackager, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addGap(119, 119, 119))
         );
         layout.setVerticalGroup(
@@ -218,11 +242,15 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(viewFoodPackets))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                    .addComponent(lblFoodPacketCount)
+                    .addComponent(editFoodPackets, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnProcess)
+                    .addComponent(btnCancel))
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -359,13 +387,48 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDeletePackagerActionPerformed
 
-    private void viewFoodPacketsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewFoodPacketsActionPerformed
+    private void editFoodPacketsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editFoodPacketsActionPerformed
         // TODO add your handling code here:
-        JPanel foodPacketViewJPanel = new FoodPacketViewJPanel(userProcessContainer,ecosystem,foodBankAdminAccount);
-        userProcessContainer.add("foodPacketView",foodPacketViewJPanel);
+        JPanel foodPacketEditJPanel = new FoodPacketEditJPanel(userProcessContainer,ecosystem,currentEnterprise, foodBankAdminAccount);
+        userProcessContainer.add("foodPacketView",foodPacketEditJPanel);
         CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
         cardLayout.next(this.userProcessContainer);
-    }//GEN-LAST:event_viewFoodPacketsActionPerformed
+    }//GEN-LAST:event_editFoodPacketsActionPerformed
+
+    private void btnProcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessActionPerformed
+        int selectedRow = tblRequestDirectory.getSelectedRow();
+        if( selectedRow == -1){
+             JOptionPane.showMessageDialog(null,"Please select a request to process");
+        }
+        else{
+            DefaultTableModel dtm = (DefaultTableModel)tblRequestDirectory.getModel();
+
+            int requestID = (int)(Integer)dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            cwr.setStatus("approved for packaging");
+            cwr.setAssignedEnterprise(this.currentEnterprise);
+            populateRequests();
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
+    }//GEN-LAST:event_btnProcessActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        int selectedRow = tblRequestDirectory.getSelectedRow();
+        if( selectedRow == -1){
+             JOptionPane.showMessageDialog(null,"Please select a request to cancel");
+        }
+        else{
+            DefaultTableModel dtm = (DefaultTableModel)tblRequestDirectory.getModel();
+            int requestID = (int)(Integer)dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            cwr.setStatus("submitted");
+            cwr.setAssignedEnterprise(null);
+            populateRequests();
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnUpdatePackagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePackagerActionPerformed
         // TODO add your handling code here:
@@ -409,7 +472,56 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             
         }
     }
-    public void initialize(){
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddDeliveryMan;
+    private javax.swing.JButton btnAddPackager;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnDeleteDeliveryMan;
+    private javax.swing.JButton btnDeletePackager;
+    private javax.swing.JButton btnProcess;
+    private javax.swing.JButton btnUpdateDeliveryMan;
+    private javax.swing.JButton btnUpdatePackager;
+    private javax.swing.JButton editFoodPackets;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblFoodPacketCount;
+    private javax.swing.JTable tblDeliveryManDirectory;
+    private javax.swing.JTable tblPackagersDirectory;
+    private javax.swing.JTable tblRequestDirectory;
+    // End of variables declaration//GEN-END:variables
+
+    private void populateRequests() {
+        System.out.println(ecosystem.getWorkQueue().getWorkRequestList().size());
+        DefaultTableModel dtm = (DefaultTableModel)tblRequestDirectory.getModel();
+        dtm.setRowCount(0); 
+        
+        for(WorkRequest w: ecosystem.getWorkQueue().getWorkRequestList()){
+            if(w.getRequestedEnterprise().equals(Enterprise.EnterpriseType.FoodBank)
+                    && w.getAssignedEnterprise() == null
+                    && this.currentEnterprise.getZipCodes().contains(w.getAddress().getZipcode())){
+                            Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+            row[0] = w.getRequestID();
+            row[1]=w.getSender().getUser().getName();
+            row[2]=w.getStatus();
+            dtm.addRow(row);
+            }
+        }
+        
+        for(WorkRequest w: ecosystem.getWorkQueue().getWorkRequestList()){
+            if(w.getAssignedEnterprise() == this.currentEnterprise){
+                            Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+            row[0] = w.getRequestID();
+            row[1]=w.getSender().getUser().getName();
+            row[2]=w.getStatus();
+            dtm.addRow(row);
+            }
+        }
+    }
+
+    public void initialize() {
         outerloop:
         for(Network n:this.ecosystem.getNetworkList()){
             for(Enterprise e :n.getEnterpriseDirectory().getEnterpriseList()){
@@ -419,23 +531,8 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 }
             }
         }
-
-    } 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddDeliveryMan;
-    private javax.swing.JButton btnAddPackager;
-    private javax.swing.JButton btnDeleteDeliveryMan;
-    private javax.swing.JButton btnDeletePackager;
-    private javax.swing.JButton btnUpdateDeliveryMan;
-    private javax.swing.JButton btnUpdatePackager;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable tblDeliveryManDirectory;
-    private javax.swing.JTable tblPackagersDirectory;
-    private javax.swing.JTable tblRequestDirectory;
-    private javax.swing.JButton viewFoodPackets;
-    // End of variables declaration//GEN-END:variables
+        
+        lblFoodPacketCount.setText(String.valueOf(((FoodBankEnterprise)this.currentEnterprise).getFoodPackets()));
+        populateRequests();    
+    }
 }

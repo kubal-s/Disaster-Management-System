@@ -227,6 +227,7 @@ public class MainJFrame extends javax.swing.JFrame {
         CardLayout crdLyt = (CardLayout) container.getLayout();
         crdLyt.next(container);
         dB4OUtil.storeSystem(system);
+        registerVictimButton.setEnabled(true);
     }//GEN-LAST:event_logoutJButtonActionPerformed
 
     private void registerVictimButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerVictimButtonActionPerformed

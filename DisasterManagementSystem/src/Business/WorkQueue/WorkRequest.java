@@ -23,6 +23,7 @@ public class WorkRequest {
     private static int requestIDCount = 1;
     private Enterprise.EnterpriseType requestedEnterprise;
     private Address address;
+    private Enterprise assignedEnterprise;
     
     public WorkRequest(){
         requestDate = new Date();
@@ -123,4 +124,19 @@ public class WorkRequest {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+    public Enterprise getAssignedEnterprise() {
+        return assignedEnterprise;
+    }
+
+    public void setAssignedEnterprise(Enterprise assignedEnterprise) {
+        this.assignedEnterprise = assignedEnterprise;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(requestID);
+    }
+    
+    
 }

@@ -28,7 +28,11 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD:DisasterManagementSystem/src/userinterface/foodbankadminrole/FoodPacketViewJPanel.form
                           <Component id="txtCount" min="-2" pref="94" max="-2" attributes="0"/>
+=======
+                          <Component id="txtFoodPackets" min="-2" pref="94" max="-2" attributes="0"/>
+>>>>>>> Added support for victim request to food bank:DisasterManagementSystem/src/userinterface/foodbankadminrole/FoodPacketEditJPanel.form
                           <Component id="lblFoodPacketCount" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                               <Component id="btnAddFoodPackets" alignment="0" max="32767" attributes="0"/>
@@ -37,7 +41,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="101" max="32767" attributes="0"/>
+              <EmptySpace pref="95" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -53,7 +57,11 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
+<<<<<<< HEAD:DisasterManagementSystem/src/userinterface/foodbankadminrole/FoodPacketViewJPanel.form
                   <Component id="txtCount" alignment="3" min="-2" max="-2" attributes="0"/>
+=======
+                  <Component id="txtFoodPackets" alignment="3" min="-2" max="-2" attributes="0"/>
+>>>>>>> Added support for victim request to food bank:DisasterManagementSystem/src/userinterface/foodbankadminrole/FoodPacketEditJPanel.form
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -81,27 +89,42 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblFoodPacketCount">
       <Properties>
-        <Property name="text" type="java.lang.String" value="count"/>
+        <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnAddFoodPackets">
       <Properties>
         <Property name="text" type="java.lang.String" value="Add"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddFoodPacketsActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnRemoveFoodPackets">
       <Properties>
         <Property name="text" type="java.lang.String" value="Remove"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoveFoodPacketsActionPerformed"/>
+      </Events>
     </Component>
+<<<<<<< HEAD:DisasterManagementSystem/src/userinterface/foodbankadminrole/FoodPacketViewJPanel.form
     <Component class="javax.swing.JTextField" name="txtCount">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCountActionPerformed"/>
+=======
+    <Component class="javax.swing.JTextField" name="txtFoodPackets">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="0"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFoodPacketsActionPerformed"/>
+>>>>>>> Added support for victim request to food bank:DisasterManagementSystem/src/userinterface/foodbankadminrole/FoodPacketEditJPanel.form
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Enter count to add or delete"/>
+        <Property name="text" type="java.lang.String" value="Enter count to add or remove"/>
       </Properties>
     </Component>
   </SubComponents>

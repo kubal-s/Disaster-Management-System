@@ -7,14 +7,17 @@ package userinterface.foodbankadminrole;
 
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Enterprise.FoodBankEnterprise;
 import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import java.awt.Component;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import userinterface.ngoadminrole.NgoAdminRoleWorkAreaJPanel;
 
-/**
- *
- * @author akhil
- */
-public class FoodPacketViewJPanel extends javax.swing.JPanel {
+
+public class FoodPacketEditJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form foodPacketViewJPanel
@@ -23,11 +26,14 @@ public class FoodPacketViewJPanel extends javax.swing.JPanel {
     EcoSystem ecosystem;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     private UserAccount foodBankAdminAccount;
-    public FoodPacketViewJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
+    private Enterprise currentEnterprise;
+    public FoodPacketEditJPanel(JPanel userProcessContainer, EcoSystem ecosystem,Enterprise enterprise, UserAccount userAccount) {
         initComponents();
         this.userProcessContainer=userProcessContainer;
         this.ecosystem=ecosystem;
         this.foodBankAdminAccount = userAccount;
+        this.currentEnterprise = enterprise;
+        initialize();
     }
 
     /**
@@ -44,7 +50,7 @@ public class FoodPacketViewJPanel extends javax.swing.JPanel {
         lblFoodPacketCount = new javax.swing.JLabel();
         btnAddFoodPackets = new javax.swing.JButton();
         btnRemoveFoodPackets = new javax.swing.JButton();
-        txtCount = new javax.swing.JTextField();
+        txtFoodPackets = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
         btnBack.setText("Back");
@@ -56,19 +62,30 @@ public class FoodPacketViewJPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Food Packet Count :");
 
-        lblFoodPacketCount.setText("count");
+        lblFoodPacketCount.setText("0");
 
         btnAddFoodPackets.setText("Add");
-
-        btnRemoveFoodPackets.setText("Remove");
-
-        txtCount.addActionListener(new java.awt.event.ActionListener() {
+        btnAddFoodPackets.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCountActionPerformed(evt);
+                btnAddFoodPacketsActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Enter count to add or delete");
+        btnRemoveFoodPackets.setText("Remove");
+        btnRemoveFoodPackets.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveFoodPacketsActionPerformed(evt);
+            }
+        });
+
+        txtFoodPackets.setText("0");
+        txtFoodPackets.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFoodPacketsActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Enter count to add or remove");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -85,12 +102,12 @@ public class FoodPacketViewJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCount, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFoodPackets, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblFoodPacketCount)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(btnAddFoodPackets, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnRemoveFoodPackets, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,7 +120,7 @@ public class FoodPacketViewJPanel extends javax.swing.JPanel {
                     .addComponent(lblFoodPacketCount))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFoodPackets, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAddFoodPackets)
@@ -115,11 +132,55 @@ public class FoodPacketViewJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        DB4OUtil.getInstance().storeSystem(ecosystem);
+        this.userProcessContainer.remove(this);
+        CardLayout layout =(CardLayout) this.userProcessContainer.getLayout();
+        Component [] comps = this.userProcessContainer.getComponents();
+        for(Component comp : comps){
+            if(comp instanceof FoodBankAdminRoleWorkAreaJPanel){
+                FoodBankAdminRoleWorkAreaJPanel jp =(FoodBankAdminRoleWorkAreaJPanel) comp;
+                jp.initialize();
+            }
+        }
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void txtCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCountActionPerformed
+    private void txtFoodPacketsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFoodPacketsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCountActionPerformed
+    }//GEN-LAST:event_txtFoodPacketsActionPerformed
+
+    private void btnAddFoodPacketsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFoodPacketsActionPerformed
+        // TODO add your handling code here:
+        try{
+            int currentTxtFoodPackets = Integer.parseInt(txtFoodPackets.getText());
+            int foodPacketCount = ((FoodBankEnterprise)this.currentEnterprise).getFoodPackets();
+            ((FoodBankEnterprise)this.currentEnterprise).setFoodPackets(foodPacketCount+currentTxtFoodPackets);
+            initialize();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Please enter number to edit food packets");
+            
+        }
+    }//GEN-LAST:event_btnAddFoodPacketsActionPerformed
+
+    private void btnRemoveFoodPacketsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFoodPacketsActionPerformed
+        // TODO add your handling code here:
+        try{
+            int currentTxtFoodPackets = Integer.parseInt(txtFoodPackets.getText());
+            int foodPacketCount = ((FoodBankEnterprise)this.currentEnterprise).getFoodPackets();
+            if(foodPacketCount < currentTxtFoodPackets){
+                JOptionPane.showMessageDialog(null,"Not enough food packets to remove");
+            }
+            else{
+                ((FoodBankEnterprise)this.currentEnterprise).setFoodPackets(foodPacketCount-currentTxtFoodPackets);
+                initialize();
+            }
+        }
+        catch(Exception e){           
+            JOptionPane.showMessageDialog(null,"Please enter number to edit food packets");
+        }
+    }//GEN-LAST:event_btnRemoveFoodPacketsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -129,6 +190,10 @@ public class FoodPacketViewJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblFoodPacketCount;
-    private javax.swing.JTextField txtCount;
+    private javax.swing.JTextField txtFoodPackets;
     // End of variables declaration//GEN-END:variables
+
+    private void initialize() {
+        lblFoodPacketCount.setText(String.valueOf(((FoodBankEnterprise)this.currentEnterprise).getFoodPackets()));
+    }
 }
