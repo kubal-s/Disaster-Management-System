@@ -9,11 +9,7 @@ import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.Network.Network;
-import Business.Organization.Organization;
-import Business.Role.FoodPackagerRole;
-import Business.Role.Role;
 import Business.UserAccount.UserAccount;
-import business.user.User;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -23,22 +19,24 @@ import javax.swing.JPanel;
  *
  * @author akhil
  */
-public class AddPackagerJPanel extends javax.swing.JPanel {
+public class UpdateDeliveryManJPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form AddPackagerJPanel
-     */
+     * Creates new form UpdateDeliveryManJPanel
+     */    
     JPanel userProcessContainer;
     EcoSystem ecosystem;
-    UserAccount foodBankAdmin;
+    UserAccount foodBankAdminAccount;
+    UserAccount deliveryMan;
     Enterprise currentEnterprise;
-    
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
-    public AddPackagerJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
+    
+    public UpdateDeliveryManJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount foodBankAdmin,UserAccount deliveryMan) {
         initComponents();
         this.userProcessContainer=userProcessContainer;
         this.ecosystem=ecosystem;
-        this.foodBankAdmin = userAccount;
+        this.foodBankAdminAccount = foodBankAdmin;
+        this.deliveryMan = deliveryMan;
         initialize();
     }
 
@@ -51,49 +49,49 @@ public class AddPackagerJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtPackagerPhoneNo = new javax.swing.JTextField();
-        txtPackagerPassword = new javax.swing.JTextField();
-        txtPackagerName = new javax.swing.JTextField();
-        btnAddPackaget = new javax.swing.JButton();
+        txtDeliveryManPhoneNo = new javax.swing.JTextField();
+        txtDeliveryManPassword = new javax.swing.JTextField();
+        txtDeliveryManName = new javax.swing.JTextField();
+        btnAddDeliveryMan = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
-        txtPackagerUsername = new javax.swing.JTextField();
+        txtDeliveryManUsername = new javax.swing.JTextField();
 
-        txtPackagerPhoneNo.addActionListener(new java.awt.event.ActionListener() {
+        txtDeliveryManPhoneNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPackagerPhoneNoActionPerformed(evt);
+                txtDeliveryManPhoneNoActionPerformed(evt);
             }
         });
 
-        txtPackagerPassword.addActionListener(new java.awt.event.ActionListener() {
+        txtDeliveryManPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPackagerPasswordActionPerformed(evt);
+                txtDeliveryManPasswordActionPerformed(evt);
             }
         });
 
-        txtPackagerName.addActionListener(new java.awt.event.ActionListener() {
+        txtDeliveryManName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPackagerNameActionPerformed(evt);
+                txtDeliveryManNameActionPerformed(evt);
             }
         });
 
-        btnAddPackaget.setText("Add");
-        btnAddPackaget.addActionListener(new java.awt.event.ActionListener() {
+        btnAddDeliveryMan.setText("Update");
+        btnAddDeliveryMan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddPackagetActionPerformed(evt);
+                btnAddDeliveryManActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Packager Name");
+        jLabel1.setText("Delivery Man Name");
 
-        jLabel2.setText("Packager Username");
+        jLabel2.setText("Delivery Man Username");
 
-        jLabel3.setText("Packager Phone No.");
+        jLabel3.setText("Delivery Man Phone No.");
 
-        jLabel4.setText("Packager Password");
+        jLabel4.setText("Delivery Man Password");
 
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -102,9 +100,9 @@ public class AddPackagerJPanel extends javax.swing.JPanel {
             }
         });
 
-        txtPackagerUsername.addActionListener(new java.awt.event.ActionListener() {
+        txtDeliveryManUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPackagerUsernameActionPerformed(evt);
+                txtDeliveryManUsernameActionPerformed(evt);
             }
         });
 
@@ -113,10 +111,11 @@ public class AddPackagerJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBack)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnAddPackaget)
+                        .addComponent(btnAddDeliveryMan)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel2)
@@ -125,119 +124,108 @@ public class AddPackagerJPanel extends javax.swing.JPanel {
                                 .addComponent(jLabel4))
                             .addGap(29, 29, 29)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtPackagerPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtPackagerPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtPackagerUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtPackagerName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 105, Short.MAX_VALUE))
+                                .addComponent(txtDeliveryManPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDeliveryManPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDeliveryManUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDeliveryManName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(btnBack)
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtPackagerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDeliveryManName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPackagerUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDeliveryManUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtPackagerPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDeliveryManPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtPackagerPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDeliveryManPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnAddPackaget)
-                .addGap(81, 81, 81))
+                .addComponent(btnAddDeliveryMan)
+                .addContainerGap(75, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtPackagerPhoneNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPackagerPhoneNoActionPerformed
+    private void txtDeliveryManPhoneNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeliveryManPhoneNoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPackagerPhoneNoActionPerformed
+    }//GEN-LAST:event_txtDeliveryManPhoneNoActionPerformed
 
-    private void txtPackagerPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPackagerPasswordActionPerformed
+    private void txtDeliveryManPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeliveryManPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPackagerPasswordActionPerformed
+    }//GEN-LAST:event_txtDeliveryManPasswordActionPerformed
 
-    private void txtPackagerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPackagerNameActionPerformed
+    private void txtDeliveryManNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeliveryManNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPackagerNameActionPerformed
+    }//GEN-LAST:event_txtDeliveryManNameActionPerformed
 
-    private void btnAddPackagetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPackagetActionPerformed
+    private void btnAddDeliveryManActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDeliveryManActionPerformed
         // TODO add your handling code here:
-        if(txtPackagerName.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Please enter packager name!");
+        if(txtDeliveryManName.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter delivery man name!");
             return;
         }
-        if(txtPackagerUsername.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Please enter packager username!");
+        if(txtDeliveryManUsername.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter delivery man username!");
             return;
         }
         for(UserAccount ua:this.ecosystem.getUserAccountDirectory().getUserAccountList()){
-            if(ua.getUsername().equals(txtPackagerUsername.getText())){
+            if(ua.getUsername().equals(txtDeliveryManUsername.getText())&&!this.deliveryMan.getUsername().equals(txtDeliveryManUsername.getText())){
                 JOptionPane.showMessageDialog(null,"Username already exists... please enter a different username!");
                 return;
             }
         }
-        if(txtPackagerPhoneNo.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Please enter packager phone Number!");
+        if(txtDeliveryManPhoneNo.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter delivery man phone Number!");
             return;
         }
-        if(txtPackagerPassword.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Please enter packager password!");
+        if(txtDeliveryManPassword.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter delivery man password!");
             return;
         }
-
-        Role role = new FoodPackagerRole();
-        User user = ecosystem.getUserDirectory().createUser(txtPackagerUsername.getText());
-        user.setPhone(txtPackagerPhoneNo.getText());
-
-        UserAccount ua = this.ecosystem.getUserAccountDirectory().createUserAccount(txtPackagerUsername.getText(),txtPackagerPassword.getText() , user, role);
-        outerloop:
-        for(Network n:this.ecosystem.getNetworkList()){
-            for(Enterprise e: n.getEnterpriseDirectory().getEnterpriseList()){
-                if(e.getName().equals(this.currentEnterprise.getName())){
-                    e.getUserAccountDirectory().addUserAccount(ua);
-                    for(Organization o :e.getOrganizationDirectory().getOrganizationList()){
-                        if(o.getName().equals(Organization.Type.FoodPackaging.getValue())){
-                            o.getUserAccountDirectory().addUserAccount(ua);
-                            break outerloop;
-                        }
-                    }
-                }
+        for(UserAccount ua:this.ecosystem.getUserAccountDirectory().getUserAccountList()){
+            if(ua.getUsername().equals(this.deliveryMan.getUsername())){
+                ua.getUser().setName(txtDeliveryManName.getText());
+                ua.getUser().setPhone(txtDeliveryManPhoneNo.getText());
+                ua.setUsername(txtDeliveryManUsername.getText());
+                ua.setPassword(txtDeliveryManPassword.getText());
+                break;
             }
         }
 
         dB4OUtil.storeSystem(ecosystem);
 
-        clearSelections();
+        isEnabled(false);
 
-        JOptionPane.showMessageDialog(null,"Packager added successfully!");
+        JOptionPane.showMessageDialog(null,"Delivery man updated successfully!");
         return;
         }
         public void initialize(){
+            txtDeliveryManName.setText(this.deliveryMan.getUser().getName());
+            txtDeliveryManPassword.setText(this.deliveryMan.getPassword());
+            txtDeliveryManPhoneNo.setText(this.deliveryMan.getUser().getPhone());
+            txtDeliveryManUsername.setText(this.deliveryMan.getUsername());
             outerloop:
             for(Network n:this.ecosystem.getNetworkList()){
                 for(Enterprise e :n.getEnterpriseDirectory().getEnterpriseList()){
-                    if(e.getUserAccount().getUsername().equals(this.foodBankAdmin.getUsername())){
+                    if(e.getUserAccount().getUsername().equals(this.foodBankAdminAccount.getUsername())){
                         this.currentEnterprise = e;
                         break outerloop;
                     }
                 }
             }
-    }//GEN-LAST:event_btnAddPackagetActionPerformed
-    public void clearSelections(){
-        txtPackagerName.setText("");
-        txtPackagerPassword.setText("");
-        txtPackagerPhoneNo.setText("");
-        txtPackagerUsername.setText("");
-    }
+    }//GEN-LAST:event_btnAddDeliveryManActionPerformed
+
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         this.userProcessContainer.remove(this);
@@ -253,21 +241,27 @@ public class AddPackagerJPanel extends javax.swing.JPanel {
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void txtPackagerUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPackagerUsernameActionPerformed
+    private void txtDeliveryManUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeliveryManUsernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPackagerUsernameActionPerformed
+    }//GEN-LAST:event_txtDeliveryManUsernameActionPerformed
 
-
+    public void isEnabled(boolean b){
+        txtDeliveryManName.setEnabled(b);
+        txtDeliveryManPassword.setEnabled(b);
+        txtDeliveryManPhoneNo.setEnabled(b);
+        txtDeliveryManUsername.setEnabled(b);
+//        txtDisasterManagmt.setEnabled(b);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddPackaget;
+    private javax.swing.JButton btnAddDeliveryMan;
     private javax.swing.JButton btnBack;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField txtPackagerName;
-    private javax.swing.JTextField txtPackagerPassword;
-    private javax.swing.JTextField txtPackagerPhoneNo;
-    private javax.swing.JTextField txtPackagerUsername;
+    private javax.swing.JTextField txtDeliveryManName;
+    private javax.swing.JTextField txtDeliveryManPassword;
+    private javax.swing.JTextField txtDeliveryManPhoneNo;
+    private javax.swing.JTextField txtDeliveryManUsername;
     // End of variables declaration//GEN-END:variables
 }

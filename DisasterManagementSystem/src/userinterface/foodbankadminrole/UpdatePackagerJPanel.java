@@ -166,6 +166,7 @@ public class UpdatePackagerJPanel extends javax.swing.JPanel {
             if(comp instanceof FoodBankAdminRoleWorkAreaJPanel){
                 FoodBankAdminRoleWorkAreaJPanel fbarwajp =(FoodBankAdminRoleWorkAreaJPanel) comp;
                 fbarwajp.populatePackagers();
+                fbarwajp.populateDeliveryMan();
             }
         }
         layout.previous(userProcessContainer);
