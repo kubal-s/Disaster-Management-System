@@ -3,32 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package userinterface.foodpackagerrole;
+package userinterface.volunteerrole;
 
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import java.awt.Component;
 import javax.swing.JPanel;
 
 /**
  *
  * @author akhil
  */
-public class FoodPackagerWorkAreaJPanel extends javax.swing.JPanel {
+public class ViewMyVolunterringTasksJPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form FoodPackagerWorkAreaJPanel
-     */   
+     * Creates new form ViewMyTasks
+     */    
     JPanel userProcessContainer;
     EcoSystem ecosystem;
-    private UserAccount packagerAccount;
+    private UserAccount volunteerAccount;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
-    public FoodPackagerWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
+    public ViewMyVolunterringTasksJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.ecosystem = ecosystem;
-        this.packagerAccount = userAccount;
+        this.volunteerAccount = userAccount;
     }
 
     /**
@@ -42,8 +43,8 @@ public class FoodPackagerWorkAreaJPanel extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRequestDirectory = new javax.swing.JTable();
-        btnAssigntToMe = new javax.swing.JButton();
-        BtnViewMyTasks = new javax.swing.JButton();
+        btnProcessRequest = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
         tblRequestDirectory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -66,17 +67,17 @@ public class FoodPackagerWorkAreaJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblRequestDirectory);
 
-        btnAssigntToMe.setText("Assign To Me");
-        btnAssigntToMe.addActionListener(new java.awt.event.ActionListener() {
+        btnProcessRequest.setText("Process Request");
+        btnProcessRequest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAssigntToMeActionPerformed(evt);
+                btnProcessRequestActionPerformed(evt);
             }
         });
 
-        BtnViewMyTasks.setText("View My Tasks");
-        BtnViewMyTasks.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnViewMyTasksActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
@@ -87,40 +88,49 @@ public class FoodPackagerWorkAreaJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnViewMyTasks)
-                    .addComponent(btnAssigntToMe))
+                    .addComponent(btnProcessRequest)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(46, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(btnBack)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAssigntToMe)
+                .addComponent(btnBack)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BtnViewMyTasks)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnProcessRequest)
+                .addContainerGap(88, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAssigntToMeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssigntToMeActionPerformed
+    private void btnProcessRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessRequestActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAssigntToMeActionPerformed
+    }//GEN-LAST:event_btnProcessRequestActionPerformed
 
-    private void BtnViewMyTasksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnViewMyTasksActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        JPanel viewMyTasksJPanel = new ViewMyPackagingTasksJPanel(userProcessContainer,ecosystem,packagerAccount);
-        userProcessContainer.add("viewMyTasks",viewMyTasksJPanel);
-        CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
-        cardLayout.next(this.userProcessContainer);
-    }//GEN-LAST:event_BtnViewMyTasksActionPerformed
+        this.userProcessContainer.remove(this);
+        CardLayout layout =(CardLayout) this.userProcessContainer.getLayout();
+        Component [] comps = this.userProcessContainer.getComponents();
+        //        for(Component comp : comps){
+            //            if(comp instanceof FoodBankAdminRoleWorkAreaJPanel){
+                //                FoodBankAdminRoleWorkAreaJPanel fbarwajp =(FoodBankAdminRoleWorkAreaJPanel) comp;
+                //                fbarwajp.populatePackagers();
+                //                fbarwajp.populateDeliveryMan();
+                //            }
+            //        }
+        layout.previous(userProcessContainer);
+    }//GEN-LAST:event_btnBackActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnViewMyTasks;
-    private javax.swing.JButton btnAssigntToMe;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnProcessRequest;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblRequestDirectory;
     // End of variables declaration//GEN-END:variables

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package userinterface.foodpackagerrole;
+package userinterface.fooddeliveryadminrole;
 
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
@@ -15,20 +15,20 @@ import javax.swing.JPanel;
  *
  * @author akhil
  */
-public class FoodPackagerWorkAreaJPanel extends javax.swing.JPanel {
+public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form FoodPackagerWorkAreaJPanel
-     */   
+     * Creates new form DeliveryOrganizationAdminWorkAreaJPanel
+     */
     JPanel userProcessContainer;
     EcoSystem ecosystem;
-    private UserAccount packagerAccount;
+    private UserAccount deliveryManAccount;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
-    public FoodPackagerWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
+    public DeliveryManWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.ecosystem = ecosystem;
-        this.packagerAccount = userAccount;
+        this.deliveryManAccount = userAccount;
     }
 
     /**
@@ -40,10 +40,17 @@ public class FoodPackagerWorkAreaJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        BtnViewMyTasks = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRequestDirectory = new javax.swing.JTable();
         btnAssigntToMe = new javax.swing.JButton();
-        BtnViewMyTasks = new javax.swing.JButton();
+
+        BtnViewMyTasks.setText("View My Tasks");
+        BtnViewMyTasks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnViewMyTasksActionPerformed(evt);
+            }
+        });
 
         tblRequestDirectory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,13 +80,6 @@ public class FoodPackagerWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        BtnViewMyTasks.setText("View My Tasks");
-        BtnViewMyTasks.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnViewMyTasksActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,7 +90,7 @@ public class FoodPackagerWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnViewMyTasks)
                     .addComponent(btnAssigntToMe))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,21 +101,21 @@ public class FoodPackagerWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(btnAssigntToMe)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnViewMyTasks)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAssigntToMeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssigntToMeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAssigntToMeActionPerformed
-
     private void BtnViewMyTasksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnViewMyTasksActionPerformed
         // TODO add your handling code here:
-        JPanel viewMyTasksJPanel = new ViewMyPackagingTasksJPanel(userProcessContainer,ecosystem,packagerAccount);
+        JPanel viewMyTasksJPanel = new ViewMyDeliveryTasksJPanel(userProcessContainer,ecosystem,deliveryManAccount);
         userProcessContainer.add("viewMyTasks",viewMyTasksJPanel);
         CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
         cardLayout.next(this.userProcessContainer);
     }//GEN-LAST:event_BtnViewMyTasksActionPerformed
+
+    private void btnAssigntToMeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssigntToMeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAssigntToMeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
