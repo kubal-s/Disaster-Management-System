@@ -107,7 +107,7 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
 
     private void BtnViewMyTasksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnViewMyTasksActionPerformed
         // TODO add your handling code here:
-        JPanel viewMyTasksJPanel = new ViewMyTasksJPanel(userProcessContainer,ecosystem,deliveryManAccount);
+        JPanel viewMyTasksJPanel = new ViewMyDeliveryTasksJPanel(userProcessContainer,ecosystem,deliveryManAccount);
         userProcessContainer.add("viewMyTasks",viewMyTasksJPanel);
         CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
         cardLayout.next(this.userProcessContainer);
