@@ -47,4 +47,13 @@ public class WorkQueue {
         lastRequestID = requestID;
         return requestID;
     }
+    
+    public WorkRequest getWorkRequestByID(int requestID){
+        for(WorkRequest w: workRequestList){
+            if(w.getRequestID() == requestID){
+                return w;
+            }
+        }
+        return null;
+    }
 }
