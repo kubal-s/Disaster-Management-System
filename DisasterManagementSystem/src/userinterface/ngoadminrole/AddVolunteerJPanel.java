@@ -242,7 +242,7 @@ public class AddVolunteerJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnAddVolunteerActionPerformed
 
-        public void clearSelections(){
+    public void clearSelections(){
         txtVolunteerName.setText("");
         txtVolunteerPassword.setText("");
         txtVolunteerPhoneNo.setText("");
