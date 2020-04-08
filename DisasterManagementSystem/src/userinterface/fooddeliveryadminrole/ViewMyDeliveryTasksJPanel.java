@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package userinterface.foodpackagerrole;
+package userinterface.fooddeliveryadminrole;
 
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
@@ -15,21 +15,22 @@ import javax.swing.JPanel;
 /**
  *
  * @author akhil
- */
-public class ViewMyTasksJPanel extends javax.swing.JPanel {
+ */    
+
+public class ViewMyDeliveryTasksJPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form ViewMyTasksJPanel
-     */    
+     * Creates new form ProcessRequestJPanel
+     */
     JPanel userProcessContainer;
     EcoSystem ecosystem;
-    private UserAccount packagerAccount;
+    private UserAccount deliveryManAccount;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
-    public ViewMyTasksJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
+    public ViewMyDeliveryTasksJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.ecosystem = ecosystem;
-        this.packagerAccount = userAccount;
+        this.deliveryManAccount = userAccount;
     }
 
     /**
@@ -117,13 +118,13 @@ public class ViewMyTasksJPanel extends javax.swing.JPanel {
         this.userProcessContainer.remove(this);
         CardLayout layout =(CardLayout) this.userProcessContainer.getLayout();
         Component [] comps = this.userProcessContainer.getComponents();
-//        for(Component comp : comps){
-//            if(comp instanceof FoodBankAdminRoleWorkAreaJPanel){
-//                FoodBankAdminRoleWorkAreaJPanel fbarwajp =(FoodBankAdminRoleWorkAreaJPanel) comp;
-//                fbarwajp.populatePackagers();
-//                fbarwajp.populateDeliveryMan();
-//            }
-//        }
+        //        for(Component comp : comps){
+            //            if(comp instanceof FoodBankAdminRoleWorkAreaJPanel){
+                //                FoodBankAdminRoleWorkAreaJPanel fbarwajp =(FoodBankAdminRoleWorkAreaJPanel) comp;
+                //                fbarwajp.populatePackagers();
+                //                fbarwajp.populateDeliveryMan();
+                //            }
+            //        }
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
