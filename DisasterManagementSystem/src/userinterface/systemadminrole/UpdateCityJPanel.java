@@ -145,7 +145,6 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
         });
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/addstate.png"))); // NOI18N
-        jLabel5.setText("jLabel5");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -181,7 +180,7 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
                         .addGap(45, 45, 45)
                         .addComponent(jLabel5))
                     .addComponent(btnBack))
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
