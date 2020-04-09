@@ -7,9 +7,16 @@ package userinterface.foodpackagerrole;
 
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Enterprise.FoodBankEnterprise;
+import Business.Network.Network;
+import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,16 +26,19 @@ public class FoodPackagerWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form FoodPackagerWorkAreaJPanel
-     */   
+     */
     JPanel userProcessContainer;
     EcoSystem ecosystem;
     private UserAccount packagerAccount;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
-    public FoodPackagerWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
+    private Enterprise currentEnterprise;
+
+    public FoodPackagerWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem, UserAccount userAccount) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.ecosystem = ecosystem;
         this.packagerAccount = userAccount;
+        initialize();
     }
 
     /**
@@ -47,17 +57,17 @@ public class FoodPackagerWorkAreaJPanel extends javax.swing.JPanel {
 
         tblRequestDirectory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Sender", "Status"
+                "Request ID", "Sender", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -84,36 +94,53 @@ public class FoodPackagerWorkAreaJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnViewMyTasks)
-                    .addComponent(btnAssigntToMe))
-                .addContainerGap(46, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAssigntToMe, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(BtnViewMyTasks, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnAssigntToMe)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnViewMyTasks)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAssigntToMeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssigntToMeActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to assign");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            if (cwr.getStatus().equals("approved for packaging")) {
+                cwr.setStatus("packaged by "+packagerAccount.getUser().getName());
+                populateRequests();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Request already assigned for packaging");
+            }
+
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnAssigntToMeActionPerformed
 
     private void BtnViewMyTasksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnViewMyTasksActionPerformed
         // TODO add your handling code here:
-        JPanel viewMyTasksJPanel = new ViewMyPackagingTasksJPanel(userProcessContainer,ecosystem,packagerAccount);
-        userProcessContainer.add("viewMyTasks",viewMyTasksJPanel);
-        CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
+        JPanel viewMyTasksJPanel = new ViewMyPackagingTasksJPanel(userProcessContainer, ecosystem, packagerAccount);
+        userProcessContainer.add("viewMyTasks", viewMyTasksJPanel);
+        CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
         cardLayout.next(this.userProcessContainer);
     }//GEN-LAST:event_BtnViewMyTasksActionPerformed
 
@@ -124,4 +151,40 @@ public class FoodPackagerWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblRequestDirectory;
     // End of variables declaration//GEN-END:variables
+
+    private void populateRequests() {
+        DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+        dtm.setRowCount(0);
+
+        for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
+            if (w.getRequestedEnterprise().equals(Enterprise.EnterpriseType.FoodBank)
+                    && w.getAssignedEnterprise() == this.currentEnterprise
+                    && (w.getStatus().equals("approved for packaging")
+                    || w.getStatus().startsWith("packaged by"))) {
+                Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+                row[0] = w.getRequestID();
+                row[1] = w.getSender().getUser().getName();
+                row[2] = w.getStatus();
+                dtm.addRow(row);
+            }
+        }
+    }
+
+    public void initialize() {
+        outerloop:
+        for (Network n : this.ecosystem.getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                    if (o.getName().equals(Organization.Type.FoodPackaging.getValue())
+                            && o.getUserAccountDirectory().getUserAccountList().contains(packagerAccount)) {
+                        this.currentEnterprise = e;
+                        break outerloop;
+                    }
+                }
+
+            }
+        }
+        populateRequests();
+    }
+
 }
