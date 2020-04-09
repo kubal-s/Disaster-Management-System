@@ -225,6 +225,7 @@ public class AddDeliveryManJPanel extends javax.swing.JPanel {
                     e.getUserAccountDirectory().addUserAccount(ua);
                     for(Organization o :e.getOrganizationDirectory().getOrganizationList()){
                         if(o.getName().equals(Organization.Type.Delivery.getValue())){
+                            System.out.println("delivery man added");
                             o.getUserAccountDirectory().addUserAccount(ua);
                             break outerloop;
                         }

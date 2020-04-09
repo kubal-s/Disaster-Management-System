@@ -27,17 +27,18 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form FoodBankAdminRoleWorkAreaJPanel
-     */   
+     */
     JPanel userProcessContainer;
     EcoSystem ecosystem;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     private UserAccount foodBankAdminAccount;
     private Enterprise currentEnterprise;
-    public FoodBankAdminRoleWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
+
+    public FoodBankAdminRoleWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem, UserAccount userAccount) {
         initComponents();
-        
-        this.userProcessContainer=userProcessContainer;
-        this.ecosystem=ecosystem;
+
+        this.userProcessContainer = userProcessContainer;
+        this.ecosystem = ecosystem;
         this.foodBankAdminAccount = userAccount;
         initialize();
         populatePackagers();
@@ -274,31 +275,31 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnAddDeliveryManActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDeliveryManActionPerformed
         // TODO add your handling code here:       
-        JPanel addDeliveryManJPanel = new AddDeliveryManJPanel(userProcessContainer,ecosystem,foodBankAdminAccount);
-        userProcessContainer.add("addDeliveryMan",addDeliveryManJPanel);
-        CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
+        JPanel addDeliveryManJPanel = new AddDeliveryManJPanel(userProcessContainer, ecosystem, foodBankAdminAccount);
+        userProcessContainer.add("addDeliveryMan", addDeliveryManJPanel);
+        CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
         cardLayout.next(this.userProcessContainer);
     }//GEN-LAST:event_btnAddDeliveryManActionPerformed
 
     private void btnAddPackagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPackagerActionPerformed
         // TODO add your handling code here:
-        JPanel addPackagerJPanel = new AddPackagerJPanel(userProcessContainer,ecosystem,foodBankAdminAccount);
-        userProcessContainer.add("addPackager",addPackagerJPanel);
-        CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
+        JPanel addPackagerJPanel = new AddPackagerJPanel(userProcessContainer, ecosystem, foodBankAdminAccount);
+        userProcessContainer.add("addPackager", addPackagerJPanel);
+        CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
         cardLayout.next(this.userProcessContainer);
     }//GEN-LAST:event_btnAddPackagerActionPerformed
 
     private void btnUpdateDeliveryManActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDeliveryManActionPerformed
         // TODO add your handling code here:
         int selectedRow = tblDeliveryManDirectory.getSelectedRow();
-        if(selectedRow>=0){
-            UserAccount deliveryMan = ((UserAccount)tblDeliveryManDirectory.getValueAt(selectedRow, 0));
+        if (selectedRow >= 0) {
+            UserAccount deliveryMan = ((UserAccount) tblDeliveryManDirectory.getValueAt(selectedRow, 0));
             //Item selectedItem = restaurant.getMenu().getItemFromName(selectedItemName);
-            JPanel updateDeliveryManJPanel = new UpdateDeliveryManJPanel(userProcessContainer,ecosystem,foodBankAdminAccount,deliveryMan);
-            userProcessContainer.add("updateDeliveryMan",updateDeliveryManJPanel);
-            CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
+            JPanel updateDeliveryManJPanel = new UpdateDeliveryManJPanel(userProcessContainer, ecosystem, foodBankAdminAccount, deliveryMan);
+            userProcessContainer.add("updateDeliveryMan", updateDeliveryManJPanel);
+            CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
             cardLayout.next(this.userProcessContainer);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Please select a Row!!");
         }
     }//GEN-LAST:event_btnUpdateDeliveryManActionPerformed
@@ -306,26 +307,26 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private void btnDeleteDeliveryManActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDeliveryManActionPerformed
         // TODO add your handling code here:       
         int selectedRow = tblDeliveryManDirectory.getSelectedRow();
-        if(selectedRow>=0){
+        if (selectedRow >= 0) {
             int selectionButton = JOptionPane.YES_NO_OPTION;
-            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete??","Warning",selectionButton);
-            if(selectionResult == JOptionPane.YES_OPTION){
-                UserAccount deliveryMan = (UserAccount)tblDeliveryManDirectory.getValueAt(selectedRow, 0);
-                for(UserAccount ua:this.ecosystem.getUserAccountDirectory().getUserAccountList()){
-                    if(ua.getUsername().equals(deliveryMan.getUsername())){
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete??", "Warning", selectionButton);
+            if (selectionResult == JOptionPane.YES_OPTION) {
+                UserAccount deliveryMan = (UserAccount) tblDeliveryManDirectory.getValueAt(selectedRow, 0);
+                for (UserAccount ua : this.ecosystem.getUserAccountDirectory().getUserAccountList()) {
+                    if (ua.getUsername().equals(deliveryMan.getUsername())) {
                         this.ecosystem.getUserAccountDirectory().getUserAccountList().remove(ua);
                         break;
                     }
                 }
-                outerloop :
-                for(Network n:this.ecosystem.getNetworkList()){
-                    for(Enterprise e :n.getEnterpriseDirectory().getEnterpriseList()){
-                        if(e.getUserAccount().getUsername().equals(this.foodBankAdminAccount.getUsername())){
+                outerloop:
+                for (Network n : this.ecosystem.getNetworkList()) {
+                    for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                        if (e.getUserAccount().getUsername().equals(this.foodBankAdminAccount.getUsername())) {
                             this.currentEnterprise = e;
-                            for(UserAccount p : e.getUserAccountDirectory().getUserAccountList()){
-                                if(p.getUsername().equals(deliveryMan.getUsername())){
-                                    for(Organization o: e.getOrganizationDirectory().getOrganizationList()){
-                                        if(o.getName().equals(Organization.Type.Delivery.getValue())){
+                            for (UserAccount p : e.getUserAccountDirectory().getUserAccountList()) {
+                                if (p.getUsername().equals(deliveryMan.getUsername())) {
+                                    for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                                        if (o.getName().equals(Organization.Type.Delivery.getValue())) {
                                             o.getUserAccountDirectory().getUserAccountList().remove(p);
                                             e.getUserAccountDirectory().getUserAccountList().remove(p);
                                             break outerloop;
@@ -340,7 +341,7 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 dB4OUtil.storeSystem(this.ecosystem);
                 populateDeliveryMan();
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Please select a Row!!");
         }
     }//GEN-LAST:event_btnDeleteDeliveryManActionPerformed
@@ -348,26 +349,26 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private void btnDeletePackagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePackagerActionPerformed
         // TODO add your handling code here:
         int selectedRow = tblPackagersDirectory.getSelectedRow();
-        if(selectedRow>=0){
+        if (selectedRow >= 0) {
             int selectionButton = JOptionPane.YES_NO_OPTION;
-            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete??","Warning",selectionButton);
-            if(selectionResult == JOptionPane.YES_OPTION){
-                UserAccount packager = (UserAccount)tblPackagersDirectory.getValueAt(selectedRow, 0);
-                for(UserAccount ua:this.ecosystem.getUserAccountDirectory().getUserAccountList()){
-                    if(ua.getUsername().equals(packager.getUsername())){
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete??", "Warning", selectionButton);
+            if (selectionResult == JOptionPane.YES_OPTION) {
+                UserAccount packager = (UserAccount) tblPackagersDirectory.getValueAt(selectedRow, 0);
+                for (UserAccount ua : this.ecosystem.getUserAccountDirectory().getUserAccountList()) {
+                    if (ua.getUsername().equals(packager.getUsername())) {
                         this.ecosystem.getUserAccountDirectory().getUserAccountList().remove(ua);
                         break;
                     }
                 }
-                outerloop :
-                for(Network n:this.ecosystem.getNetworkList()){
-                    for(Enterprise e :n.getEnterpriseDirectory().getEnterpriseList()){
-                        if(e.getUserAccount().getUsername().equals(this.foodBankAdminAccount.getUsername())){
+                outerloop:
+                for (Network n : this.ecosystem.getNetworkList()) {
+                    for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                        if (e.getUserAccount().getUsername().equals(this.foodBankAdminAccount.getUsername())) {
                             this.currentEnterprise = e;
-                            for(UserAccount p : e.getUserAccountDirectory().getUserAccountList()){
-                                if(p.getUsername().equals(packager.getUsername())){
-                                    for(Organization o: e.getOrganizationDirectory().getOrganizationList()){
-                                        if(o.getName().equals(Organization.Type.FoodPackaging.getValue())){
+                            for (UserAccount p : e.getUserAccountDirectory().getUserAccountList()) {
+                                if (p.getUsername().equals(packager.getUsername())) {
+                                    for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                                        if (o.getName().equals(Organization.Type.FoodPackaging.getValue())) {
                                             o.getUserAccountDirectory().getUserAccountList().remove(p);
                                             e.getUserAccountDirectory().getUserAccountList().remove(p);
                                             break outerloop;
@@ -382,32 +383,36 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 dB4OUtil.storeSystem(this.ecosystem);
                 populatePackagers();
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Please select a Row!!");
         }
     }//GEN-LAST:event_btnDeletePackagerActionPerformed
 
     private void editFoodPacketsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editFoodPacketsActionPerformed
         // TODO add your handling code here:
-        JPanel foodPacketEditJPanel = new FoodPacketEditJPanel(userProcessContainer,ecosystem,currentEnterprise, foodBankAdminAccount);
-        userProcessContainer.add("foodPacketView",foodPacketEditJPanel);
-        CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
+        JPanel foodPacketEditJPanel = new FoodPacketEditJPanel(userProcessContainer, ecosystem, currentEnterprise, foodBankAdminAccount);
+        userProcessContainer.add("foodPacketView", foodPacketEditJPanel);
+        CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
         cardLayout.next(this.userProcessContainer);
     }//GEN-LAST:event_editFoodPacketsActionPerformed
 
     private void btnProcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessActionPerformed
         int selectedRow = tblRequestDirectory.getSelectedRow();
-        if( selectedRow == -1){
-             JOptionPane.showMessageDialog(null,"Please select a request to process");
-        }
-        else{
-            DefaultTableModel dtm = (DefaultTableModel)tblRequestDirectory.getModel();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to process");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
 
-            int requestID = (int)(Integer)dtm.getValueAt(selectedRow, 0);
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
             WorkRequest cwr = null;
             cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
-            cwr.setStatus("approved for packaging");
-            cwr.setAssignedEnterprise(this.currentEnterprise);
+            if(cwr.getStatus().equals("submitted")){
+                cwr.setStatus("approved for packaging");
+                cwr.setAssignedEnterprise(this.currentEnterprise);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Already sent for packaging");
+            }
             populateRequests();
         }
         DB4OUtil.getInstance().storeSystem(ecosystem);
@@ -415,16 +420,19 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         int selectedRow = tblRequestDirectory.getSelectedRow();
-        if( selectedRow == -1){
-             JOptionPane.showMessageDialog(null,"Please select a request to cancel");
-        }
-        else{
-            DefaultTableModel dtm = (DefaultTableModel)tblRequestDirectory.getModel();
-            int requestID = (int)(Integer)dtm.getValueAt(selectedRow, 0);
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to cancel");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
             WorkRequest cwr = null;
             cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
-            cwr.setStatus("submitted");
-            cwr.setAssignedEnterprise(null);
+            if (cwr.getStatus().equals("completed")) {
+                JOptionPane.showMessageDialog(null, "Cannot cancel request already completed");
+            } else {
+                cwr.setStatus("submitted");
+                cwr.setAssignedEnterprise(null);
+            }
             populateRequests();
         }
         DB4OUtil.getInstance().storeSystem(ecosystem);
@@ -433,43 +441,44 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private void btnUpdatePackagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePackagerActionPerformed
         // TODO add your handling code here:
         int selectedRow = tblPackagersDirectory.getSelectedRow();
-        if(selectedRow>=0){
-            UserAccount packager = ((UserAccount)tblPackagersDirectory.getValueAt(selectedRow, 0));
+        if (selectedRow >= 0) {
+            UserAccount packager = ((UserAccount) tblPackagersDirectory.getValueAt(selectedRow, 0));
             //Item selectedItem = restaurant.getMenu().getItemFromName(selectedItemName);
-            JPanel updatePackagerJPanel = new UpdatePackagerJPanel(userProcessContainer,ecosystem,foodBankAdminAccount,packager);
-            userProcessContainer.add("updatePackager",updatePackagerJPanel);
-            CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
+            JPanel updatePackagerJPanel = new UpdatePackagerJPanel(userProcessContainer, ecosystem, foodBankAdminAccount, packager);
+            userProcessContainer.add("updatePackager", updatePackagerJPanel);
+            CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
             cardLayout.next(this.userProcessContainer);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Please select a Row!!");
         }
     }//GEN-LAST:event_btnUpdatePackagerActionPerformed
-    public void populatePackagers(){
-        DefaultTableModel dtm = (DefaultTableModel)tblPackagersDirectory.getModel();
-        dtm.setRowCount(0);   
-        for(UserAccount n: this.currentEnterprise.getUserAccountDirectory().getUserAccountList()){  
-            if(n.getRole().getRoleType().equals(Role.RoleType.FoodPackager)){
-                    Object[] row = new Object[dtm.getColumnCount()];
-                    row[0]= n;
-                    row[1]= n.getUser().getName();
-                    row[2] = n.getUser().getPhone();
-                    dtm.addRow(row);
+    public void populatePackagers() {
+        DefaultTableModel dtm = (DefaultTableModel) tblPackagersDirectory.getModel();
+        dtm.setRowCount(0);
+        for (UserAccount n : this.currentEnterprise.getUserAccountDirectory().getUserAccountList()) {
+            if (n.getRole().getRoleType().equals(Role.RoleType.FoodPackager)) {
+                Object[] row = new Object[dtm.getColumnCount()];
+                row[0] = n;
+                row[1] = n.getUser().getName();
+                row[2] = n.getUser().getPhone();
+                dtm.addRow(row);
             }
-            
+
         }
     }
-        public void populateDeliveryMan(){
-        DefaultTableModel dtm = (DefaultTableModel)tblDeliveryManDirectory.getModel();
-        dtm.setRowCount(0);   
-        for(UserAccount n: this.currentEnterprise.getUserAccountDirectory().getUserAccountList()){  
-            if(n.getRole().getRoleType().equals(Role.RoleType.DeliveryMan)){
-                    Object[] row = new Object[dtm.getColumnCount()];
-                    row[0]= n;
-                    row[1]= n.getUser().getName();
-                    row[2] = n.getUser().getPhone();
-                    dtm.addRow(row);
+
+    public void populateDeliveryMan() {
+        DefaultTableModel dtm = (DefaultTableModel) tblDeliveryManDirectory.getModel();
+        dtm.setRowCount(0);
+        for (UserAccount n : this.currentEnterprise.getUserAccountDirectory().getUserAccountList()) {
+            if (n.getRole().getRoleType().equals(Role.RoleType.DeliveryMan)) {
+                Object[] row = new Object[dtm.getColumnCount()];
+                row[0] = n;
+                row[1] = n.getUser().getName();
+                row[2] = n.getUser().getPhone();
+                dtm.addRow(row);
             }
-            
+
         }
     }
 
@@ -495,44 +504,44 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     private void populateRequests() {
         System.out.println(ecosystem.getWorkQueue().getWorkRequestList().size());
-        DefaultTableModel dtm = (DefaultTableModel)tblRequestDirectory.getModel();
-        dtm.setRowCount(0); 
-        
-        for(WorkRequest w: ecosystem.getWorkQueue().getWorkRequestList()){
-            if(w.getRequestedEnterprise().equals(Enterprise.EnterpriseType.FoodBank)
+        DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+        dtm.setRowCount(0);
+
+        for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
+            if (w.getRequestedEnterprise().equals(Enterprise.EnterpriseType.FoodBank)
                     && w.getAssignedEnterprise() == null
-                    && this.currentEnterprise.getZipCodes().contains(w.getAddress().getZipcode())){
-                            Object[] row = new Object[tblRequestDirectory.getColumnCount()];
-            row[0] = w.getRequestID();
-            row[1]=w.getSender().getUser().getName();
-            row[2]=w.getStatus();
-            dtm.addRow(row);
+                    && this.currentEnterprise.getZipCodes().contains(w.getAddress().getZipcode())) {
+                Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+                row[0] = w.getRequestID();
+                row[1] = w.getSender().getUser().getName();
+                row[2] = w.getStatus();
+                dtm.addRow(row);
             }
         }
-        
-        for(WorkRequest w: ecosystem.getWorkQueue().getWorkRequestList()){
-            if(w.getAssignedEnterprise() == this.currentEnterprise){
-                            Object[] row = new Object[tblRequestDirectory.getColumnCount()];
-            row[0] = w.getRequestID();
-            row[1]=w.getSender().getUser().getName();
-            row[2]=w.getStatus();
-            dtm.addRow(row);
+
+        for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
+            if (w.getAssignedEnterprise() == this.currentEnterprise) {
+                Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+                row[0] = w.getRequestID();
+                row[1] = w.getSender().getUser().getName();
+                row[2] = w.getStatus();
+                dtm.addRow(row);
             }
         }
     }
 
     public void initialize() {
         outerloop:
-        for(Network n:this.ecosystem.getNetworkList()){
-            for(Enterprise e :n.getEnterpriseDirectory().getEnterpriseList()){
-                if(e.getUserAccount().getUsername().equals(this.foodBankAdminAccount.getUsername())){
+        for (Network n : this.ecosystem.getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                if (e.getUserAccount().getUsername().equals(this.foodBankAdminAccount.getUsername())) {
                     this.currentEnterprise = e;
                     break outerloop;
                 }
             }
         }
-        
-        lblFoodPacketCount.setText(String.valueOf(((FoodBankEnterprise)this.currentEnterprise).getFoodPackets()));
-        populateRequests();    
+
+        lblFoodPacketCount.setText(String.valueOf(((FoodBankEnterprise) this.currentEnterprise).getFoodPackets()));
+        populateRequests();
     }
 }

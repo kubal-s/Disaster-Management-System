@@ -7,9 +7,15 @@ package userinterface.fooddeliveryadminrole;
 
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,11 +30,14 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
     EcoSystem ecosystem;
     private UserAccount deliveryManAccount;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
-    public DeliveryManWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
+    private Enterprise currentEnterprise;
+
+    public DeliveryManWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem, UserAccount userAccount) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.ecosystem = ecosystem;
         this.deliveryManAccount = userAccount;
+        initialize();
     }
 
     /**
@@ -54,17 +63,17 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
 
         tblRequestDirectory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Sender", "Status"
+                "Request ID", "Sender", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -107,14 +116,31 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
 
     private void BtnViewMyTasksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnViewMyTasksActionPerformed
         // TODO add your handling code here:
-        JPanel viewMyTasksJPanel = new ViewMyDeliveryTasksJPanel(userProcessContainer,ecosystem,deliveryManAccount);
-        userProcessContainer.add("viewMyTasks",viewMyTasksJPanel);
-        CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
+        JPanel viewMyTasksJPanel = new ViewMyDeliveryTasksJPanel(userProcessContainer, ecosystem, deliveryManAccount);
+        userProcessContainer.add("viewMyTasks", viewMyTasksJPanel);
+        CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
         cardLayout.next(this.userProcessContainer);
     }//GEN-LAST:event_BtnViewMyTasksActionPerformed
 
     private void btnAssigntToMeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssigntToMeActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to assign");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            if (cwr.getStatus().equals("ready for delivery")) {
+                cwr.setStatus("delivery by " + deliveryManAccount.getUser().getName());
+                populateRequests();
+            } else {
+                JOptionPane.showMessageDialog(null, "Request already assigned for delivery");
+            }
+
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnAssigntToMeActionPerformed
 
 
@@ -124,4 +150,44 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblRequestDirectory;
     // End of variables declaration//GEN-END:variables
+
+    private void populateRequests() {
+        DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+        dtm.setRowCount(0);
+
+        for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
+            System.out.println(w.getAssignedEnterprise() == this.currentEnterprise);
+            System.out.println(w.getAssignedEnterprise().getName());
+            System.out.println(this.currentEnterprise.getName());
+            if (w.getRequestedEnterprise().equals(Enterprise.EnterpriseType.FoodBank)
+                    && w.getAssignedEnterprise() == this.currentEnterprise
+                    && (w.getStatus().equals("ready for delivery")
+                    || w.getStatus().startsWith("delivery by"))) {
+                Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+                row[0] = w.getRequestID();
+                row[1] = w.getSender().getUser().getName();
+                row[2] = w.getStatus();
+                dtm.addRow(row);
+            }
+        }
+    }
+
+    public void initialize() {
+        outerloop:
+        for (Network n : this.ecosystem.getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                    System.out.println(o.getName().equals(Organization.Type.Delivery));
+                    if (o.getName().equals(Organization.Type.Delivery.getValue())
+                            && o.getUserAccountDirectory().getUserAccountList().contains(deliveryManAccount)) {
+                        this.currentEnterprise = e;
+                        break outerloop;
+                    }
+                }
+
+            }
+        }
+        populateRequests();
+    }
+
 }
