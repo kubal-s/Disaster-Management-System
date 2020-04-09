@@ -78,6 +78,8 @@ public class UpdateEnterpriseJPanel extends javax.swing.JPanel {
         lblEnterpriseType = new javax.swing.JLabel();
         btnRemoveZipCode = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 240));
+
         txtEnterpriseName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEnterpriseNameActionPerformed(evt);
