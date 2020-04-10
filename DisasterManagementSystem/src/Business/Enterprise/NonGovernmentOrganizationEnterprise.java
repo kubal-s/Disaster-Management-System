@@ -11,6 +11,9 @@ import Business.Role.VolunteerRole;
 import java.util.ArrayList;
 
 public class NonGovernmentOrganizationEnterprise extends Enterprise{
+    
+    
+    
     public NonGovernmentOrganizationEnterprise(String name) {
         super(name, Enterprise.EnterpriseType.NonGovernmentOrganization);
     }
