@@ -7,10 +7,16 @@ package userinterface.volunteerrole;
 
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,11 +31,13 @@ public class ViewMyVolunterringTasksJPanel extends javax.swing.JPanel {
     EcoSystem ecosystem;
     private UserAccount volunteerAccount;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+    private Enterprise currentEnterprise;
     public ViewMyVolunterringTasksJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.ecosystem = ecosystem;
         this.volunteerAccount = userAccount;
+        initialize();
     }
 
     /**
@@ -48,17 +56,17 @@ public class ViewMyVolunterringTasksJPanel extends javax.swing.JPanel {
 
         tblRequestDirectory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Sender", "Status"
+                "Request ID", "Sender", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -86,14 +94,16 @@ public class ViewMyVolunterringTasksJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnProcessRequest)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(46, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addComponent(btnBack)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnProcessRequest)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,28 +112,43 @@ public class ViewMyVolunterringTasksJPanel extends javax.swing.JPanel {
                 .addComponent(btnBack)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnProcessRequest)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnProcessRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessRequestActionPerformed
         // TODO add your handling code here:
+                       int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to process");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+            
+            
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            cwr.setStatus("completed");
+            cwr.getForwardRequest().setStatus("completed");
+            populateRequests();
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnProcessRequestActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        DB4OUtil.getInstance().storeSystem(ecosystem);
         this.userProcessContainer.remove(this);
         CardLayout layout =(CardLayout) this.userProcessContainer.getLayout();
         Component [] comps = this.userProcessContainer.getComponents();
-        //        for(Component comp : comps){
-            //            if(comp instanceof FoodBankAdminRoleWorkAreaJPanel){
-                //                FoodBankAdminRoleWorkAreaJPanel fbarwajp =(FoodBankAdminRoleWorkAreaJPanel) comp;
-                //                fbarwajp.populatePackagers();
-                //                fbarwajp.populateDeliveryMan();
-                //            }
-            //        }
+        for (Component comp : comps) {
+            if (comp instanceof VolunteerWorkAreaJPanel) {
+                VolunteerWorkAreaJPanel jp = (VolunteerWorkAreaJPanel) comp;
+                jp.initialize();
+            }
+        }
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
@@ -134,4 +159,39 @@ public class ViewMyVolunterringTasksJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblRequestDirectory;
     // End of variables declaration//GEN-END:variables
+
+        private void populateRequests() {
+        DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+        dtm.setRowCount(0);
+
+        for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
+            if (w.getRequestedEnterprise().equals(Enterprise.EnterpriseType.NonGovernmentOrganization)
+                    && w.getAssignedEnterprise() == this.currentEnterprise
+                    && w.getStatus().equals("processed by " + this.volunteerAccount.getUser().getName())) {
+                Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+                row[0] = w.getRequestID();
+                row[1] = w.getSender().getUser().getName();
+                row[2] = w.getStatus();
+                dtm.addRow(row);
+            }
+        }
+
+    }
+
+    public void initialize() {
+        outerloop:
+        for (Network n : this.ecosystem.getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                    if (o.getName().equals(Organization.Type.Volunteer.getValue())
+                            && o.getUserAccountDirectory().getUserAccountList().contains(volunteerAccount)) {
+                        this.currentEnterprise = e;
+                        break outerloop;
+                    }
+                }
+
+            }
+        }
+        populateRequests();
+    }
 }

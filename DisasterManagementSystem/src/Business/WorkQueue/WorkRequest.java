@@ -7,6 +7,7 @@ package Business.WorkQueue;
 import Business.Enterprise.Enterprise;
 import Business.UserAccount.UserAccount;
 import business.address.Address;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -24,6 +25,8 @@ public class WorkRequest {
     private Enterprise.EnterpriseType requestedEnterprise;
     private Address address;
     private Enterprise assignedEnterprise;
+    
+    private WorkRequest forwardRequest;
     
     public WorkRequest(){
         requestDate = new Date();
@@ -137,6 +140,12 @@ public class WorkRequest {
     public String toString() {
         return String.valueOf(requestID);
     }
-    
-    
+
+    public WorkRequest getForwardRequest() {
+        return forwardRequest;
+    }
+
+    public void setForwardRequest(WorkRequest forwardRequest) {
+        this.forwardRequest = forwardRequest;
+    }
 }
