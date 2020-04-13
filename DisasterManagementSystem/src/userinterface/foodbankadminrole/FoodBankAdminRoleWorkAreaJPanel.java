@@ -420,6 +420,7 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             if(cwr.getStatus().equals("submitted")){
                 cwr.setStatus("approved for packaging");
                 cwr.setAssignedEnterprise(this.currentEnterprise);
+                JOptionPane.showMessageDialog(null, "Approved for packaging");
             }
             else{
                 JOptionPane.showMessageDialog(null, "Already sent for packaging");
@@ -540,7 +541,6 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void populateRequests() {
-        System.out.println(ecosystem.getWorkQueue().getWorkRequestList().size());
         DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
         dtm.setRowCount(0);
 

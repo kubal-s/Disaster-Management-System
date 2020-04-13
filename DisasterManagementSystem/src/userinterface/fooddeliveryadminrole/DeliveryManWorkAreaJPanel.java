@@ -156,9 +156,6 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
         dtm.setRowCount(0);
 
         for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
-            System.out.println(w.getAssignedEnterprise() == this.currentEnterprise);
-            System.out.println(w.getAssignedEnterprise().getName());
-            System.out.println(this.currentEnterprise.getName());
             if (w.getRequestedEnterprise().equals(Enterprise.EnterpriseType.FoodBank)
                     && w.getAssignedEnterprise() == this.currentEnterprise
                     && (w.getStatus().equals("ready for delivery")

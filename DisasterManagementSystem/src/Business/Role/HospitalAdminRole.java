@@ -10,6 +10,7 @@ import Business.Enterprise.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import javax.swing.JPanel;
+import userinterface.hospitaladminrole.HospitalAdminRoleWorkAreaJPanel;
 
 public class HospitalAdminRole extends Role{
 
@@ -19,7 +20,7 @@ public class HospitalAdminRole extends Role{
 
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new HospitalAdminRoleWorkAreaJPanel(userProcessContainer, business, account);
     }
     
 }
