@@ -59,6 +59,8 @@ public class UpdateVolunteerJPanel extends javax.swing.JPanel {
         txtVolunteerName = new javax.swing.JTextField();
         btnAddVolunteer = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 240));
+
         jLabel1.setText("Volunteer Name");
 
         jLabel2.setText("Vounteer Username");
