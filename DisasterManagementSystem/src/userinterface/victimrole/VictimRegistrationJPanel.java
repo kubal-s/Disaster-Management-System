@@ -14,6 +14,7 @@ import business.address.Address;
 import javax.swing.JPanel;
 import business.user.User;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 public class VictimRegistrationJPanel extends javax.swing.JPanel {
 
@@ -166,49 +167,49 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(151, 151, 151)
-                .addComponent(statusTextField)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(151, 151, 151)
+                        .addComponent(statusTextField))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(victimNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGap(46, 46, 46)
+                                    .addComponent(jLabel1))
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addGap(66, 66, 66)
+                                    .addComponent(victimStreetTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(victimPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(victimUsernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(96, 96, 96)
+                                    .addComponent(submitVictimRegistration))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel8)
+                                        .addComponent(jLabel9)
+                                        .addComponent(jLabel10)
+                                        .addComponent(jLabel11))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(victimPhoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(victimZipcodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(victimStateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(victimCityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(victimUnitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel12)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(victimNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(46, 46, 46)
-                            .addComponent(jLabel1))
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addGap(66, 66, 66)
-                            .addComponent(victimStreetTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(victimPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(victimUsernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(96, 96, 96)
-                            .addComponent(submitVictimRegistration)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel7)
-                                .addComponent(jLabel8)
-                                .addComponent(jLabel9)
-                                .addComponent(jLabel10)
-                                .addComponent(jLabel11))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(victimPhoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(victimZipcodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(victimStateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(victimCityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(victimUnitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(80, 80, 80)
-                .addComponent(jLabel12)
-                .addGap(155, 155, 155))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,6 +267,36 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
 
     private void submitVictimRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitVictimRegistrationActionPerformed
         // TODO add your handling code here:
+        if(victimNameTextField.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter your name!");
+            return;
+        }
+        if(victimUsernameTextField.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter your username!");
+            return;
+        }
+        for(UserAccount ua:this.ecosystem.getUserAccountDirectory().getUserAccountList()){
+            if(ua.getUsername().equals(victimUsernameTextField.getText())){
+                JOptionPane.showMessageDialog(null,"Username already exists... please enter a different username!");
+                return;
+            }
+        }
+        if(victimPasswordTextField.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter a password!");
+            return;
+        }
+        if(victimPhoneTextField.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter your phone no!");
+            return;
+        }
+        if(victimZipcodeTextField.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter zip code!");
+            return;
+        }
+        if(victimUnitTextField.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter no of people affected!");
+            return;
+        }
         String victimName = victimNameTextField.getText();
         String victimUsername = victimUsernameTextField.getText();
         String victimPassword = victimPasswordTextField.getText();
@@ -295,16 +326,23 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
         
         if (ecosystem.getUserAccountDirectory().checkIfUsernameIsUnique(victimUsername)){
             ecosystem.getUserAccountDirectory().getUserAccountList().add(victimUserAccount);
-            statusTextField.setText("Successfuly Registered");
-            statusTextField.setForeground(Color.BLUE);
+            JOptionPane.showMessageDialog(null,"You are registered successfully!");
+            DB4OUtil.getInstance().storeSystem(ecosystem);
+            clearVictimRegistrationFields();
+            return;
+//            statusTextField.setText("Successfuly Registered");
+//            statusTextField.setForeground(Color.BLUE);
         }
         else{
-            statusTextField.setText("Username already exists");
-            statusTextField.setForeground(Color.RED);
+            JOptionPane.showMessageDialog(null,"Some problem occured in registration!");
+             clearVictimRegistrationFields();
+            return;
+//            statusTextField.setText("Username already exists");
+//            statusTextField.setForeground(Color.RED);
         }    
-        clearVictimRegistrationFields();
-        ecosystem.getUserAccountDirectory().getUserAccountList().add(victimUserAccount);
-        DB4OUtil.getInstance().storeSystem(ecosystem);
+       
+//        ecosystem.getUserAccountDirectory().getUserAccountList().add(victimUserAccount);
+        
     }//GEN-LAST:event_submitVictimRegistrationActionPerformed
 
     private void victimUsernameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_victimUsernameTextFieldActionPerformed
