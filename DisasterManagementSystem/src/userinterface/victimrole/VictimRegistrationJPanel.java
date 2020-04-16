@@ -293,10 +293,6 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter zip code!");
             return;
         }
-        if(victimUnitTextField.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Please enter no of people affected!");
-            return;
-        }
         String victimName = victimNameTextField.getText();
         String victimUsername = victimUsernameTextField.getText();
         String victimPassword = victimPasswordTextField.getText();

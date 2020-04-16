@@ -51,7 +51,7 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
         this.userProcessContainer=userProcessContainer;
         this.ecosystem=ecosystem;
         this.cityAdminUserAccount = cityAdminUserAccount;
-        this.zipCodes = null;
+        this.zipCodes = new HashSet<String>();
         initialize();
     }
 
@@ -337,6 +337,12 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter admin password!");
             return;
         }
+        
+        if(tblAddedZipCodesDirec.getRowCount()==0){
+            JOptionPane.showMessageDialog(null,"Enterprise should serve at least one zipcode!");
+            return;
+        }
+        
         String enterpriseName = txtEnterpriseName.getText();
         String enterpriseAdminName = txtEnterpriseAdminName.getText();
         String enterpriseAdminPassword = txtEnterpriseAdminPassword.getText();
@@ -404,7 +410,7 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
     private void btnAddZipCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddZipCodeActionPerformed
         // TODO add your handling code here:
         DefaultTableModel dtm = (DefaultTableModel)tblZipCodesDirectory.getModel();
-        this.zipCodes = new HashSet<String>();
+        // this.zipCodes = new HashSet<String>();
         for(int row = 0;row < dtm.getRowCount();row++) {
             if(dtm.getValueAt(row,1).equals(true)){
                 this.zipCodes.add((String)dtm.getValueAt(row,0));

@@ -15,6 +15,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -338,6 +339,33 @@ public class VictimWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnSubmitHelpRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitHelpRequestActionPerformed
         // TODO add your handling code here:
+        if(txtSummary.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please state the problem faced..enter summary!");
+            return;
+        }
+        if(txtPeopleAffected.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter number of people affected!");
+            return;
+        }
+        try{
+            Integer.parseInt(txtPeopleAffected.getText());
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Please people affected in digits!");
+            return;
+        }
+        if(txtCity.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter city name!");
+            return;
+        }
+        if(txtState.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter state name!");
+            return;
+        }
+        if(txtZipcode.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Please enter zipcode!");
+            return;
+        }
         WorkRequest victimWorkRequest = new WorkRequest();
         victimWorkRequest.setRequestID(ecosystem.getWorkQueue().getRequestID());
         victimWorkRequest.setRequestedEnterprise
@@ -359,6 +387,8 @@ public class VictimWorkAreaJPanel extends javax.swing.JPanel {
         clearFields();
         this.ecosystem.getWorkQueue().add(victimWorkRequest);
         DB4OUtil.getInstance().storeSystem(ecosystem);
+        JOptionPane.showMessageDialog(null,"Request submitted successfully!");
+        return;
     }//GEN-LAST:event_btnSubmitHelpRequestActionPerformed
 
     private void comboxEnterpriseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboxEnterpriseActionPerformed
