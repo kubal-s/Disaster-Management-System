@@ -11,8 +11,12 @@ import Business.Enterprise.Enterprise;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.HospitalToPoliceRequest;
+import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -28,7 +32,8 @@ public class PoliceOfficerWorkAreaJPanel extends javax.swing.JPanel {
     private UserAccount policeOfficerAccount;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     private Enterprise currentEnterprise;
-    public PoliceOfficerWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
+
+    public PoliceOfficerWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem, UserAccount userAccount) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.ecosystem = ecosystem;
@@ -123,38 +128,64 @@ public class PoliceOfficerWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAssigntToMeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssigntToMeActionPerformed
-        // TODO add your handling code here:
         int selectedRow = tblRequestDirectory.getSelectedRow();
-//        if (selectedRow == -1) {
-//            JOptionPane.showMessageDialog(null, "Please select a request to assign");
-//        } else {
-//            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
-//
-//            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
-//            WorkRequest cwr = null;
-//            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
-//            if (cwr.getStatus().equals("approved for processing by volunteers")) {
-//                cwr.setStatus("processed by "+volunteerAccount.getUser().getName());
-//                if(cwr.getForwardRequest().getRequestedEnterprise().equals(Enterprise.EnterpriseType.FoodBank)){
-//                    cwr.getForwardRequest().setStatus("delivered by "+volunteerAccount.getUser().getName());
-//                }
-//                populateRequests();
-//            }
-//            else{
-//                JOptionPane.showMessageDialog(null, "Request already assigned for processing");
-//            }
-//
-//        }
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to assign");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            if (cwr.getStatus().equals("approved for investigation")) {
+                cwr.setStatus("case investigated by " + policeOfficerAccount.getUser().getName());
+                if (cwr instanceof HospitalToPoliceRequest){
+                    ((HospitalToPoliceRequest)cwr).getVictimHelpRequest().setStatus("case investigated by " + policeOfficerAccount.getUser().getName());
+                }
+                populateRequests();
+            } else {
+                JOptionPane.showMessageDialog(null, "Request already assigned for packaging");
+            }
+
+        }
         DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnAssigntToMeActionPerformed
 
     private void BtnViewMyTasksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnViewMyTasksActionPerformed
         // TODO add your handling code here:
-        JPanel PoliceOfficerTasksJPanel = new PoliceOfficerTasksJPanel(userProcessContainer,ecosystem,policeOfficerAccount);
-        userProcessContainer.add("PoliceOfficerTasks",PoliceOfficerTasksJPanel);
-        CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
+        JPanel PoliceOfficerTasksJPanel = new PoliceOfficerTasksJPanel(userProcessContainer, ecosystem, policeOfficerAccount);
+        userProcessContainer.add("PoliceOfficerTasks", PoliceOfficerTasksJPanel);
+        CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
         cardLayout.next(this.userProcessContainer);
     }//GEN-LAST:event_BtnViewMyTasksActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnViewMyTasks;
+    private javax.swing.JButton btnAssigntToMe;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblRequestDirectory;
+    // End of variables declaration//GEN-END:variables
+
+    private void populateRequests() {
+        DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+        dtm.setRowCount(0);
+
+        for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
+            if (w.getRequestedEnterprise().equals(Enterprise.EnterpriseType.PoliceDepartment)
+                    && w.getAssignedEnterprise() == this.currentEnterprise
+                    && (w.getStatus().equals("approved for investigation")
+                    || w.getStatus().startsWith("case investigated by"))) {
+                Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+                row[0] = w.getRequestID();
+                row[1] = w.getSender().getUser().getName();
+                row[2] = w.getStatus();
+                dtm.addRow(row);
+            }
+        }
+    }
+
     public void initialize() {
         outerloop:
         for (Network n : this.ecosystem.getNetworkList()) {
@@ -169,14 +200,6 @@ public class PoliceOfficerWorkAreaJPanel extends javax.swing.JPanel {
 
             }
         }
-//        populateRequests();
+        populateRequests();
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnViewMyTasks;
-    private javax.swing.JButton btnAssigntToMe;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblRequestDirectory;
-    // End of variables declaration//GEN-END:variables
 }

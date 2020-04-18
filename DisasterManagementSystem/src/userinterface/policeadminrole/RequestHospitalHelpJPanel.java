@@ -3,20 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package userinterface.foodbankadminrole;
+package userinterface.policeadminrole;
 
+import userinterface.hospitaladminrole.*;
+import userinterface.foodbankadminrole.*;
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.FoodBankToNGORequest;
+import Business.WorkQueue.HospitalToPoliceRequest;
+import Business.WorkQueue.PoliceToHospitalRequest;
+import Business.WorkQueue.VictimHelpRequest;
 import Business.WorkQueue.WorkRequest;
+import business.address.Address;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.Date;
 import javax.swing.JPanel;
 
 
-public class RaiseNGORequestJPanel extends javax.swing.JPanel {
+public class RequestHospitalHelpJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form RaiseNGORequestJPanel
@@ -25,14 +32,14 @@ public class RaiseNGORequestJPanel extends javax.swing.JPanel {
     private EcoSystem ecosystem;
     private JPanel userProcessContainer;
     private WorkRequest victimHelpRequest;
-    private UserAccount foodBankAdminAccount;
+    private UserAccount policeAdminAccount;
 
-    public RaiseNGORequestJPanel(JPanel userProcessContainer, EcoSystem ecosystem, WorkRequest victimHelpRequest, UserAccount foodBankAdminAccount) {
+    public RequestHospitalHelpJPanel(JPanel userProcessContainer, EcoSystem ecosystem, WorkRequest victimHelpRequest, UserAccount policeAdminAccount) {
         initComponents();
         this.ecosystem = ecosystem;
         this.userProcessContainer = userProcessContainer;
         this.victimHelpRequest = victimHelpRequest;
-        this.foodBankAdminAccount = foodBankAdminAccount;
+        this.policeAdminAccount = policeAdminAccount;
     }
 
     /**
@@ -56,7 +63,7 @@ public class RaiseNGORequestJPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 240));
 
-        jLabel1.setText("Create a Help Request for NGO");
+        jLabel1.setText("Create Request for Hospital");
 
         jLabel5.setText("Description");
 
@@ -98,7 +105,7 @@ public class RaiseNGORequestJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(101, 101, 101)
+                        .addGap(153, 153, 153)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
@@ -149,27 +156,39 @@ public class RaiseNGORequestJPanel extends javax.swing.JPanel {
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
-        victimHelpRequest.setStatus("delivery assigned to NGO");
-        WorkRequest raiseNGORequest = new FoodBankToNGORequest();
-        ((FoodBankToNGORequest)raiseNGORequest).setVictimHelpRequest(victimHelpRequest);
-        raiseNGORequest.setRequestID(ecosystem.getWorkQueue().getRequestID());
-        raiseNGORequest.setRequestedEnterprise(Enterprise.EnterpriseType.NonGovernmentOrganization);
-        raiseNGORequest.setSummary(txtSummary.getText());
-        raiseNGORequest.setDescription(txtDescription.getText());
-        raiseNGORequest.setStatus("submitted");
-        raiseNGORequest.setSender(foodBankAdminAccount);
-        raiseNGORequest.setAddress(victimHelpRequest.getAddress());
-        this.ecosystem.getWorkQueue().getWorkRequestList().add(raiseNGORequest);
+        
+        WorkRequest victimHelpRequestToHospital = new VictimHelpRequest();
+        victimHelpRequestToHospital.setRequestID(ecosystem.getWorkQueue().getRequestID());
+        victimHelpRequestToHospital.setRequestedEnterprise(Enterprise.EnterpriseType.Hospital);
+        victimHelpRequestToHospital.setSummary(victimHelpRequest.getSummary());
+        victimHelpRequestToHospital.setDescription(victimHelpRequest.getDescription());
+        ((VictimHelpRequest)victimHelpRequestToHospital).setPeopleAffected(((VictimHelpRequest)victimHelpRequest).getPeopleAffected());
+        victimHelpRequestToHospital.setAddress(victimHelpRequest.getAddress());
+        victimHelpRequestToHospital.setSender(victimHelpRequest.getSender());
+        victimHelpRequestToHospital.setStatus("submitted by police admin "+policeAdminAccount.getUser().getName());
+        victimHelpRequestToHospital.setRequestDate(new Date());
+        this.ecosystem.getWorkQueue().getWorkRequestList().add(victimHelpRequestToHospital);
+        
+        WorkRequest hospitalHelpRequest = new PoliceToHospitalRequest();
+        ((PoliceToHospitalRequest)hospitalHelpRequest).setVictimHelpRequest(victimHelpRequestToHospital);
+        hospitalHelpRequest.setRequestID(ecosystem.getWorkQueue().getRequestID());
+        hospitalHelpRequest.setRequestedEnterprise(Enterprise.EnterpriseType.Hospital);
+        hospitalHelpRequest.setSummary(txtSummary.getText());
+        hospitalHelpRequest.setDescription(txtDescription.getText());
+        hospitalHelpRequest.setStatus("submitted");
+        hospitalHelpRequest.setSender(policeAdminAccount);
+        hospitalHelpRequest.setAddress(victimHelpRequestToHospital.getAddress());
+        this.ecosystem.getWorkQueue().getWorkRequestList().add(hospitalHelpRequest);
         DB4OUtil.getInstance().storeSystem(ecosystem);
         this.userProcessContainer.remove(this);
         CardLayout layout =(CardLayout) this.userProcessContainer.getLayout();
         Component [] comps = this.userProcessContainer.getComponents();
         for(Component comp : comps){
-            if(comp instanceof FoodBankAdminRoleWorkAreaJPanel){
-                FoodBankAdminRoleWorkAreaJPanel jp =(FoodBankAdminRoleWorkAreaJPanel) comp;
+            if(comp instanceof HospitalAdminRoleWorkAreaJPanel){
+                HospitalAdminRoleWorkAreaJPanel jp =(HospitalAdminRoleWorkAreaJPanel) comp;
                 jp.initialize();
-                jp.populatePackagers();
-                jp.populateDeliveryMan();
+                jp.populateHospitalStaff();
+                jp.populateDoctors();
             }
         }
         layout.previous(userProcessContainer);
@@ -185,11 +204,10 @@ public class RaiseNGORequestJPanel extends javax.swing.JPanel {
         CardLayout layout = (CardLayout) this.userProcessContainer.getLayout();
         Component[] comps = this.userProcessContainer.getComponents();
         for (Component comp : comps) {
-            if (comp instanceof FoodBankAdminRoleWorkAreaJPanel) {
-                FoodBankAdminRoleWorkAreaJPanel fbarwajp = (FoodBankAdminRoleWorkAreaJPanel) comp;
-                fbarwajp.initialize();
-                fbarwajp.populatePackagers();
-                fbarwajp.populateDeliveryMan();
+            if (comp instanceof PoliceAdminRoleWorkAreaJPanel) {
+                PoliceAdminRoleWorkAreaJPanel jp = (PoliceAdminRoleWorkAreaJPanel) comp;
+                jp.initialize();
+                jp.populatePoliceOfficers();
             }
         }
         layout.previous(userProcessContainer);

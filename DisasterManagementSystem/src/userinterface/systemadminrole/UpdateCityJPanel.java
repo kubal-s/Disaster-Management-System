@@ -260,6 +260,12 @@ public class UpdateCityJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter city admin password!");
             return;
         }
+        
+        if(tblDirectory.getRowCount()==0){
+            JOptionPane.showMessageDialog(null,"City should have at least one zipcode!");
+            return;
+        }
+        
         String disasterMangmt = "Disaster Management of " + txtCityName.getText();
 
         String name = txtCityAdminName.getText();

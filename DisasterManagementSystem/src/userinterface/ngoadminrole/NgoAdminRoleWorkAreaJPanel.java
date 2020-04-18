@@ -14,6 +14,7 @@ import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Role.Role;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.FoodBankToNGORequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -340,8 +341,8 @@ public class NgoAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
             if (w.getRequestedEnterprise().equals(Enterprise.EnterpriseType.NonGovernmentOrganization)
                     && w.getAssignedEnterprise() == null
-                    && this.currentEnterprise.getZipCodes().contains(w.getForwardRequest().getAddress().getZipcode())
-                    &&!w.getForwardRequest().getStatus().equals("submitted")) {
+                    && this.currentEnterprise.getZipCodes().contains(((FoodBankToNGORequest)w).getVictimHelpRequest().getAddress().getZipcode())
+                    &&!((FoodBankToNGORequest)w).getVictimHelpRequest().getStatus().equals("submitted")) {
                 Object[] row = new Object[tblRequestDirectory.getColumnCount()];
                 row[0] = w.getRequestID();
                 row[1] = w.getSender().getUser().getName();
@@ -352,7 +353,7 @@ public class NgoAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
         for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
             if (w.getAssignedEnterprise() == this.currentEnterprise
-                    &&!w.getForwardRequest().getStatus().equals("submitted")) {
+                    &&!((FoodBankToNGORequest)w).getVictimHelpRequest().getStatus().equals("submitted")) {
                 Object[] row = new Object[tblRequestDirectory.getColumnCount()];
                 row[0] = w.getRequestID();
                 row[1] = w.getSender().getUser().getName();

@@ -7,11 +7,11 @@ package Business.WorkQueue;
 import Business.Enterprise.Enterprise;
 import Business.UserAccount.UserAccount;
 import business.address.Address;
-import java.util.ArrayList;
 import java.util.Date;
 
 
-public class WorkRequest {
+public abstract class WorkRequest {
+    private int requestID;
     private String summary;
     private String description;
     private UserAccount sender;
@@ -19,14 +19,11 @@ public class WorkRequest {
     private String status;
     private Date requestDate;
     private Date resolveDate;
-    private int peopleAffected;
-    private int requestID;
-    private static int requestIDCount = 1;
     private Enterprise.EnterpriseType requestedEnterprise;
     private Address address;
     private Enterprise assignedEnterprise;
     
-    private WorkRequest forwardRequest;
+    
     
     public WorkRequest(){
         requestDate = new Date();
@@ -88,28 +85,12 @@ public class WorkRequest {
         this.resolveDate = resolveDate;
     }
 
-    public int getPeopleAffected() {
-        return peopleAffected;
-    }
-
-    public void setPeopleAffected(int peopleAffected) {
-        this.peopleAffected = peopleAffected;
-    }
-
     public int getRequestID() {
         return requestID;
     }
 
     public void setRequestID(int requestID) {
         this.requestID = requestID;
-    }
-
-    public static int getRequestIDCount() {
-        return requestIDCount;
-    }
-
-    public static void setRequestIDCount(int requestIDCount) {
-        WorkRequest.requestIDCount = requestIDCount;
     }
 
     public Enterprise.EnterpriseType getRequestedEnterprise() {
@@ -141,11 +122,4 @@ public class WorkRequest {
         return String.valueOf(requestID);
     }
 
-    public WorkRequest getForwardRequest() {
-        return forwardRequest;
-    }
-
-    public void setForwardRequest(WorkRequest forwardRequest) {
-        this.forwardRequest = forwardRequest;
-    }
 }

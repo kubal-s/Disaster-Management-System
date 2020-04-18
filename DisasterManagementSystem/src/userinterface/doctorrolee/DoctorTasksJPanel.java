@@ -8,10 +8,17 @@ package userinterface.doctorrolee;
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
+import Business.Network.Network;
+import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.HospitalToPoliceRequest;
+import Business.WorkQueue.PoliceToHospitalRequest;
+import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,11 +34,13 @@ public class DoctorTasksJPanel extends javax.swing.JPanel {
     private UserAccount doctorAccount;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     private Enterprise currentEnterprise;
-    public DoctorTasksJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
-        initComponents();      
+
+    public DoctorTasksJPanel(JPanel userProcessContainer, EcoSystem ecosystem, UserAccount userAccount) {
+        initComponents();
         this.userProcessContainer = userProcessContainer;
         this.ecosystem = ecosystem;
         this.doctorAccount = userAccount;
+        initialize();
     }
 
     /**
@@ -118,28 +127,29 @@ public class DoctorTasksJPanel extends javax.swing.JPanel {
 
     private void btnProcessRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessRequestActionPerformed
         // TODO add your handling code here:
-        //        int selectedRow = tblRequestDirectory.getSelectedRow();
-        //        if (selectedRow == -1) {
-            //            JOptionPane.showMessageDialog(null, "Please select a request to process");
-            //        } else {
-            //            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
-            //
-            //            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
-            //            WorkRequest cwr = null;
-            //            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
-            //            cwr.setStatus("completed");
-            //            cwr.getForwardRequest().setStatus("completed");
-            //            populateRequests();
-            //        }
-        //        DB4OUtil.getInstance().storeSystem(ecosystem);
+        int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to process");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            cwr.setStatus("completed");
+            if (cwr instanceof PoliceToHospitalRequest) {
+                ((PoliceToHospitalRequest) cwr).getVictimHelpRequest().setStatus("completed");
+            }
+            populateRequests();
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnProcessRequestActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         DB4OUtil.getInstance().storeSystem(ecosystem);
         this.userProcessContainer.remove(this);
-        CardLayout layout =(CardLayout) this.userProcessContainer.getLayout();
-        Component [] comps = this.userProcessContainer.getComponents();
+        CardLayout layout = (CardLayout) this.userProcessContainer.getLayout();
+        Component[] comps = this.userProcessContainer.getComponents();
         for (Component comp : comps) {
             if (comp instanceof DoctorWorkAreaJPanel) {
                 DoctorWorkAreaJPanel dwajp = (DoctorWorkAreaJPanel) comp;
@@ -157,4 +167,39 @@ public class DoctorTasksJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblRequestDirectory;
     // End of variables declaration//GEN-END:variables
+
+    private void populateRequests() {
+        DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+        dtm.setRowCount(0);
+        for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
+            if (w.getRequestedEnterprise().equals(Enterprise.EnterpriseType.Hospital)
+                    && w.getAssignedEnterprise() == this.currentEnterprise
+                    && w.getStatus().equals("case assigned to Dr. " + doctorAccount.getUser().getName())) {
+                Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+                row[0] = w.getRequestID();
+                row[1] = w.getSender().getUser().getName();
+                row[2] = w.getStatus();
+                dtm.addRow(row);
+            }
+        }
+
+    }
+
+    public void initialize() {
+        outerloop:
+        for (Network n : this.ecosystem.getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                    if (o.getName().equals(Organization.Type.Doctor.getValue())
+                            && o.getUserAccountDirectory().getUserAccountList().contains(doctorAccount)) {
+                        this.currentEnterprise = e;
+                        break outerloop;
+                    }
+                }
+
+            }
+        }
+        populateRequests();
+    }
+
 }

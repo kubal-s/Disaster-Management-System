@@ -11,6 +11,8 @@ import Business.Enterprise.Enterprise;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.FoodBankToNGORequest;
+import Business.WorkQueue.VictimHelpRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -149,8 +151,8 @@ public class VolunteerWorkAreaJPanel extends javax.swing.JPanel {
             cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
             if (cwr.getStatus().equals("approved for processing by volunteers")) {
                 cwr.setStatus("processed by "+volunteerAccount.getUser().getName());
-                if(cwr.getForwardRequest().getRequestedEnterprise().equals(Enterprise.EnterpriseType.FoodBank)){
-                    cwr.getForwardRequest().setStatus("delivered by "+volunteerAccount.getUser().getName());
+                if(((FoodBankToNGORequest)cwr).getVictimHelpRequest().getRequestedEnterprise().equals(Enterprise.EnterpriseType.FoodBank)){
+                    ((FoodBankToNGORequest)cwr).getVictimHelpRequest().setStatus("delivered by "+volunteerAccount.getUser().getName());
                 }
                 populateRequests();
             }
