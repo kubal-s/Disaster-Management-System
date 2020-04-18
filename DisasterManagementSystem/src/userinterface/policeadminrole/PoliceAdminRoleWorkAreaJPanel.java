@@ -8,10 +8,12 @@ package userinterface.policeadminrole;
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.FoodBankEnterprise;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Role.Role;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.HospitalToPoliceRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -32,10 +34,11 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     private UserAccount policeAdminAccount;
     private Enterprise currentEnterprise;
-    public PoliceAdminRoleWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
+
+    public PoliceAdminRoleWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem, UserAccount userAccount) {
         initComponents();
-        this.userProcessContainer=userProcessContainer;
-        this.ecosystem=ecosystem;
+        this.userProcessContainer = userProcessContainer;
+        this.ecosystem = ecosystem;
         this.policeAdminAccount = userAccount;
         initialize();
         populatePoliceOfficers();
@@ -201,91 +204,95 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-//        int selectedRow = tblRequestDirectory.getSelectedRow();
-//        if (selectedRow == -1) {
-//            JOptionPane.showMessageDialog(null, "Please select a request to cancel");
-//        } else {
-//            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
-//            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
-//            WorkRequest cwr = null;
-//            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
-//            if (cwr.getStatus().equals("completed")) {
-//                JOptionPane.showMessageDialog(null, "Cannot cancel request already completed");
-//            } else {
-//                cwr.setStatus("submitted");
-//                cwr.setAssignedEnterprise(null);
-//            }
-//            populateRequests();
-//        }
-//        DB4OUtil.getInstance().storeSystem(ecosystem);
+        int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to cancel");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            if (cwr.getStatus().equals("completed")) {
+                JOptionPane.showMessageDialog(null, "Cannot cancel request already completed");
+            } else {
+                cwr.setStatus("submitted");
+                cwr.setAssignedEnterprise(null);
+            }
+            populateRequests();
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnRequestHospitalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequestHospitalBtnActionPerformed
-//        int selectedRow = tblRequestDirectory.getSelectedRow();
-//        if (selectedRow == -1) {
-//            JOptionPane.showMessageDialog(null, "Please select a request to process");
-//        } else {
-//            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
-//
-//            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
-//            WorkRequest cwr = null;
-//            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
-//            if(cwr.getStatus().equals("ready for delivery")){
-//                cwr.setAssignedEnterprise(this.currentEnterprise);
-//                JPanel raiseNGORequestJPanel = new RaiseNGORequestJPanel(userProcessContainer, ecosystem, cwr, foodBankAdminAccount);
-//                userProcessContainer.add("raiseNGORequest", raiseNGORequestJPanel);
-//                CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
-//                cardLayout.next(this.userProcessContainer);
-//            }
-//            else{
-//                JOptionPane.showMessageDialog(null, "Request not ready for delivery");
-//            }
-//            populateRequests();
-//        }
-//        DB4OUtil.getInstance().storeSystem(ecosystem);
+        int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to process");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            if(!cwr.getStatus().equals("submitted")){
+                cwr.setAssignedEnterprise(this.currentEnterprise);
+                JPanel requestHospitalHelpJPanel = new RequestHospitalHelpJPanel(userProcessContainer, ecosystem, cwr, policeAdminAccount);
+                userProcessContainer.add("requestHospitalHelp", requestHospitalHelpJPanel);
+                CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
+                cardLayout.next(this.userProcessContainer);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Request not approved yet!");
+            }
+            populateRequests();
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnRequestHospitalBtnActionPerformed
 
     private void btnProcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessActionPerformed
-//        int selectedRow = tblRequestDirectory.getSelectedRow();
-//        if (selectedRow == -1) {
-//            JOptionPane.showMessageDialog(null, "Please select a request to process");
-//        } else {
-//            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
-//
-//            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
-//            WorkRequest cwr = null;
-//            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
-//            if(cwr.getStatus().equals("submitted")){
-//                cwr.setStatus("approved for packaging");
-//                cwr.setAssignedEnterprise(this.currentEnterprise);
-//            }
-//            else{
-//                JOptionPane.showMessageDialog(null, "Already sent for packaging");
-//            }
-//            populateRequests();
-//        }
-//        DB4OUtil.getInstance().storeSystem(ecosystem);
+        int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to process");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            if(cwr.getStatus().equals("submitted")){
+                cwr.setStatus("approved for investigation");
+                if (cwr instanceof HospitalToPoliceRequest){
+                    ((HospitalToPoliceRequest)cwr).getVictimHelpRequest().setStatus("approved for investigation");
+                }
+                cwr.setAssignedEnterprise(this.currentEnterprise);
+                JOptionPane.showMessageDialog(null, "Approved for investigation");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Already approved");
+            }
+            populateRequests();
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnProcessActionPerformed
 
     private void btnAddPoliceOfficerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPoliceOfficerActionPerformed
         // TODO add your handling code here:
-        JPanel addPoliceOfficerJPanel = new AddPoliceOfficerJPanel(userProcessContainer,ecosystem,policeAdminAccount);
-        userProcessContainer.add("addPoliceOfficer",addPoliceOfficerJPanel);
-        CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
+        JPanel addPoliceOfficerJPanel = new AddPoliceOfficerJPanel(userProcessContainer, ecosystem, policeAdminAccount);
+        userProcessContainer.add("addPoliceOfficer", addPoliceOfficerJPanel);
+        CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
         cardLayout.next(this.userProcessContainer);
     }//GEN-LAST:event_btnAddPoliceOfficerActionPerformed
 
     private void btnUpdatePoliceOfficerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePoliceOfficerActionPerformed
         // TODO add your handling code here:
         int selectedRow = tblVolunteersDirectory.getSelectedRow();
-        if(selectedRow>=0){
-            UserAccount policeOffice = ((UserAccount)tblVolunteersDirectory.getValueAt(selectedRow, 0));
+        if (selectedRow >= 0) {
+            UserAccount policeOffice = ((UserAccount) tblVolunteersDirectory.getValueAt(selectedRow, 0));
             //Item selectedItem = restaurant.getMenu().getItemFromName(selectedItemName);
-            JPanel updatePoliceOfficerJPanel = new UpdatePoliceOfficerJPanel(userProcessContainer,ecosystem,policeAdminAccount,policeOffice);
-            userProcessContainer.add("updatePoliceOfficer",updatePoliceOfficerJPanel);
-            CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
+            JPanel updatePoliceOfficerJPanel = new UpdatePoliceOfficerJPanel(userProcessContainer, ecosystem, policeAdminAccount, policeOffice);
+            userProcessContainer.add("updatePoliceOfficer", updatePoliceOfficerJPanel);
+            CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
             cardLayout.next(this.userProcessContainer);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Please select a Row!!");
         }
     }//GEN-LAST:event_btnUpdatePoliceOfficerActionPerformed
@@ -293,26 +300,26 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private void btnDeletePoliceOfficerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePoliceOfficerActionPerformed
         // TODO add your handling code here:
         int selectedRow = tblVolunteersDirectory.getSelectedRow();
-        if(selectedRow>=0){
+        if (selectedRow >= 0) {
             int selectionButton = JOptionPane.YES_NO_OPTION;
-            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete??","Warning",selectionButton);
-            if(selectionResult == JOptionPane.YES_OPTION){
-                UserAccount policeOfficer = (UserAccount)tblVolunteersDirectory.getValueAt(selectedRow, 0);
-                for(UserAccount ua:this.ecosystem.getUserAccountDirectory().getUserAccountList()){
-                    if(ua.getUsername().equals(policeOfficer.getUsername())){
+            int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete??", "Warning", selectionButton);
+            if (selectionResult == JOptionPane.YES_OPTION) {
+                UserAccount policeOfficer = (UserAccount) tblVolunteersDirectory.getValueAt(selectedRow, 0);
+                for (UserAccount ua : this.ecosystem.getUserAccountDirectory().getUserAccountList()) {
+                    if (ua.getUsername().equals(policeOfficer.getUsername())) {
                         this.ecosystem.getUserAccountDirectory().getUserAccountList().remove(ua);
                         break;
                     }
                 }
-                outerloop :
-                for(Network n:this.ecosystem.getNetworkList()){
-                    for(Enterprise e :n.getEnterpriseDirectory().getEnterpriseList()){
-                        if(e.getUserAccount().getUsername().equals(this.policeAdminAccount.getUsername())){
+                outerloop:
+                for (Network n : this.ecosystem.getNetworkList()) {
+                    for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                        if (e.getUserAccount().getUsername().equals(this.policeAdminAccount.getUsername())) {
                             this.currentEnterprise = e;
-                            for(UserAccount pol : e.getUserAccountDirectory().getUserAccountList()){
-                                if(pol.getUsername().equals(policeOfficer.getUsername())){
-                                    for(Organization o: e.getOrganizationDirectory().getOrganizationList()){
-                                        if(o.getName().equals(Organization.Type.PoliceOfficer.getValue())){
+                            for (UserAccount pol : e.getUserAccountDirectory().getUserAccountList()) {
+                                if (pol.getUsername().equals(policeOfficer.getUsername())) {
+                                    for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                                        if (o.getName().equals(Organization.Type.PoliceOfficer.getValue())) {
                                             o.getUserAccountDirectory().getUserAccountList().remove(pol);
                                             e.getUserAccountDirectory().getUserAccountList().remove(pol);
                                             break outerloop;
@@ -327,37 +334,27 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 dB4OUtil.storeSystem(this.ecosystem);
                 populatePoliceOfficers();
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Please select a Row!!");
         }
-        
-        
+
+
     }//GEN-LAST:event_btnDeletePoliceOfficerActionPerformed
 
-    public void initialize() {
-        outerloop:
-        for (Network n : this.ecosystem.getNetworkList()) {
-            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
-                if (e.getUserAccount().getUsername().equals(this.policeAdminAccount.getUsername())) {
-                    this.currentEnterprise = e;
-                    break outerloop;
-                }
-            }
-        }
-    }
 
-    public void populatePoliceOfficers(){
-        DefaultTableModel dtm = (DefaultTableModel)tblVolunteersDirectory.getModel();
-        dtm.setRowCount(0);   
-        for(UserAccount n: this.currentEnterprise.getUserAccountDirectory().getUserAccountList()){  
-            if(n.getRole().getRoleType().equals(Role.RoleType.PoliceOfficer)){
-                    Object[] row = new Object[dtm.getColumnCount()];
-                    row[0]= n;
-                    row[1]= n.getUser().getName();
-                    row[2] = n.getUser().getPhone();
-                    dtm.addRow(row);
+
+    public void populatePoliceOfficers() {
+        DefaultTableModel dtm = (DefaultTableModel) tblVolunteersDirectory.getModel();
+        dtm.setRowCount(0);
+        for (UserAccount n : this.currentEnterprise.getUserAccountDirectory().getUserAccountList()) {
+            if (n.getRole().getRoleType().equals(Role.RoleType.PoliceOfficer)) {
+                Object[] row = new Object[dtm.getColumnCount()];
+                row[0] = n;
+                row[1] = n.getUser().getName();
+                row[2] = n.getUser().getPhone();
+                dtm.addRow(row);
             }
-            
+
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -373,4 +370,47 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JTable tblRequestDirectory;
     private javax.swing.JTable tblVolunteersDirectory;
     // End of variables declaration//GEN-END:variables
+
+    private void populateRequests() {
+        DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+        dtm.setRowCount(0);
+
+        for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
+            System.out.println(w.getAddress());
+            if (w.getRequestedEnterprise().equals(Enterprise.EnterpriseType.PoliceDepartment)
+                    && w.getAssignedEnterprise() == null
+                    && this.currentEnterprise.getZipCodes().contains(w.getAddress().getZipcode())
+                    && w.getStatus().equals("submitted")) {
+                Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+                row[0] = w.getRequestID();
+                row[1] = w.getSender().getUser().getName();
+                row[2] = w.getStatus();
+                dtm.addRow(row);
+            }
+        }
+
+        for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
+            if (w.getAssignedEnterprise() == this.currentEnterprise) {
+                Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+                row[0] = w.getRequestID();
+                row[1] = w.getSender().getUser().getName();
+                row[2] = w.getStatus();
+                dtm.addRow(row);
+            }
+        }
+    }
+
+    public void initialize() {
+        outerloop:
+        for (Network n : this.ecosystem.getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                if (e.getUserAccount().getUsername().equals(this.policeAdminAccount.getUsername())) {
+                    this.currentEnterprise = e;
+                    break outerloop;
+                }
+            }
+        }
+
+       populateRequests();
+    }
 }

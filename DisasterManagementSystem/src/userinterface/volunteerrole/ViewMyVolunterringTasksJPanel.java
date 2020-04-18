@@ -11,6 +11,7 @@ import Business.Enterprise.Enterprise;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.FoodBankToNGORequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -139,7 +140,7 @@ public class ViewMyVolunterringTasksJPanel extends javax.swing.JPanel {
             WorkRequest cwr = null;
             cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
             cwr.setStatus("completed");
-            cwr.getForwardRequest().setStatus("completed");
+            ((FoodBankToNGORequest)cwr).getVictimHelpRequest().setStatus("completed");
             populateRequests();
         }
         DB4OUtil.getInstance().storeSystem(ecosystem);

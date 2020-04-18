@@ -11,8 +11,14 @@ import Business.Enterprise.Enterprise;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.HospitalToPoliceRequest;
+import Business.WorkQueue.PoliceToHospitalRequest;
+import Business.WorkQueue.VictimHelpRequest;
+import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,14 +28,15 @@ public class HospitalStaffRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form HospitalStaffRoleWorkAreaJPanel
-     */   
+     */
     JPanel userProcessContainer;
     EcoSystem ecosystem;
     private UserAccount hospitalStaffAccount;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     private Enterprise currentEnterprise;
-    public HospitalStaffRoleWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
-        initComponents();       
+
+    public HospitalStaffRoleWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem, UserAccount userAccount) {
+        initComponents();
         this.userProcessContainer = userProcessContainer;
         this.ecosystem = ecosystem;
         this.hospitalStaffAccount = userAccount;
@@ -127,38 +134,64 @@ public class HospitalStaffRoleWorkAreaJPanel extends javax.swing.JPanel {
     private void btnAssigntToMeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssigntToMeActionPerformed
         // TODO add your handling code here:
         int selectedRow = tblRequestDirectory.getSelectedRow();
-        //        if (selectedRow == -1) {
-            //            JOptionPane.showMessageDialog(null, "Please select a request to assign");
-            //        } else {
-            //            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
-            //
-            //            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
-            //            WorkRequest cwr = null;
-            //            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
-            //            if (cwr.getStatus().equals("approved for processing by volunteers")) {
-                //                cwr.setStatus("processed by "+volunteerAccount.getUser().getName());
-                //                if(cwr.getForwardRequest().getRequestedEnterprise().equals(Enterprise.EnterpriseType.FoodBank)){
-                    //                    cwr.getForwardRequest().setStatus("delivered by "+volunteerAccount.getUser().getName());
-                    //                }
-                //                populateRequests();
-                //            }
-            //            else{
-                //                JOptionPane.showMessageDialog(null, "Request already assigned for processing");
-                //            }
-            //
-            //        }
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to assign");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            if (cwr.getStatus().equals("approved for treatment")) {
+                cwr.setStatus("processed by hospital staff " + hospitalStaffAccount.getUser().getName());
+                if (cwr instanceof PoliceToHospitalRequest) {
+                    ((PoliceToHospitalRequest) cwr).getVictimHelpRequest().setStatus("processed by hospital staff " + hospitalStaffAccount.getUser().getName());
+                }
+                populateRequests();
+            } else {
+                JOptionPane.showMessageDialog(null, "Request already assigned fot processing");
+            }
+
+        }
         DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnAssigntToMeActionPerformed
 
     private void BtnViewMyTasksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnViewMyTasksActionPerformed
         // TODO add your handling code here:
-        JPanel hospitalStaffTasksJPanel = new HospitalStaffTasksJPanel(userProcessContainer,ecosystem,hospitalStaffAccount);
-        userProcessContainer.add("hospitalStaffTasks",hospitalStaffTasksJPanel);
-        CardLayout cardLayout = (CardLayout)userProcessContainer.getLayout();
+        JPanel hospitalStaffTasksJPanel = new HospitalStaffTasksJPanel(userProcessContainer, ecosystem, hospitalStaffAccount);
+        userProcessContainer.add("hospitalStaffTasks", hospitalStaffTasksJPanel);
+        CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
         cardLayout.next(this.userProcessContainer);
     }//GEN-LAST:event_BtnViewMyTasksActionPerformed
 
-        public void initialize() {
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnViewMyTasks;
+    private javax.swing.JButton btnAssigntToMe;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblRequestDirectory;
+    // End of variables declaration//GEN-END:variables
+
+    private void populateRequests() {
+        DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+        dtm.setRowCount(0);
+
+        for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
+            if (w.getRequestedEnterprise().equals(Enterprise.EnterpriseType.Hospital)
+                    && w.getAssignedEnterprise() == this.currentEnterprise
+                    && (w.getStatus().equals("approved for treatment")
+                    || w.getStatus().startsWith("processed by hospital staff"))) {
+                Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+                row[0] = w.getRequestID();
+                row[1] = w.getSender().getUser().getName();
+                row[2] = w.getStatus();
+                dtm.addRow(row);
+            }
+        }
+    }
+
+    public void initialize() {
         outerloop:
         for (Network n : this.ecosystem.getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
@@ -172,14 +205,6 @@ public class HospitalStaffRoleWorkAreaJPanel extends javax.swing.JPanel {
 
             }
         }
-//        populateRequests();
+        populateRequests();
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnViewMyTasks;
-    private javax.swing.JButton btnAssigntToMe;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblRequestDirectory;
-    // End of variables declaration//GEN-END:variables
 }

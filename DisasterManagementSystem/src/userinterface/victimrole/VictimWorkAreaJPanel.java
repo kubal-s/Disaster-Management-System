@@ -9,6 +9,7 @@ import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.VictimHelpRequest;
 import Business.WorkQueue.WorkRequest;
 import business.address.Address;
 import java.text.DateFormat;
@@ -29,7 +30,7 @@ public class VictimWorkAreaJPanel extends javax.swing.JPanel {
     private EcoSystem ecosystem;
     private UserAccount victimUserAccount;
     private List<WorkRequest> victimWorkRequests;
-    private DateFormat dateFormat = new SimpleDateFormat("mm-dd-yyyy hh:mm:ss");
+    private DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
     
     public VictimWorkAreaJPanel(JPanel userProcessContainer, UserAccount victimUserAccount) {
         this.userProcessContainer = userProcessContainer;
@@ -366,13 +367,13 @@ public class VictimWorkAreaJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter zipcode!");
             return;
         }
-        WorkRequest victimWorkRequest = new WorkRequest();
+        WorkRequest victimWorkRequest = new VictimHelpRequest();
         victimWorkRequest.setRequestID(ecosystem.getWorkQueue().getRequestID());
         victimWorkRequest.setRequestedEnterprise
         ((Enterprise.EnterpriseType)comboxEnterprise.getSelectedItem());
         victimWorkRequest.setSummary(txtSummary.getText());
         victimWorkRequest.setDescription(txtDescription.getText());
-        victimWorkRequest.setPeopleAffected(Integer.parseInt(txtPeopleAffected.getText()));
+        ((VictimHelpRequest)victimWorkRequest).setPeopleAffected(Integer.parseInt(txtPeopleAffected.getText()));
         Address victimWorkRequestAddress = new Address();
         victimWorkRequestAddress.setStreetName(txtStreet.getText());
         victimWorkRequestAddress.setUnitNumber(txtUnitNumber.getText());

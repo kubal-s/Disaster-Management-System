@@ -12,6 +12,8 @@ import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Role.Role;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.HospitalToPoliceRequest;
+import Business.WorkQueue.PoliceToHospitalRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -32,6 +34,7 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     private UserAccount hospitalAdminAccount;
     private Enterprise currentEnterprise;
+
     public HospitalAdminRoleWorkAreaJPanel(JPanel userProcessContainer, EcoSystem ecosystem, UserAccount userAccount) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
@@ -40,7 +43,7 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         initialize();
         populateDoctors();
         populateHospitalStaff();
-        
+
     }
 
     /**
@@ -169,7 +172,7 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tblDoctorsDirectory);
 
-        btnRequestPoliceHelp.setText("Assign Delivery to NGO");
+        btnRequestPoliceHelp.setText("Alert Police");
         btnRequestPoliceHelp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRequestPoliceHelpActionPerformed(evt);
@@ -221,12 +224,11 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                                 .addComponent(btnDeleteHospitalStaff, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnUpdateHospitalStaff, javax.swing.GroupLayout.Alignment.TRAILING))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(365, 365, 365)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnProcess)
-                        .addGap(34, 34, 34)
+                        .addGap(41, 41, 41)
                         .addComponent(btnCancel)
-                        .addGap(37, 37, 37)
+                        .addGap(33, 33, 33)
                         .addComponent(btnRequestPoliceHelp)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 778, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -398,85 +400,75 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAddHospitalStaffActionPerformed
 
     private void btnProcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessActionPerformed
-//        int selectedRow = tblRequestDirectory.getSelectedRow();
-//        if (selectedRow == -1) {
-//            JOptionPane.showMessageDialog(null, "Please select a request to process");
-//        } else {
-//            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
-//
-//            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
-//            WorkRequest cwr = null;
-//            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
-//            if(cwr.getStatus().equals("submitted")){
-//                cwr.setStatus("approved for packaging");
-//                cwr.setAssignedEnterprise(this.currentEnterprise);
-//                JOptionPane.showMessageDialog(null, "Approved for packaging");
-//            }
-//            else{
-//                JOptionPane.showMessageDialog(null, "Already sent for packaging");
-//            }
-//            populateRequests();
-//        }
-//        DB4OUtil.getInstance().storeSystem(ecosystem);
+        int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to process");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            if (cwr.getStatus().equals("submitted")) {
+                cwr.setStatus("approved for treatment");
+                if (cwr instanceof PoliceToHospitalRequest) {
+                    ((PoliceToHospitalRequest) cwr).getVictimHelpRequest().setStatus("approved for treatment");
+                }
+                cwr.setAssignedEnterprise(this.currentEnterprise);
+                JOptionPane.showMessageDialog(null, "Approved for treatment");
+            } else {
+                JOptionPane.showMessageDialog(null, "Already approved");
+            }
+            populateRequests();
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnProcessActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-//        int selectedRow = tblRequestDirectory.getSelectedRow();
-//        if (selectedRow == -1) {
-//            JOptionPane.showMessageDialog(null, "Please select a request to cancel");
-//        } else {
-//            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
-//            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
-//            WorkRequest cwr = null;
-//            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
-//            if (cwr.getStatus().equals("completed")) {
-//                JOptionPane.showMessageDialog(null, "Cannot cancel request already completed");
-//            } else {
-//                cwr.setStatus("submitted");
-//                cwr.setAssignedEnterprise(null);
-//            }
-//            populateRequests();
-//        }
-//        DB4OUtil.getInstance().storeSystem(ecosystem);
+        int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to cancel");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            if (cwr.getStatus().equals("completed")) {
+                JOptionPane.showMessageDialog(null, "Cannot cancel request already completed");
+            } else {
+                cwr.setStatus("submitted");
+                cwr.setAssignedEnterprise(null);
+            }
+            populateRequests();
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnRequestPoliceHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRequestPoliceHelpActionPerformed
-//        int selectedRow = tblRequestDirectory.getSelectedRow();
-//        if (selectedRow == -1) {
-//            JOptionPane.showMessageDialog(null, "Please select a request to process");
-//        } else {
-//            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
-//
-//            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
-//            WorkRequest cwr = null;
-//            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
-//            if(cwr.getStatus().equals("ready for delivery")){
-//                cwr.setAssignedEnterprise(this.currentEnterprise);
-//                JPanel raiseNGORequestJPanel = new RaiseNGORequestJPanel(userProcessContainer, ecosystem, cwr, foodBankAdminAccount);
-//                userProcessContainer.add("raiseNGORequest", raiseNGORequestJPanel);
-//                CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
-//                cardLayout.next(this.userProcessContainer);
-//            }
-//            else{
-//                JOptionPane.showMessageDialog(null, "Request not ready for delivery");
-//            }
-//            populateRequests();
-//        }
-//        DB4OUtil.getInstance().storeSystem(ecosystem);
-    }//GEN-LAST:event_btnRequestPoliceHelpActionPerformed
-    public void initialize() {
-        outerloop:
-        for (Network n : this.ecosystem.getNetworkList()) {
-            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
-                if (e.getUserAccount().getUsername().equals(this.hospitalAdminAccount.getUsername())) {
-                    this.currentEnterprise = e;
-                    break outerloop;
-                }
+        int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to process");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            if (!cwr.getStatus().equals("submitted")) {
+                cwr.setAssignedEnterprise(this.currentEnterprise);
+                JPanel alertPoliceJPanel = new AlertPoliceJPanel(userProcessContainer, ecosystem, cwr, hospitalAdminAccount);
+                userProcessContainer.add("alertPolice", alertPoliceJPanel);
+                CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
+                cardLayout.next(this.userProcessContainer);
+            } else {
+                JOptionPane.showMessageDialog(null, "Request not approved yet");
             }
+            populateRequests();
         }
-//        populateRequests();
-    }
-    public void populateHospitalStaff(){
+        DB4OUtil.getInstance().storeSystem(ecosystem);
+    }//GEN-LAST:event_btnRequestPoliceHelpActionPerformed
+
+    public void populateHospitalStaff() {
         DefaultTableModel dtm = (DefaultTableModel) tblHospitalStaffDirectory.getModel();
         dtm.setRowCount(0);
         for (UserAccount n : this.currentEnterprise.getUserAccountDirectory().getUserAccountList()) {
@@ -490,8 +482,8 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
         }
     }
-    
-    public void populateDoctors(){    
+
+    public void populateDoctors() {
         DefaultTableModel dtm = (DefaultTableModel) tblDoctorsDirectory.getModel();
         dtm.setRowCount(0);
         for (UserAccount n : this.currentEnterprise.getUserAccountDirectory().getUserAccountList()) {
@@ -504,7 +496,7 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             }
 
         }
-    
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -525,4 +517,46 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JTable tblHospitalStaffDirectory;
     private javax.swing.JTable tblRequestDirectory;
     // End of variables declaration//GEN-END:variables
+
+    private void populateRequests() {
+        DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+        dtm.setRowCount(0);
+
+        for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
+            if (w.getRequestedEnterprise().equals(Enterprise.EnterpriseType.Hospital)
+                    && w.getAssignedEnterprise() == null
+                    && this.currentEnterprise.getZipCodes().contains(w.getAddress().getZipcode())
+                    && w.getStatus().equals("submitted")) {
+                Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+                row[0] = w.getRequestID();
+                row[1] = w.getSender().getUser().getName();
+                row[2] = w.getStatus();
+                dtm.addRow(row);
+            }
+        }
+
+        for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
+            if (w.getAssignedEnterprise() == this.currentEnterprise) {
+                Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+                row[0] = w.getRequestID();
+                row[1] = w.getSender().getUser().getName();
+                row[2] = w.getStatus();
+                dtm.addRow(row);
+            }
+        }
+    }
+
+    public void initialize() {
+        outerloop:
+        for (Network n : this.ecosystem.getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                if (e.getUserAccount().getUsername().equals(this.hospitalAdminAccount.getUsername())) {
+                    this.currentEnterprise = e;
+                    break outerloop;
+                }
+            }
+        }
+
+        populateRequests();
+    }
 }

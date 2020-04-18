@@ -8,10 +8,19 @@ package userinterface.policeofficerrole;
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
+import Business.Enterprise.FoodBankEnterprise;
+import Business.Network.Network;
+import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.HospitalToPoliceRequest;
+import Business.WorkQueue.VictimHelpRequest;
+import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,17 +30,19 @@ public class PoliceOfficerTasksJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form PoliceOfficerTasksJPanel
-     */   
+     */
     JPanel userProcessContainer;
     EcoSystem ecosystem;
     private UserAccount policeOfficerAccount;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     private Enterprise currentEnterprise;
-    public PoliceOfficerTasksJPanel(JPanel userProcessContainer, EcoSystem ecosystem,UserAccount userAccount) {
+
+    public PoliceOfficerTasksJPanel(JPanel userProcessContainer, EcoSystem ecosystem, UserAccount userAccount) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.ecosystem = ecosystem;
         this.policeOfficerAccount = userAccount;
+        initialize();
     }
 
     /**
@@ -123,28 +134,29 @@ public class PoliceOfficerTasksJPanel extends javax.swing.JPanel {
 
     private void btnProcessRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessRequestActionPerformed
         // TODO add your handling code here:
-//        int selectedRow = tblRequestDirectory.getSelectedRow();
-//        if (selectedRow == -1) {
-//            JOptionPane.showMessageDialog(null, "Please select a request to process");
-//        } else {
-//            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
-//
-//            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
-//            WorkRequest cwr = null;
-//            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
-//            cwr.setStatus("completed");
-//            cwr.getForwardRequest().setStatus("completed");
-//            populateRequests();
-//        }
-//        DB4OUtil.getInstance().storeSystem(ecosystem);
+        int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to process");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            cwr.setStatus("completed");
+            if (cwr instanceof HospitalToPoliceRequest) {
+                ((HospitalToPoliceRequest) cwr).getVictimHelpRequest().setStatus("completed");;
+            }
+            populateRequests();
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnProcessRequestActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         DB4OUtil.getInstance().storeSystem(ecosystem);
         this.userProcessContainer.remove(this);
-        CardLayout layout =(CardLayout) this.userProcessContainer.getLayout();
-        Component [] comps = this.userProcessContainer.getComponents();
+        CardLayout layout = (CardLayout) this.userProcessContainer.getLayout();
+        Component[] comps = this.userProcessContainer.getComponents();
         for (Component comp : comps) {
             if (comp instanceof PoliceOfficerWorkAreaJPanel) {
                 PoliceOfficerWorkAreaJPanel powajp = (PoliceOfficerWorkAreaJPanel) comp;
@@ -162,4 +174,40 @@ public class PoliceOfficerTasksJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblRequestDirectory;
     // End of variables declaration//GEN-END:variables
+
+    private void populateRequests() {
+        DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+        dtm.setRowCount(0);
+        for (WorkRequest w : ecosystem.getWorkQueue().getWorkRequestList()) {
+            System.out.println(w.getStatus());
+            if (w.getRequestedEnterprise().equals(Enterprise.EnterpriseType.PoliceDepartment)
+                    && w.getAssignedEnterprise() == this.currentEnterprise
+                    && w.getStatus().equals("case investigated by " + policeOfficerAccount.getUser().getName())) {
+                Object[] row = new Object[tblRequestDirectory.getColumnCount()];
+                row[0] = w.getRequestID();
+                row[1] = w.getSender().getUser().getName();
+                row[2] = w.getStatus();
+                dtm.addRow(row);
+            }
+        }
+
+    }
+
+    public void initialize() {
+        outerloop:
+        for (Network n : this.ecosystem.getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                    if (o.getName().equals(Organization.Type.PoliceOfficer.getValue())
+                            && o.getUserAccountDirectory().getUserAccountList().contains(policeOfficerAccount)) {
+                        this.currentEnterprise = e;
+                        break outerloop;
+                    }
+                }
+
+            }
+        }
+        populateRequests();
+    }
+
 }
