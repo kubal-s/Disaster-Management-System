@@ -14,11 +14,14 @@ import Business.Role.Role;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.HospitalToPoliceRequest;
 import Business.WorkQueue.PoliceToHospitalRequest;
+import Business.WorkQueue.VictimHelpRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import userinterface.request.PoliceToHospitalRequestDetailsJPanel;
+import userinterface.request.VictimRequestDetailsJPanel;
 
 /**
  *
@@ -71,6 +74,7 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblHospitalStaffDirectory = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        btnViewDetails = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -202,6 +206,13 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/medical-team-group-of-hospital-workers-illustration.jpg"))); // NOI18N
 
+        btnViewDetails.setText("View Details");
+        btnViewDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewDetailsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -225,10 +236,12 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                                 .addComponent(btnUpdateHospitalStaff, javax.swing.GroupLayout.Alignment.TRAILING))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnProcess)
-                        .addGap(41, 41, 41)
-                        .addComponent(btnCancel)
-                        .addGap(33, 33, 33)
+                        .addComponent(btnViewDetails)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnRequestPoliceHelp)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 778, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,7 +259,8 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnProcess)
                             .addComponent(btnCancel)
-                            .addComponent(btnRequestPoliceHelp))
+                            .addComponent(btnRequestPoliceHelp)
+                            .addComponent(btnViewDetails))
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -454,7 +468,10 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
             WorkRequest cwr = null;
             cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
-            if (!cwr.getStatus().equals("submitted")) {
+            if(cwr instanceof PoliceToHospitalRequest){
+                JOptionPane.showMessageDialog(null, "Cannot create police alert!");
+            }
+            else if (!cwr.getStatus().equals("submitted")) {
                 cwr.setAssignedEnterprise(this.currentEnterprise);
                 JPanel alertPoliceJPanel = new AlertPoliceJPanel(userProcessContainer, ecosystem, cwr, hospitalAdminAccount);
                 userProcessContainer.add("alertPolice", alertPoliceJPanel);
@@ -467,6 +484,33 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         }
         DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnRequestPoliceHelpActionPerformed
+
+    private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
+        // TODO add your handling code here:
+                int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to view details");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+
+            if (cwr instanceof VictimHelpRequest) {
+                JPanel victimRequestDetailsJPanel = new VictimRequestDetailsJPanel(userProcessContainer, cwr);
+                userProcessContainer.add("RequestDetails", victimRequestDetailsJPanel);
+                CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
+                cardLayout.next(this.userProcessContainer);
+            } else {
+                JPanel policeToHospitalRequestDetailsJPanel = new PoliceToHospitalRequestDetailsJPanel(userProcessContainer, cwr);
+                userProcessContainer.add("RequestDetails", policeToHospitalRequestDetailsJPanel);
+                CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
+                cardLayout.next(this.userProcessContainer);
+            }
+
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
+    }//GEN-LAST:event_btnViewDetailsActionPerformed
 
     public void populateHospitalStaff() {
         DefaultTableModel dtm = (DefaultTableModel) tblHospitalStaffDirectory.getModel();
@@ -509,6 +553,7 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnRequestPoliceHelp;
     private javax.swing.JButton btnUpdateDoctor;
     private javax.swing.JButton btnUpdateHospitalStaff;
+    private javax.swing.JButton btnViewDetails;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
