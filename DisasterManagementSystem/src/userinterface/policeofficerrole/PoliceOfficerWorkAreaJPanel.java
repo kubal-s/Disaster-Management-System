@@ -12,11 +12,15 @@ import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.HospitalToPoliceRequest;
+import Business.WorkQueue.VictimHelpRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import userinterface.request.HospitalToPoliceRequestDetailsJPanel;
+import userinterface.request.PoliceToHospitalRequestDetailsJPanel;
+import userinterface.request.VictimRequestDetailsJPanel;
 
 /**
  *
@@ -55,6 +59,7 @@ public class PoliceOfficerWorkAreaJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRequestDirectory = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        btnViewDetails = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -95,6 +100,13 @@ public class PoliceOfficerWorkAreaJPanel extends javax.swing.JPanel {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/policeteam.jpg"))); // NOI18N
 
+        btnViewDetails.setText("View Details");
+        btnViewDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewDetailsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,9 +117,10 @@ public class PoliceOfficerWorkAreaJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAssigntToMe)
-                            .addComponent(BtnViewMyTasks)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(BtnViewMyTasks, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAssigntToMe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnViewDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 847, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(199, Short.MAX_VALUE))
         );
@@ -120,8 +133,11 @@ public class PoliceOfficerWorkAreaJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(btnViewDetails)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAssigntToMe)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(BtnViewMyTasks)))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
@@ -159,10 +175,38 @@ public class PoliceOfficerWorkAreaJPanel extends javax.swing.JPanel {
         cardLayout.next(this.userProcessContainer);
     }//GEN-LAST:event_BtnViewMyTasksActionPerformed
 
+    private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
+        // TODO add your handling code here:
+                int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to view details");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+
+            if (cwr instanceof VictimHelpRequest) {
+                JPanel victimRequestDetailsJPanel = new VictimRequestDetailsJPanel(userProcessContainer, cwr);
+                userProcessContainer.add("RequestDetails", victimRequestDetailsJPanel);
+                CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
+                cardLayout.next(this.userProcessContainer);
+            } else {
+                JPanel hospitalToPoliceRequestDetailsJPanel = new HospitalToPoliceRequestDetailsJPanel(userProcessContainer, cwr);
+                userProcessContainer.add("RequestDetails", hospitalToPoliceRequestDetailsJPanel);
+                CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
+                cardLayout.next(this.userProcessContainer);
+            }
+
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
+    }//GEN-LAST:event_btnViewDetailsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnViewMyTasks;
     private javax.swing.JButton btnAssigntToMe;
+    private javax.swing.JButton btnViewDetails;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblRequestDirectory;

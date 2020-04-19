@@ -73,6 +73,7 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         btnCancel = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        btnViewDetails = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -215,6 +216,13 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/foodbank.jpg"))); // NOI18N
 
+        btnViewDetails.setText("View Details");
+        btnViewDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewDetailsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -231,11 +239,13 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                             .addComponent(editFoodPackets))
                         .addComponent(jScrollPane1)
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(365, 365, 365)
-                            .addComponent(btnProcess)
-                            .addGap(34, 34, 34)
-                            .addComponent(btnCancel)
-                            .addGap(37, 37, 37)
+                            .addGap(225, 225, 225)
+                            .addComponent(btnViewDetails)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
                             .addComponent(jButton1)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -270,7 +280,8 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnProcess)
                             .addComponent(btnCancel)
-                            .addComponent(jButton1))
+                            .addComponent(jButton1)
+                            .addComponent(btnViewDetails))
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -499,6 +510,10 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         }
         DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnViewDetailsActionPerformed
     public void populatePackagers() {
         DefaultTableModel dtm = (DefaultTableModel) tblPackagersDirectory.getModel();
         dtm.setRowCount(0);
@@ -538,6 +553,7 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnProcess;
     private javax.swing.JButton btnUpdateDeliveryMan;
     private javax.swing.JButton btnUpdatePackager;
+    private javax.swing.JButton btnViewDetails;
     private javax.swing.JButton editFoodPackets;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

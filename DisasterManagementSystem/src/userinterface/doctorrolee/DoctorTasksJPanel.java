@@ -13,12 +13,15 @@ import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.HospitalToPoliceRequest;
 import Business.WorkQueue.PoliceToHospitalRequest;
+import Business.WorkQueue.VictimHelpRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import userinterface.request.PoliceToHospitalRequestDetailsJPanel;
+import userinterface.request.VictimRequestDetailsJPanel;
 
 /**
  *
@@ -57,6 +60,7 @@ public class DoctorTasksJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRequestDirectory = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        btnViewDetails = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -97,6 +101,13 @@ public class DoctorTasksJPanel extends javax.swing.JPanel {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/doctor.gif"))); // NOI18N
 
+        btnViewDetails.setText("View Details");
+        btnViewDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewDetailsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,7 +116,10 @@ public class DoctorTasksJPanel extends javax.swing.JPanel {
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBack)
-                    .addComponent(btnProcessRequest, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnViewDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnProcessRequest))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(257, Short.MAX_VALUE))
@@ -118,7 +132,9 @@ public class DoctorTasksJPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnProcessRequest)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnProcessRequest)
+                    .addComponent(btnViewDetails))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(364, Short.MAX_VALUE))
@@ -159,10 +175,38 @@ public class DoctorTasksJPanel extends javax.swing.JPanel {
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
+        // TODO add your handling code here:
+                int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to view details");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+
+            if (cwr instanceof VictimHelpRequest) {
+                JPanel victimRequestDetailsJPanel = new VictimRequestDetailsJPanel(userProcessContainer, cwr);
+                userProcessContainer.add("RequestDetails", victimRequestDetailsJPanel);
+                CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
+                cardLayout.next(this.userProcessContainer);
+            } else {
+                JPanel policeToHospitalRequestDetailsJPanel = new PoliceToHospitalRequestDetailsJPanel(userProcessContainer, cwr);
+                userProcessContainer.add("RequestDetails", policeToHospitalRequestDetailsJPanel);
+                CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
+                cardLayout.next(this.userProcessContainer);
+            }
+
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
+    }//GEN-LAST:event_btnViewDetailsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnProcessRequest;
+    private javax.swing.JButton btnViewDetails;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblRequestDirectory;

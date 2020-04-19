@@ -9,9 +9,11 @@ import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Enterprise.Enterprise;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.PoliceToHospitalRequest;
 import Business.WorkQueue.VictimHelpRequest;
 import Business.WorkQueue.WorkRequest;
 import business.address.Address;
+import java.awt.CardLayout;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,24 +21,25 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import userinterface.policeofficerrole.PoliceOfficerTasksJPanel;
+import userinterface.request.VictimRequestDetailsJPanel;
 
 public class VictimWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form VictimWorkAreaJPanel
      */
-
     private JPanel userProcessContainer;
     private EcoSystem ecosystem;
     private UserAccount victimUserAccount;
     private List<WorkRequest> victimWorkRequests;
     private DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
-    
+
     public VictimWorkAreaJPanel(JPanel userProcessContainer, UserAccount victimUserAccount) {
         this.userProcessContainer = userProcessContainer;
         this.ecosystem = DB4OUtil.getInstance().retrieveSystem();
         this.victimUserAccount = victimUserAccount;
-        
+
         initComponents();
         // Create and initialize the Engine
         initialize();
@@ -81,8 +84,9 @@ public class VictimWorkAreaJPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblHelpRequest = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        btnViewDetails = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
+        btnCancel = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -210,14 +214,21 @@ public class VictimWorkAreaJPanel extends javax.swing.JPanel {
         ));
         jScrollPane3.setViewportView(tblHelpRequest);
 
-        jButton2.setText("Get Details");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnViewDetails.setText("View Details");
+        btnViewDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnViewDetailsActionPerformed(evt);
             }
         });
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/wecarevictim2.jpg"))); // NOI18N
+
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -261,11 +272,13 @@ public class VictimWorkAreaJPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 325, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane3))
+                                .addComponent(btnViewDetails)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)))
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -329,8 +342,11 @@ public class VictimWorkAreaJPanel extends javax.swing.JPanel {
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2))
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnViewDetails)
+                            .addComponent(btnCancel))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -340,40 +356,38 @@ public class VictimWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnSubmitHelpRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitHelpRequestActionPerformed
         // TODO add your handling code here:
-        if(txtSummary.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Please state the problem faced..enter summary!");
+        if (txtSummary.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please state the problem faced..enter summary!");
             return;
         }
-        if(txtPeopleAffected.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Please enter number of people affected!");
+        if (txtPeopleAffected.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter number of people affected!");
             return;
         }
-        try{
+        try {
             Integer.parseInt(txtPeopleAffected.getText());
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null,"Please people affected in digits!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Please people affected in digits!");
             return;
         }
-        if(txtCity.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Please enter city name!");
+        if (txtCity.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter city name!");
             return;
         }
-        if(txtState.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Please enter state name!");
+        if (txtState.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter state name!");
             return;
         }
-        if(txtZipcode.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"Please enter zipcode!");
+        if (txtZipcode.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter zipcode!");
             return;
         }
         WorkRequest victimWorkRequest = new VictimHelpRequest();
         victimWorkRequest.setRequestID(ecosystem.getWorkQueue().getRequestID());
-        victimWorkRequest.setRequestedEnterprise
-        ((Enterprise.EnterpriseType)comboxEnterprise.getSelectedItem());
+        victimWorkRequest.setRequestedEnterprise((Enterprise.EnterpriseType) comboxEnterprise.getSelectedItem());
         victimWorkRequest.setSummary(txtSummary.getText());
         victimWorkRequest.setDescription(txtDescription.getText());
-        ((VictimHelpRequest)victimWorkRequest).setPeopleAffected(Integer.parseInt(txtPeopleAffected.getText()));
+        ((VictimHelpRequest) victimWorkRequest).setPeopleAffected(Integer.parseInt(txtPeopleAffected.getText()));
         Address victimWorkRequestAddress = new Address();
         victimWorkRequestAddress.setStreetName(txtStreet.getText());
         victimWorkRequestAddress.setUnitNumber(txtUnitNumber.getText());
@@ -388,7 +402,7 @@ public class VictimWorkAreaJPanel extends javax.swing.JPanel {
         clearFields();
         this.ecosystem.getWorkQueue().add(victimWorkRequest);
         DB4OUtil.getInstance().storeSystem(ecosystem);
-        JOptionPane.showMessageDialog(null,"Request submitted successfully!");
+        JOptionPane.showMessageDialog(null, "Request submitted successfully!");
         return;
     }//GEN-LAST:event_btnSubmitHelpRequestActionPerformed
 
@@ -424,15 +438,51 @@ public class VictimWorkAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtZipcodeActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
+                // TODO add your handling code here:
+
+        int selectedRow = tblHelpRequest.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to view details");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblHelpRequest.getModel();
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            JPanel victimRequestDetailsJPanel = new VictimRequestDetailsJPanel(userProcessContainer, cwr);
+            userProcessContainer.add("RequestDetails", victimRequestDetailsJPanel);
+            CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
+            cardLayout.next(this.userProcessContainer);
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
+    }//GEN-LAST:event_btnViewDetailsActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        int selectedRow = tblHelpRequest.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to cancel");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblHelpRequest.getModel();
+
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            if (cwr.getStatus().equals("completed")) {
+                JOptionPane.showMessageDialog(null, "Cannot cancel completed request");
+            } else {
+                cwr.setStatus("cancelled");
+                initialize();
+            }
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
+    }//GEN-LAST:event_btnCancelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnSubmitHelpRequest;
+    private javax.swing.JButton btnViewDetails;
     private javax.swing.JComboBox comboxEnterprise;
-    private javax.swing.JButton jButton2;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -464,44 +514,42 @@ public class VictimWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtZipcode;
     // End of variables declaration//GEN-END:variables
 
-    private void initialize() {
+    public void initialize() {
         comboxEnterprise.removeAllItems();
         comboxEnterprise.addItem(Enterprise.EnterpriseType.FoodBank);
         comboxEnterprise.addItem(Enterprise.EnterpriseType.Hospital);
         comboxEnterprise.addItem(Enterprise.EnterpriseType.PoliceDepartment);
         comboxEnterprise.addItem(Enterprise.EnterpriseType.NonGovernmentOrganization);
-        
+
         victimWorkRequests = ecosystem.getWorkQueue().getWorkRequestListForUser(victimUserAccount);
-        DefaultTableModel dtm = (DefaultTableModel)tblHelpRequest.getModel();
-        dtm.setRowCount(0); 
-        for(WorkRequest w: victimWorkRequests){
+        DefaultTableModel dtm = (DefaultTableModel) tblHelpRequest.getModel();
+        dtm.setRowCount(0);
+        for (WorkRequest w : victimWorkRequests) {
             Object[] row = new Object[tblHelpRequest.getColumnCount()];
-            row[0]=w.getRequestID();
-            row[1]=dateFormat.format(w.getRequestDate());
-            row[2]=w.getSummary();
-            row[3]=w.getRequestedEnterprise().toString();
-            row[4]=w.getStatus();
+            row[0] = w.getRequestID();
+            row[1] = dateFormat.format(w.getRequestDate());
+            row[2] = w.getSummary();
+            row[3] = w.getRequestedEnterprise().toString();
+            row[4] = w.getStatus();
             dtm.addRow(row);
         }
-        
-        
-        
+
     }
 
-    private void populateTbl(WorkRequest wr) {
-            System.out.println(wr);
-            DefaultTableModel dtm = (DefaultTableModel)tblHelpRequest.getModel();
-            //dtm.setRowCount(0);
-            Object[] row = new Object[tblHelpRequest.getColumnCount()];
-            row[0]=wr.getRequestID();
-            row[1]=dateFormat.format(wr.getRequestDate());
-            row[2]=wr.getSummary();
-            row[3]=wr.getRequestedEnterprise().toString();
-            row[4]=wr.getStatus();
-            dtm.addRow(row);
+    public void populateTbl(WorkRequest wr) {
+        System.out.println(wr);
+        DefaultTableModel dtm = (DefaultTableModel) tblHelpRequest.getModel();
+        //dtm.setRowCount(0);
+        Object[] row = new Object[tblHelpRequest.getColumnCount()];
+        row[0] = wr.getRequestID();
+        row[1] = dateFormat.format(wr.getRequestDate());
+        row[2] = wr.getSummary();
+        row[3] = wr.getRequestedEnterprise().toString();
+        row[4] = wr.getStatus();
+        dtm.addRow(row);
     }
-    
-    private void clearFields(){
+
+    private void clearFields() {
         txtSummary.setText("");
         txtDescription.setText("");
         txtPeopleAffected.setText("");

@@ -25,7 +25,11 @@
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnBack" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnProcessRequest" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="btnViewDetails" min="-2" pref="128" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnProcessRequest" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Component id="jScrollPane1" alignment="0" min="-2" pref="713" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="1" min="-2" pref="563" max="-2" attributes="0"/>
               </Group>
@@ -41,7 +45,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="136" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnProcessRequest" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnProcessRequest" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnViewDetails" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel2" min="-2" pref="448" max="-2" attributes="0"/>
               <EmptySpace pref="364" max="32767" attributes="0"/>
@@ -95,6 +102,14 @@
           <Image iconType="3" name="/userinterface/assets/images/doctor.gif"/>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnViewDetails">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="View Details"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnViewDetailsActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
