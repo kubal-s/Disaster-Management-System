@@ -58,10 +58,10 @@ public class AddPoliceOfficerJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         txtPoliceOfficerUsername = new javax.swing.JTextField();
         txtPoliceOfficerPhoneNo = new javax.swing.JTextField();
-        txtPoliceOfficerPassword = new javax.swing.JTextField();
         txtPoliceOfficerName = new javax.swing.JTextField();
         btnAddPoliceOfficer = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        txtPoliceOfficerPassword = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -92,12 +92,6 @@ public class AddPoliceOfficerJPanel extends javax.swing.JPanel {
             }
         });
 
-        txtPoliceOfficerPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPoliceOfficerPasswordActionPerformed(evt);
-            }
-        });
-
         txtPoliceOfficerName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPoliceOfficerNameActionPerformed(evt);
@@ -123,21 +117,20 @@ public class AddPoliceOfficerJPanel extends javax.swing.JPanel {
                     .addComponent(btnBack)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel1))
-                                .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPoliceOfficerPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPoliceOfficerUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPoliceOfficerName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(btnAddPoliceOfficer)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel1))
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(29, 29, 29)
-                                .addComponent(txtPoliceOfficerPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtPoliceOfficerPhoneNo, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtPoliceOfficerUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtPoliceOfficerName, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtPoliceOfficerPassword))))
                         .addGap(80, 80, 80)
                         .addComponent(jLabel5)))
                 .addContainerGap(311, Short.MAX_VALUE))
@@ -195,10 +188,6 @@ public class AddPoliceOfficerJPanel extends javax.swing.JPanel {
     private void txtPoliceOfficerPhoneNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPoliceOfficerPhoneNoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPoliceOfficerPhoneNoActionPerformed
-
-    private void txtPoliceOfficerPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPoliceOfficerPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPoliceOfficerPasswordActionPerformed
 
     private void txtPoliceOfficerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPoliceOfficerNameActionPerformed
         // TODO add your handling code here:
@@ -286,7 +275,7 @@ public class AddPoliceOfficerJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField txtPoliceOfficerName;
-    private javax.swing.JTextField txtPoliceOfficerPassword;
+    private javax.swing.JPasswordField txtPoliceOfficerPassword;
     private javax.swing.JTextField txtPoliceOfficerPhoneNo;
     private javax.swing.JTextField txtPoliceOfficerUsername;
     // End of variables declaration//GEN-END:variables

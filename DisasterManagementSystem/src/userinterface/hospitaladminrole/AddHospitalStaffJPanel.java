@@ -52,7 +52,6 @@ public class AddHospitalStaffJPanel extends javax.swing.JPanel {
 
         txtHospitalStaffUsername = new javax.swing.JTextField();
         txtHospitalStaffPhoneNo = new javax.swing.JTextField();
-        txtHospitalStaffPassword = new javax.swing.JTextField();
         txtHospitalStaffName = new javax.swing.JTextField();
         btnAddHospitalStaff = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -61,6 +60,7 @@ public class AddHospitalStaffJPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        txtHospitalStaffPassword = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -73,12 +73,6 @@ public class AddHospitalStaffJPanel extends javax.swing.JPanel {
         txtHospitalStaffPhoneNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtHospitalStaffPhoneNoActionPerformed(evt);
-            }
-        });
-
-        txtHospitalStaffPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtHospitalStaffPasswordActionPerformed(evt);
             }
         });
 
@@ -112,6 +106,12 @@ public class AddHospitalStaffJPanel extends javax.swing.JPanel {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/medicalteam.jpg"))); // NOI18N
 
+        txtHospitalStaffPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHospitalStaffPasswordActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,11 +130,11 @@ public class AddHospitalStaffJPanel extends javax.swing.JPanel {
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel4))
                                 .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtHospitalStaffPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtHospitalStaffPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtHospitalStaffUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtHospitalStaffName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtHospitalStaffPhoneNo, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtHospitalStaffUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtHospitalStaffName, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtHospitalStaffPassword))))
                         .addGap(80, 80, 80)
                         .addComponent(jLabel5)))
                 .addContainerGap(306, Short.MAX_VALUE))
@@ -160,10 +160,11 @@ public class AddHospitalStaffJPanel extends javax.swing.JPanel {
                             .addComponent(txtHospitalStaffPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(txtHospitalStaffPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtHospitalStaffPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(44, 44, 44)
                                 .addComponent(btnAddHospitalStaff))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
@@ -179,10 +180,6 @@ public class AddHospitalStaffJPanel extends javax.swing.JPanel {
     private void txtHospitalStaffPhoneNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHospitalStaffPhoneNoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHospitalStaffPhoneNoActionPerformed
-
-    private void txtHospitalStaffPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHospitalStaffPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtHospitalStaffPasswordActionPerformed
 
     private void txtHospitalStaffNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHospitalStaffNameActionPerformed
         // TODO add your handling code here:
@@ -269,6 +266,10 @@ public class AddHospitalStaffJPanel extends javax.swing.JPanel {
         }
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void txtHospitalStaffPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHospitalStaffPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHospitalStaffPasswordActionPerformed
     public void clearSelections(){
         txtHospitalStaffName.setText("");
         txtHospitalStaffPassword.setText("");
@@ -285,7 +286,7 @@ public class AddHospitalStaffJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField txtHospitalStaffName;
-    private javax.swing.JTextField txtHospitalStaffPassword;
+    private javax.swing.JPasswordField txtHospitalStaffPassword;
     private javax.swing.JTextField txtHospitalStaffPhoneNo;
     private javax.swing.JTextField txtHospitalStaffUsername;
     // End of variables declaration//GEN-END:variables

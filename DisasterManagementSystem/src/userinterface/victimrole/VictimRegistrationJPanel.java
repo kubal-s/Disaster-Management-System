@@ -65,7 +65,6 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         victimNameTextField = new javax.swing.JTextField();
         victimUsernameTextField = new javax.swing.JTextField();
-        victimPasswordTextField = new javax.swing.JTextField();
         victimStreetTextField = new javax.swing.JTextField();
         victimUnitTextField = new javax.swing.JTextField();
         victimCityTextField = new javax.swing.JTextField();
@@ -74,6 +73,7 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
         victimPhoneTextField = new javax.swing.JTextField();
         statusTextField = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        victimPasswordTextField = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -118,12 +118,6 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
             }
         });
 
-        victimPasswordTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                victimPasswordTextFieldActionPerformed(evt);
-            }
-        });
-
         victimStreetTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 victimStreetTextFieldActionPerformed(evt);
@@ -162,6 +156,12 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/wecarevictim.png"))); // NOI18N
 
+        victimPasswordTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                victimPasswordTextFieldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -180,15 +180,18 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
                                     .addGap(46, 46, 46)
                                     .addComponent(jLabel1))
                                 .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addComponent(jLabel6)
                                     .addGap(66, 66, 66)
                                     .addComponent(victimStreetTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(victimPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(victimUsernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(43, 43, 43)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(victimUsernameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                                        .addComponent(victimPasswordTextField))))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGap(96, 96, 96)
@@ -227,7 +230,7 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel3)
                             .addComponent(victimUsernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(victimPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
@@ -345,10 +348,6 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_victimUsernameTextFieldActionPerformed
 
-    private void victimPasswordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_victimPasswordTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_victimPasswordTextFieldActionPerformed
-
     private void victimStreetTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_victimStreetTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_victimStreetTextFieldActionPerformed
@@ -377,6 +376,10 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_victimPhoneTextFieldActionPerformed
 
+    private void victimPasswordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_victimPasswordTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_victimPasswordTextFieldActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -395,7 +398,7 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
     private javax.swing.JButton submitVictimRegistration;
     private javax.swing.JTextField victimCityTextField;
     private javax.swing.JTextField victimNameTextField;
-    private javax.swing.JTextField victimPasswordTextField;
+    private javax.swing.JPasswordField victimPasswordTextField;
     private javax.swing.JTextField victimPhoneTextField;
     private javax.swing.JTextField victimStateTextField;
     private javax.swing.JTextField victimStreetTextField;

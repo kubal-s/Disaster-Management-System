@@ -52,7 +52,6 @@ public class AddPackagerJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         txtPackagerPhoneNo = new javax.swing.JTextField();
-        txtPackagerPassword = new javax.swing.JTextField();
         txtPackagerName = new javax.swing.JTextField();
         btnAddPackaget = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -62,18 +61,13 @@ public class AddPackagerJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         txtPackagerUsername = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        txtPackagerPassword = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
         txtPackagerPhoneNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPackagerPhoneNoActionPerformed(evt);
-            }
-        });
-
-        txtPackagerPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPackagerPasswordActionPerformed(evt);
             }
         });
 
@@ -113,6 +107,12 @@ public class AddPackagerJPanel extends javax.swing.JPanel {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/foodpackager.png"))); // NOI18N
 
+        txtPackagerPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPackagerPasswordActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,11 +131,11 @@ public class AddPackagerJPanel extends javax.swing.JPanel {
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel4))
                                 .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPackagerPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPackagerPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPackagerUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPackagerName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtPackagerPhoneNo, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtPackagerUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtPackagerName, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtPackagerPassword))))
                         .addGap(128, 128, 128)
                         .addComponent(jLabel5)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -173,10 +173,6 @@ public class AddPackagerJPanel extends javax.swing.JPanel {
     private void txtPackagerPhoneNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPackagerPhoneNoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPackagerPhoneNoActionPerformed
-
-    private void txtPackagerPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPackagerPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPackagerPasswordActionPerformed
 
     private void txtPackagerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPackagerNameActionPerformed
         // TODO add your handling code here:
@@ -270,6 +266,10 @@ public class AddPackagerJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPackagerUsernameActionPerformed
 
+    private void txtPackagerPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPackagerPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPackagerPasswordActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddPackaget;
@@ -280,7 +280,7 @@ public class AddPackagerJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField txtPackagerName;
-    private javax.swing.JTextField txtPackagerPassword;
+    private javax.swing.JPasswordField txtPackagerPassword;
     private javax.swing.JTextField txtPackagerPhoneNo;
     private javax.swing.JTextField txtPackagerUsername;
     // End of variables declaration//GEN-END:variables

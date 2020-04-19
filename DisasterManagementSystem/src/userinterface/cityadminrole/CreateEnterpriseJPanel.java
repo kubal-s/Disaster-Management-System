@@ -71,7 +71,6 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         txtEnterpriseName = new javax.swing.JTextField();
         txtEnterpriseAdminName = new javax.swing.JTextField();
-        txtEnterpriseAdminPassword = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         comboxEnterpriseType = new javax.swing.JComboBox();
         txtEnterpriseAdminUsername = new javax.swing.JTextField();
@@ -82,6 +81,7 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
         tblAddedZipCodesDirec = new javax.swing.JTable();
         btnAddZipCode = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        txtEnterpriseAdminPassword = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -109,12 +109,6 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
         txtEnterpriseAdminName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEnterpriseAdminNameActionPerformed(evt);
-            }
-        });
-
-        txtEnterpriseAdminPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEnterpriseAdminPasswordActionPerformed(evt);
             }
         });
 
@@ -212,16 +206,17 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(comboxEnterpriseType, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(131, 131, 131)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtEnterpriseAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtEnterpriseAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtEnterpriseAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtEnterpriseName, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel4)
+                            .addGap(27, 27, 27)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtEnterpriseAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEnterpriseAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEnterpriseName, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtEnterpriseAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(btnBack)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnAddZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -254,18 +249,19 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(txtEnterpriseAdminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAddZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCreateEnterprise))
                     .addComponent(txtEnterpriseAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAddZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCreateEnterprise)
-                .addGap(202, 202, 202))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
@@ -294,10 +290,6 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
     private void txtEnterpriseAdminNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnterpriseAdminNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEnterpriseAdminNameActionPerformed
-
-    private void txtEnterpriseAdminPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnterpriseAdminPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEnterpriseAdminPasswordActionPerformed
 
     private void txtEnterpriseAdminUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnterpriseAdminUsernameActionPerformed
         // TODO add your handling code here:
@@ -467,7 +459,7 @@ public class CreateEnterpriseJPanel extends javax.swing.JPanel {
     private javax.swing.JTable tblAddedZipCodesDirec;
     private javax.swing.JTable tblZipCodesDirectory;
     private javax.swing.JTextField txtEnterpriseAdminName;
-    private javax.swing.JTextField txtEnterpriseAdminPassword;
+    private javax.swing.JPasswordField txtEnterpriseAdminPassword;
     private javax.swing.JTextField txtEnterpriseAdminUsername;
     private javax.swing.JTextField txtEnterpriseName;
     // End of variables declaration//GEN-END:variables

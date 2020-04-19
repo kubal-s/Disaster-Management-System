@@ -55,13 +55,13 @@ public class AddDeliveryManJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         txtDeliveryManUsername = new javax.swing.JTextField();
         txtDeliveryManPhoneNo = new javax.swing.JTextField();
-        txtDeliveryManPassword = new javax.swing.JTextField();
         txtDeliveryManName = new javax.swing.JTextField();
         btnAddDeliveryMan = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        txtDeliveryManPassword = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -86,12 +86,6 @@ public class AddDeliveryManJPanel extends javax.swing.JPanel {
             }
         });
 
-        txtDeliveryManPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDeliveryManPasswordActionPerformed(evt);
-            }
-        });
-
         txtDeliveryManName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDeliveryManNameActionPerformed(evt);
@@ -113,6 +107,12 @@ public class AddDeliveryManJPanel extends javax.swing.JPanel {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/delivery.gif"))); // NOI18N
 
+        txtDeliveryManPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDeliveryManPasswordActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,11 +131,11 @@ public class AddDeliveryManJPanel extends javax.swing.JPanel {
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel4))
                                 .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtDeliveryManPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDeliveryManPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDeliveryManUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDeliveryManName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtDeliveryManPhoneNo, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtDeliveryManUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtDeliveryManName, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtDeliveryManPassword))))
                         .addGap(46, 46, 46)
                         .addComponent(jLabel5)))
                 .addContainerGap(186, Short.MAX_VALUE))
@@ -192,10 +192,6 @@ public class AddDeliveryManJPanel extends javax.swing.JPanel {
     private void txtDeliveryManPhoneNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeliveryManPhoneNoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDeliveryManPhoneNoActionPerformed
-
-    private void txtDeliveryManPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeliveryManPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDeliveryManPasswordActionPerformed
 
     private void txtDeliveryManNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeliveryManNameActionPerformed
         // TODO add your handling code here:
@@ -266,6 +262,10 @@ public class AddDeliveryManJPanel extends javax.swing.JPanel {
             }
     }//GEN-LAST:event_btnAddDeliveryManActionPerformed
 
+    private void txtDeliveryManPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeliveryManPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDeliveryManPasswordActionPerformed
+
     public void clearSelections(){
         txtDeliveryManName.setText("");
         txtDeliveryManPassword.setText("");
@@ -281,7 +281,7 @@ public class AddDeliveryManJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField txtDeliveryManName;
-    private javax.swing.JTextField txtDeliveryManPassword;
+    private javax.swing.JPasswordField txtDeliveryManPassword;
     private javax.swing.JTextField txtDeliveryManPhoneNo;
     private javax.swing.JTextField txtDeliveryManUsername;
     // End of variables declaration//GEN-END:variables

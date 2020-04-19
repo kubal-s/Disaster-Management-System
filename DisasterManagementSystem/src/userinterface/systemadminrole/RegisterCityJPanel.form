@@ -48,10 +48,10 @@
                                   <Component id="txtCityAdminUserName" alignment="0" max="32767" attributes="0"/>
                                   <Component id="txtCityAdminName" alignment="0" max="32767" attributes="0"/>
                                   <Component id="txtCityName" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtCityAdminPassword" max="32767" attributes="0"/>
                                   <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
-                                  <Component id="txtZipCode" alignment="0" min="-2" pref="192" max="-2" attributes="0"/>
+                                  <Component id="txtZipCode" alignment="0" pref="192" max="32767" attributes="0"/>
                                   <Component id="btnAddZipCode" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCityAdminPassword" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -87,10 +87,10 @@
                       </Group>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtCityAdminPassword" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCityAdminPassword" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="61" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -153,8 +153,6 @@
         <Property name="text" type="java.lang.String" value="City Admin Password"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtCityAdminPassword">
-    </Component>
     <Component class="javax.swing.JButton" name="btnAddZipCode">
       <Properties>
         <Property name="text" type="java.lang.String" value="Add Zip Code"/>
@@ -214,6 +212,8 @@
           <Image iconType="3" name="/userinterface/assets/images/addstate.png"/>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="txtCityAdminPassword">
     </Component>
   </SubComponents>
 </Form>

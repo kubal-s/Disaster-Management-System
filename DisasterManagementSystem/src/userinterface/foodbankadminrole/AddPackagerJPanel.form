@@ -36,11 +36,11 @@
                                   <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtPackagerPassword" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
-                                  <Component id="txtPackagerPhoneNo" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
-                                  <Component id="txtPackagerUsername" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
-                                  <Component id="txtPackagerName" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtPackagerPhoneNo" alignment="0" pref="142" max="32767" attributes="0"/>
+                                  <Component id="txtPackagerUsername" alignment="0" pref="142" max="32767" attributes="0"/>
+                                  <Component id="txtPackagerName" alignment="0" pref="142" max="32767" attributes="0"/>
+                                  <Component id="txtPackagerPassword" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -95,11 +95,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPackagerPhoneNoActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtPackagerPassword">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPackagerPasswordActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JTextField" name="txtPackagerName">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPackagerNameActionPerformed"/>
@@ -152,6 +147,11 @@
           <Image iconType="3" name="/userinterface/assets/images/foodpackager.png"/>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="txtPackagerPassword">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPackagerPasswordActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
