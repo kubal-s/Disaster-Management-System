@@ -53,7 +53,6 @@ public class AddDoctorJPanel extends javax.swing.JPanel {
 
         txtDoctorUsername = new javax.swing.JTextField();
         txtDoctorPhoneNo = new javax.swing.JTextField();
-        txtDoctorPassword = new javax.swing.JTextField();
         txtDoctorName = new javax.swing.JTextField();
         btnAddDoctor = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -62,6 +61,7 @@ public class AddDoctorJPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        txtDoctorPassword = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -74,12 +74,6 @@ public class AddDoctorJPanel extends javax.swing.JPanel {
         txtDoctorPhoneNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDoctorPhoneNoActionPerformed(evt);
-            }
-        });
-
-        txtDoctorPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDoctorPasswordActionPerformed(evt);
             }
         });
 
@@ -113,6 +107,12 @@ public class AddDoctorJPanel extends javax.swing.JPanel {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/doc1.png"))); // NOI18N
 
+        txtDoctorPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDoctorPasswordActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,11 +131,11 @@ public class AddDoctorJPanel extends javax.swing.JPanel {
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel4))
                                 .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtDoctorPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDoctorPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDoctorUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDoctorName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtDoctorPhoneNo, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtDoctorUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtDoctorName, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                    .addComponent(txtDoctorPassword))))
                         .addGap(80, 80, 80)
                         .addComponent(jLabel5)))
                 .addContainerGap(600, Short.MAX_VALUE))
@@ -177,10 +177,6 @@ public class AddDoctorJPanel extends javax.swing.JPanel {
     private void txtDoctorPhoneNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDoctorPhoneNoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDoctorPhoneNoActionPerformed
-
-    private void txtDoctorPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDoctorPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDoctorPasswordActionPerformed
 
     private void txtDoctorNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDoctorNameActionPerformed
         // TODO add your handling code here:
@@ -268,6 +264,10 @@ public class AddDoctorJPanel extends javax.swing.JPanel {
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void txtDoctorPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDoctorPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDoctorPasswordActionPerformed
+
     public void clearSelections(){
         txtDoctorName.setText("");
         txtDoctorPassword.setText("");
@@ -283,7 +283,7 @@ public class AddDoctorJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField txtDoctorName;
-    private javax.swing.JTextField txtDoctorPassword;
+    private javax.swing.JPasswordField txtDoctorPassword;
     private javax.swing.JTextField txtDoctorPhoneNo;
     private javax.swing.JTextField txtDoctorUsername;
     // End of variables declaration//GEN-END:variables

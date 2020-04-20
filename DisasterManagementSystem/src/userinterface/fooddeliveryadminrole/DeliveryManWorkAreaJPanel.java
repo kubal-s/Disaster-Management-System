@@ -77,7 +77,7 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -96,6 +96,11 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/food_delivery.gif"))); // NOI18N
 
         btnViewDetails.setText("View Details");
+        btnViewDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewDetailsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -160,6 +165,10 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
         }
         DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnAssigntToMeActionPerformed
+
+    private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnViewDetailsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

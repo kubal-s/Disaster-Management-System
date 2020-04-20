@@ -80,7 +80,7 @@ public class VolunteerWorkAreaJPanel extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -88,9 +88,6 @@ public class VolunteerWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(tblRequestDirectory);
-        if (tblRequestDirectory.getColumnModel().getColumnCount() > 0) {
-            tblRequestDirectory.getColumnModel().getColumn(0).setResizable(false);
-        }
 
         btnAssigntToMe.setText("Assign To Me");
         btnAssigntToMe.addActionListener(new java.awt.event.ActionListener() {

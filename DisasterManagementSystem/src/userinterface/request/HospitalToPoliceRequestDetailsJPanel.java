@@ -85,27 +85,29 @@ public class HospitalToPoliceRequestDetailsJPanel extends javax.swing.JPanel {
         txtHospitalRequestID = new javax.swing.JLabel();
         txtSender = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 240));
+
         jLabel1.setText("Hospital Request Details");
 
-        jLabel2.setText("Request ID                              :");
+        jLabel2.setText("Request ID:");
 
-        jLabel3.setText("Requested By                         :");
+        jLabel3.setText("Requested By:");
 
-        jLabel4.setText("Summary                                 :");
+        jLabel4.setText("Summary:");
 
         jLabel5.setText("Requested Enterprise Type :");
 
-        jLabel6.setText("Acting Enterprise                   :");
+        jLabel6.setText("Acting Enterprise:");
 
-        jLabel7.setText("Description                             :");
+        jLabel7.setText("Description:");
 
-        jLabel8.setText("Address                                   :");
+        jLabel8.setText("Address:");
 
-        jLabel9.setText("People Affected                      :");
+        jLabel9.setText("People Affected:");
 
-        jLabel10.setText("Date                                         :");
+        jLabel10.setText("Date:");
 
-        jLabel11.setText("Status                                      :");
+        jLabel11.setText("Status:");
 
         btnPrint.setText("Print");
         btnPrint.addActionListener(new java.awt.event.ActionListener() {
@@ -141,23 +143,23 @@ public class HospitalToPoliceRequestDetailsJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel12.setText("Phone number                        :");
+        jLabel12.setText("Phone number:");
 
         txtPhoneNumber.setText("N/A");
 
         jLabel13.setText("Help Request Details");
 
-        jLabel14.setText("Summary                                 :");
+        jLabel14.setText("Summary:");
 
-        jLabel15.setText("Description                             :");
+        jLabel15.setText("Description:");
 
         txtHospitalSummary.setText("N/A");
 
         txtHospitalDescription.setText("N/A");
 
-        jLabel16.setText("Request ID                              :");
+        jLabel16.setText("Request ID:");
 
-        jLabel17.setText("Sender                                    :");
+        jLabel17.setText("Sender:");
 
         txtHospitalRequestID.setText("N/A");
 
@@ -168,86 +170,61 @@ public class HospitalToPoliceRequestDetailsJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(166, 166, 166)
+                        .addGap(27, 27, 27)
                         .addComponent(jLabel1))
+                    .addComponent(jLabel13)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel13))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtRequestedBy))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtRequestID))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtPeopleAffected))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtDate)
-                                    .addComponent(txtRequestedEnterpriseType)
-                                    .addComponent(txtActingEnterprise)
-                                    .addComponent(txtSummary)
-                                    .addComponent(txtDescription)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel10)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtAddress))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtStatus))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtPhoneNumber))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(242, 242, 242)
-                                .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel15)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtHospitalDescription))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtHospitalSummary))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtHospitalRequestID))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtSender)))))
-                .addContainerGap(212, Short.MAX_VALUE))
+                                .addComponent(jLabel8))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel16))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtHospitalRequestID)
+                            .addComponent(txtSender)
+                            .addComponent(txtHospitalSummary)
+                            .addComponent(txtHospitalDescription)
+                            .addComponent(txtRequestID)
+                            .addComponent(txtRequestedBy)
+                            .addComponent(txtPhoneNumber)
+                            .addComponent(txtStatus)
+                            .addComponent(txtPeopleAffected)
+                            .addComponent(txtAddress)
+                            .addComponent(txtDate)
+                            .addComponent(txtRequestedEnterpriseType)
+                            .addComponent(txtActingEnterprise)
+                            .addComponent(txtSummary)
+                            .addComponent(txtDescription))))
+                .addContainerGap(316, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
                     .addComponent(txtHospitalRequestID))
@@ -263,9 +240,9 @@ public class HospitalToPoliceRequestDetailsJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(txtHospitalDescription))
-                .addGap(26, 26, 26)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel13)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtRequestID))
@@ -301,15 +278,15 @@ public class HospitalToPoliceRequestDetailsJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtAddress))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtPeopleAffected))
-                .addGap(25, 25, 25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtStatus))
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(btnPrint)
                 .addContainerGap())
         );

@@ -55,7 +55,6 @@ public class RegisterCityJPanel extends javax.swing.JPanel {
         txtCityAdminName = new javax.swing.JTextField();
         txtCityAdminUserName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtCityAdminPassword = new javax.swing.JTextField();
         btnAddZipCode = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDirectory = new javax.swing.JTable();
@@ -63,6 +62,7 @@ public class RegisterCityJPanel extends javax.swing.JPanel {
         txtZipCode = new javax.swing.JTextField();
         btnAddCity = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        txtCityAdminPassword = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -159,10 +159,10 @@ public class RegisterCityJPanel extends javax.swing.JPanel {
                                     .addComponent(txtCityAdminUserName, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtCityAdminName, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtCityName, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCityAdminPassword)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addComponent(txtZipCode, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnAddZipCode))))
+                                    .addComponent(txtZipCode, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                                    .addComponent(btnAddZipCode)
+                                    .addComponent(txtCityAdminPassword, javax.swing.GroupLayout.Alignment.LEADING))))
                         .addGap(52, 52, 52)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 772, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(168, Short.MAX_VALUE))
@@ -188,8 +188,8 @@ public class RegisterCityJPanel extends javax.swing.JPanel {
                             .addComponent(txtCityAdminUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCityAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
+                            .addComponent(jLabel4)
+                            .addComponent(txtCityAdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -332,7 +332,7 @@ public class RegisterCityJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDirectory;
     private javax.swing.JTextField txtCityAdminName;
-    private javax.swing.JTextField txtCityAdminPassword;
+    private javax.swing.JPasswordField txtCityAdminPassword;
     private javax.swing.JTextField txtCityAdminUserName;
     private javax.swing.JTextField txtCityName;
     private javax.swing.JTextField txtZipCode;
