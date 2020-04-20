@@ -179,6 +179,12 @@ public class SystemAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             int selectionResult = JOptionPane.showConfirmDialog(null, "Are you sure to delete??","Warning",selectionButton);
             if(selectionResult == JOptionPane.YES_OPTION){
                 Network network = (Network)tblDirectory.getValueAt(selectedRow, 1);
+                for (UserAccount ua : this.ecosystem.getUserAccountDirectory().getUserAccountList()) {
+                    if (ua.getUsername().equals(network.getCityAdmin().getUsername())) {
+                        this.ecosystem.getUserAccountDirectory().getUserAccountList().remove(ua);
+                        break;
+                    }
+                }
                 for(Network n: this.ecosystem.getNetworkList()){
                     if(n.getName().equals(network.getName())){
                         this.ecosystem.getNetworkList().remove(n);

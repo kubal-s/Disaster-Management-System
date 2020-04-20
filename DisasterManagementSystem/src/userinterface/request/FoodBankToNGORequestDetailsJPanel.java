@@ -83,27 +83,29 @@ public class FoodBankToNGORequestDetailsJPanel extends javax.swing.JPanel {
         txtFoodBankRequestID = new javax.swing.JLabel();
         txtSenderName = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 240));
+
         jLabel1.setText("Food Bank Request Details");
 
-        jLabel2.setText("Request ID                              :");
+        jLabel2.setText("Request ID:");
 
-        jLabel3.setText("Requested By                         :");
+        jLabel3.setText("Requested By:");
 
-        jLabel4.setText("Summary                                 :");
+        jLabel4.setText("Summary:");
 
         jLabel5.setText("Requested Enterprise Type :");
 
-        jLabel6.setText("Acting Enterprise                   :");
+        jLabel6.setText("Acting Enterprise:");
 
-        jLabel7.setText("Description                             :");
+        jLabel7.setText("Description:");
 
-        jLabel8.setText("Address                                   :");
+        jLabel8.setText("Address:");
 
-        jLabel9.setText("People Affected                      :");
+        jLabel9.setText("People Affected:");
 
-        jLabel10.setText("Date                                         :");
+        jLabel10.setText("Date:");
 
-        jLabel11.setText("Status                                      :");
+        jLabel11.setText("Status:");
 
         btnPrint.setText("Print");
         btnPrint.addActionListener(new java.awt.event.ActionListener() {
@@ -139,23 +141,23 @@ public class FoodBankToNGORequestDetailsJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel12.setText("Phone number                        :");
+        jLabel12.setText("Phone number:");
 
         txtPhoneNumber.setText("N/A");
 
         jLabel13.setText("Help Request Details");
 
-        jLabel14.setText("Summary                                 :");
+        jLabel14.setText("Summary:");
 
-        jLabel15.setText("Description                             :");
+        jLabel15.setText("Description:");
 
         txtFoodBankSummary.setText("N/A");
 
         txtFoodBankDescription.setText("N/A");
 
-        jLabel16.setText("Request ID                              :");
+        jLabel16.setText("Request ID:");
 
-        jLabel17.setText("Sender                                    :");
+        jLabel17.setText("Sender:");
 
         txtFoodBankRequestID.setText("N/A");
 
@@ -166,90 +168,65 @@ public class FoodBankToNGORequestDetailsJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel17)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(166, 166, 166)
+                        .addGap(37, 37, 37)
                         .addComponent(jLabel1))
+                    .addComponent(jLabel13)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel13))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtRequestedBy))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtRequestID))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtPeopleAffected))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtDate)
-                                    .addComponent(txtRequestedEnterpriseType)
-                                    .addComponent(txtActingEnterprise)
-                                    .addComponent(txtSummary)
-                                    .addComponent(txtDescription)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtAddress))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtStatus))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtPhoneNumber))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(242, 242, 242)
-                                .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel15)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtFoodBankDescription))
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel7)
                                 .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtFoodBankSummary))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtFoodBankRequestID))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtSenderName)))))
-                .addContainerGap(197, Short.MAX_VALUE))
+                                .addComponent(jLabel15)
+                                .addComponent(jLabel10)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel12)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel4)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(1, 1, 1)
+                                    .addComponent(jLabel8))
+                                .addComponent(jLabel9)
+                                .addComponent(jLabel11)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtStatus)
+                            .addComponent(txtPeopleAffected)
+                            .addComponent(txtAddress)
+                            .addComponent(txtPhoneNumber)
+                            .addComponent(txtRequestedBy)
+                            .addComponent(txtRequestID)
+                            .addComponent(txtFoodBankDescription)
+                            .addComponent(txtFoodBankSummary)
+                            .addComponent(txtDate)
+                            .addComponent(txtRequestedEnterpriseType)
+                            .addComponent(txtActingEnterprise)
+                            .addComponent(txtSummary)
+                            .addComponent(txtDescription)
+                            .addComponent(txtFoodBankRequestID)
+                            .addComponent(txtSenderName))))
+                .addContainerGap(289, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
                     .addComponent(txtFoodBankRequestID))
-                .addGap(18, 18, 18)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(txtSenderName))
@@ -261,9 +238,9 @@ public class FoodBankToNGORequestDetailsJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(txtFoodBankDescription))
-                .addGap(26, 26, 26)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel13)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtRequestID))
@@ -303,11 +280,11 @@ public class FoodBankToNGORequestDetailsJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtPeopleAffected))
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtStatus))
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPrint)
                 .addContainerGap())
         );

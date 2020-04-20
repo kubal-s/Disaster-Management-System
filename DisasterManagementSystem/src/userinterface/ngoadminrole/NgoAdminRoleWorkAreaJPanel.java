@@ -150,7 +150,6 @@ public class NgoAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/requestngo.jpg"))); // NOI18N
-        jLabel1.setText("jLabel1");
 
         btnViewDetails.setText("View Details");
         btnViewDetails.addActionListener(new java.awt.event.ActionListener() {
