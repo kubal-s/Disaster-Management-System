@@ -479,7 +479,7 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 userProcessContainer.add("alertPolice", alertPoliceJPanel);
                 CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
                 cardLayout.next(this.userProcessContainer);
-                JOptionPane.showMessageDialog(null,"Request submitted to Police Departments!");
+//                JOptionPane.showMessageDialog(null,"Request submitted to Police Departments!");
             } else {
                 JOptionPane.showMessageDialog(null, "Request not approved yet");
             }

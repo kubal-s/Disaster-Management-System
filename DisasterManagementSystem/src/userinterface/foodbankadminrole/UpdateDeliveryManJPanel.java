@@ -105,7 +105,7 @@ public class UpdateDeliveryManJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/delivery.gif"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/deliverymanadd.jpg"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -160,7 +160,7 @@ public class UpdateDeliveryManJPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(btnAddDeliveryMan))
                     .addComponent(jLabel5))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

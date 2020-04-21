@@ -504,10 +504,14 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 userProcessContainer.add("raiseNGORequest", raiseNGORequestJPanel);
                 CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
                 cardLayout.next(this.userProcessContainer);
-                JOptionPane.showMessageDialog(null,"Request assigned to NGOs for delivery!");
+//                JOptionPane.showMessageDialog(null,"Request assigned to NGOs for delivery!");
             }
             else if (cwr.getStatus().equals("completed")) {
                 JOptionPane.showMessageDialog(null, "Request already completed");
+                
+            }
+            else if(cwr.getStatus().equals("delivery assigned to NGO")){
+                JOptionPane.showMessageDialog(null, "Request already assigned to NGO");
             }
             else{
                 JOptionPane.showMessageDialog(null, "Request not ready for delivery");

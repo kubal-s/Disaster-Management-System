@@ -49,11 +49,13 @@
                                   <Component id="txtCityAdminPassword" alignment="1" max="32767" attributes="0"/>
                                   <Component id="jScrollPane1" alignment="1" pref="0" max="32767" attributes="0"/>
                                   <Component id="txtZipCode" alignment="1" min="-2" pref="192" max="-2" attributes="0"/>
-                                  <Component id="btnAddZipCode" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="btnAddCity" alignment="1" min="-2" pref="129" max="-2" attributes="0"/>
-                          <Component id="btnDeleteZipCode" alignment="1" min="-2" pref="129" max="-2" attributes="0"/>
+                          <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="btnAddZipCode" alignment="1" max="32767" attributes="0"/>
+                              <Component id="btnDeleteZipCode" alignment="1" min="-2" pref="129" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>

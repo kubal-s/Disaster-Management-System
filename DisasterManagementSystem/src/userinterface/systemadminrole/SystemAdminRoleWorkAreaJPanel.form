@@ -29,10 +29,10 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jScrollPane1" min="-2" pref="348" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnRegisterCity" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnUpdateCity" min="-2" pref="124" max="-2" attributes="0"/>
-                          <Component id="btnDeleteCity" min="-2" pref="124" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnUpdateCity" max="32767" attributes="0"/>
+                          <Component id="btnDeleteCity" max="32767" attributes="0"/>
+                          <Component id="btnRegisterCity" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
