@@ -67,6 +67,7 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         btnDeletePoliceOfficer = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnViewDetails = new javax.swing.JButton();
+        lblEnterpriseName = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -163,6 +164,8 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        lblEnterpriseName.setText("Enterprise Name");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -171,9 +174,11 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblEnterpriseName)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -191,7 +196,9 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(33, 33, 33)
+                .addComponent(lblEnterpriseName)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnViewDetails)
@@ -213,7 +220,7 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                         .addComponent(btnDeletePoliceOfficer)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -417,6 +424,7 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblEnterpriseName;
     private javax.swing.JTable tblRequestDirectory;
     private javax.swing.JTable tblVolunteersDirectory;
     // End of variables declaration//GEN-END:variables
@@ -460,7 +468,7 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 }
             }
         }
-
+        lblEnterpriseName.setText(this.currentEnterprise.getName());
        populateRequests();
     }
 }
