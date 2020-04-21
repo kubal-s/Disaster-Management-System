@@ -526,7 +526,7 @@ public class VictimWorkAreaJPanel extends javax.swing.JPanel {
         comboxEnterprise.addItem(Enterprise.EnterpriseType.FoodBank);
         comboxEnterprise.addItem(Enterprise.EnterpriseType.Hospital);
         comboxEnterprise.addItem(Enterprise.EnterpriseType.PoliceDepartment);
-        comboxEnterprise.addItem(Enterprise.EnterpriseType.NonGovernmentOrganization);
+//        comboxEnterprise.addItem(Enterprise.EnterpriseType.NonGovernmentOrganization);
 
         victimWorkRequests = ecosystem.getWorkQueue().getWorkRequestListForUser(victimUserAccount);
         DefaultTableModel dtm = (DefaultTableModel) tblHelpRequest.getModel();
