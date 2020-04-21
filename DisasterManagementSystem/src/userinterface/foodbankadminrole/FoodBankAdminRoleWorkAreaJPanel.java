@@ -452,7 +452,7 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Cannot process! request already cancelled");
             }
             else{
-                JOptionPane.showMessageDialog(null, "Already sent for packaging");
+                JOptionPane.showMessageDialog(null, "Cannot process! current status: "+ cwr.getStatus() );
             }
             populateRequests();
         }
