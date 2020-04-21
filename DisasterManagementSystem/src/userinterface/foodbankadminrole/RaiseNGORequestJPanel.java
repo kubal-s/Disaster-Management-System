@@ -5,12 +5,12 @@
  */
 package userinterface.foodbankadminrole;
 
-import Business.DB4OUtil.DB4OUtil;
-import Business.EcoSystem;
-import Business.Enterprise.Enterprise;
-import Business.UserAccount.UserAccount;
-import Business.WorkQueue.FoodBankToNGORequest;
-import Business.WorkQueue.WorkRequest;
+import business.db4outil.DB4OUtil;
+import business.config.EcoSystem;
+import business.enterprise.Enterprise;
+import business.useraccount.UserAccount;
+import business.workqueue.FoodBankToNGORequest;
+import business.workqueue.WorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JPanel;

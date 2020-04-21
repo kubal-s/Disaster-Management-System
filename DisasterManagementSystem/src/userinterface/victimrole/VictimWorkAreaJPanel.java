@@ -5,13 +5,13 @@
  */
 package userinterface.victimrole;
 
-import Business.DB4OUtil.DB4OUtil;
-import Business.EcoSystem;
-import Business.Enterprise.Enterprise;
-import Business.UserAccount.UserAccount;
-import Business.WorkQueue.PoliceToHospitalRequest;
-import Business.WorkQueue.VictimHelpRequest;
-import Business.WorkQueue.WorkRequest;
+import business.db4outil.DB4OUtil;
+import business.config.EcoSystem;
+import business.enterprise.Enterprise;
+import business.useraccount.UserAccount;
+import business.workqueue.PoliceToHospitalRequest;
+import business.workqueue.VictimHelpRequest;
+import business.workqueue.WorkRequest;
 import business.address.Address;
 import java.awt.CardLayout;
 import java.text.DateFormat;

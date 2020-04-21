@@ -5,12 +5,12 @@
  */
 package userinterface.systemadminrole;
 
-import Business.DB4OUtil.DB4OUtil;
-import Business.EcoSystem;
+import business.db4outil.DB4OUtil;
+import business.config.EcoSystem;
 import business.user.User;
-import Business.Network.Network;
-import Business.Role.SystemAdminRole;
-import Business.UserAccount.UserAccount;
+import business.network.Network;
+import business.role.SystemAdminRole;
+import business.useraccount.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;

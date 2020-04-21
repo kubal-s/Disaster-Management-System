@@ -4,13 +4,13 @@
  */
 package userinterface;
 
-import Business.EcoSystem;
-import Business.DB4OUtil.DB4OUtil;
-import Business.Enterprise.Enterprise;
-import Business.Network.Network;
-import Business.Organization.Organization;
-import Business.Role.VictimRole;
-import Business.UserAccount.UserAccount;
+import business.config.EcoSystem;
+import business.db4outil.DB4OUtil;
+import business.enterprise.Enterprise;
+import business.network.Network;
+import business.organization.Organization;
+import business.role.VictimRole;
+import business.useraccount.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;

@@ -5,15 +5,15 @@
  */
 package userinterface.foodbankadminrole;
 
-import Business.DB4OUtil.DB4OUtil;
-import Business.EcoSystem;
-import Business.Enterprise.Enterprise;
-import Business.Organization.Organization;
-import Business.Role.Role;
-import Business.Enterprise.FoodBankEnterprise;
-import Business.Network.Network;
-import Business.UserAccount.UserAccount;
-import Business.WorkQueue.WorkRequest;
+import business.db4outil.DB4OUtil;
+import business.config.EcoSystem;
+import business.enterprise.Enterprise;
+import business.organization.Organization;
+import business.role.Role;
+import business.enterprise.FoodBankEnterprise;
+import business.network.Network;
+import business.useraccount.UserAccount;
+import business.workqueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;

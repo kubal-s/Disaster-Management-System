@@ -5,10 +5,10 @@
  */
 package userinterface.request;
 
-import Business.EcoSystem;
-import Business.UserAccount.UserAccount;
-import Business.WorkQueue.VictimHelpRequest;
-import Business.WorkQueue.WorkRequest;
+import business.config.EcoSystem;
+import business.useraccount.UserAccount;
+import business.workqueue.VictimHelpRequest;
+import business.workqueue.WorkRequest;
 import business.printer.Printer;
 import java.awt.CardLayout;
 import java.awt.Component;

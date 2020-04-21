@@ -5,14 +5,14 @@
  */
 package userinterface.policeadminrole;
 
-import Business.DB4OUtil.DB4OUtil;
-import Business.EcoSystem;
-import Business.Enterprise.Enterprise;
-import Business.Network.Network;
-import Business.Organization.Organization;
-import Business.Role.PoliceOfficerRole;
-import Business.Role.Role;
-import Business.UserAccount.UserAccount;
+import business.db4outil.DB4OUtil;
+import business.config.EcoSystem;
+import business.enterprise.Enterprise;
+import business.network.Network;
+import business.organization.Organization;
+import business.role.PoliceOfficerRole;
+import business.role.Role;
+import business.useraccount.UserAccount;
 import business.user.User;
 import java.awt.CardLayout;
 import java.awt.Component;

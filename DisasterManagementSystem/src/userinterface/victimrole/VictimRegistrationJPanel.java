@@ -5,11 +5,11 @@
  */
 package userinterface.victimrole;
 
-import Business.DB4OUtil.DB4OUtil;
-import Business.EcoSystem;
-import Business.Role.Role;
-import Business.Role.VictimRole;
-import Business.UserAccount.UserAccount;
+import business.db4outil.DB4OUtil;
+import business.config.EcoSystem;
+import business.role.Role;
+import business.role.VictimRole;
+import business.useraccount.UserAccount;
 import business.address.Address;
 import javax.swing.JPanel;
 import business.user.User;
