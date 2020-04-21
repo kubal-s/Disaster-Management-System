@@ -57,6 +57,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         tblRequestDirectory = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         btnViewDetails = new javax.swing.JButton();
+        lblEnterpriseName = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -104,6 +105,8 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        lblEnterpriseName.setText("enterprise name");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,6 +114,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEnterpriseName)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -124,7 +128,9 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(30, 30, 30)
+                .addComponent(lblEnterpriseName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,7 +141,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                         .addComponent(btnAssigntToMe)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(BtnViewMyTasks)))
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -207,6 +213,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnViewDetails;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblEnterpriseName;
     private javax.swing.JTable tblRequestDirectory;
     // End of variables declaration//GEN-END:variables
 
@@ -229,6 +236,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
     }
 
     public void initialize() {
+       
         outerloop:
         for (Network n : this.ecosystem.getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
@@ -242,6 +250,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
 
             }
         }
+       lblEnterpriseName.setText(this.currentEnterprise.getName());
         populateRequests();
     }
 }
