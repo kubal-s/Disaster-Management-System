@@ -52,6 +52,7 @@ public class FoodPacketEditJPanel extends javax.swing.JPanel {
         btnRemoveFoodPackets = new javax.swing.JButton();
         txtFoodPackets = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        lblEnterpriseName = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -89,33 +90,38 @@ public class FoodPacketEditJPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Enter count to add or remove");
 
+        lblEnterpriseName.setText("Enterprise Name");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBack)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFoodPackets, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFoodPacketCount)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnAddFoodPackets, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnRemoveFoodPackets, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(95, Short.MAX_VALUE))
+                            .addComponent(jLabel2)))
+                    .addComponent(btnBack))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEnterpriseName)
+                    .addComponent(txtFoodPackets, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFoodPacketCount)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnAddFoodPackets, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRemoveFoodPackets, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnBack)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack)
+                    .addComponent(lblEnterpriseName))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -128,7 +134,7 @@ public class FoodPacketEditJPanel extends javax.swing.JPanel {
                 .addComponent(btnAddFoodPackets)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRemoveFoodPackets)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -190,11 +196,13 @@ public class FoodPacketEditJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnRemoveFoodPackets;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblEnterpriseName;
     private javax.swing.JLabel lblFoodPacketCount;
     private javax.swing.JTextField txtFoodPackets;
     // End of variables declaration//GEN-END:variables
 
     private void initialize() {
         lblFoodPacketCount.setText(String.valueOf(((FoodBankEnterprise)this.currentEnterprise).getFoodPackets()));
+        lblEnterpriseName.setText(this.currentEnterprise.getName());
     }
 }

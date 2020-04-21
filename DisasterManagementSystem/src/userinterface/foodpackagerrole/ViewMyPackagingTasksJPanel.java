@@ -56,6 +56,7 @@ public class ViewMyPackagingTasksJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btnViewDetails = new javax.swing.JButton();
+        lblEnterpriseName = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -103,6 +104,8 @@ public class ViewMyPackagingTasksJPanel extends javax.swing.JPanel {
             }
         });
 
+        lblEnterpriseName.setText("Enterprise Name");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,7 +113,10 @@ public class ViewMyPackagingTasksJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBack)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnBack)
+                        .addGap(248, 248, 248)
+                        .addComponent(lblEnterpriseName))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -124,7 +130,9 @@ public class ViewMyPackagingTasksJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addComponent(btnBack)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack)
+                    .addComponent(lblEnterpriseName))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -203,6 +211,7 @@ public class ViewMyPackagingTasksJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnViewDetails;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblEnterpriseName;
     private javax.swing.JTable tblRequestDirectory;
     // End of variables declaration//GEN-END:variables
 
@@ -237,6 +246,7 @@ public class ViewMyPackagingTasksJPanel extends javax.swing.JPanel {
 
             }
         }
+        lblEnterpriseName.setText(this.currentEnterprise.getName());
         populateRequests();
     }
 

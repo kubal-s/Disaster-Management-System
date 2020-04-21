@@ -53,6 +53,7 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
         btnAssigntToMe = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnViewDetails = new javax.swing.JButton();
+        lblEnterpriseName = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -100,6 +101,8 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        lblEnterpriseName.setText("Enterprise Name");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,6 +110,7 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEnterpriseName)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 936, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -120,7 +124,9 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(31, 31, 31)
+                .addComponent(lblEnterpriseName)
+                .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,7 +137,7 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(BtnViewMyTasks))
                     .addComponent(jLabel1))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -190,6 +196,7 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnViewDetails;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblEnterpriseName;
     private javax.swing.JTable tblRequestDirectory;
     // End of variables declaration//GEN-END:variables
 
@@ -226,6 +233,7 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
 
             }
         }
+        lblEnterpriseName.setText(this.currentEnterprise.getName());
         populateRequests();
     }
 

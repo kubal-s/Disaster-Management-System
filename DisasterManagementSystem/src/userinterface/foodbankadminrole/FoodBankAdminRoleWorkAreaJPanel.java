@@ -72,6 +72,7 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btnViewDetails = new javax.swing.JButton();
+        lblEnterpriseName = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -221,6 +222,8 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        lblEnterpriseName.setText("Enterprise Name");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -229,9 +232,12 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblFoodPacketCount)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblFoodPacketCount))
+                            .addComponent(lblEnterpriseName))
                         .addGap(18, 18, 18)
                         .addComponent(editFoodPackets))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -264,7 +270,9 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(29, 29, 29)
+                .addComponent(lblEnterpriseName)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lblFoodPacketCount)
@@ -586,6 +594,7 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblEnterpriseName;
     private javax.swing.JLabel lblFoodPacketCount;
     private javax.swing.JTable tblDeliveryManDirectory;
     private javax.swing.JTable tblPackagersDirectory;
@@ -623,13 +632,15 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
         outerloop:
         for (Network n : this.ecosystem.getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                System.out.println(e);
                 if (e.getUserAccount().getUsername().equals(this.foodBankAdminAccount.getUsername())) {
                     this.currentEnterprise = e;
+                    System.out.println(e);
                     break outerloop;
                 }
             }
         }
-
+        lblEnterpriseName.setText(this.currentEnterprise.getName());
         lblFoodPacketCount.setText(String.valueOf(((FoodBankEnterprise) this.currentEnterprise).getFoodPackets()));
         populateRequests();
     }
