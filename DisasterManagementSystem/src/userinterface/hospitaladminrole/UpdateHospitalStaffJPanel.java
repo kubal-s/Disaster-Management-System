@@ -9,6 +9,7 @@ import business.db4outil.DB4OUtil;
 import business.config.EcoSystem;
 import business.enterprise.Enterprise;
 import business.network.Network;
+import business.user.User;
 import business.useraccount.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -57,6 +58,7 @@ public class UpdateHospitalStaffJPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        lblEnterpriseName = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -108,6 +110,8 @@ public class UpdateHospitalStaffJPanel extends javax.swing.JPanel {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/medicalteam.jpg"))); // NOI18N
 
+        lblEnterpriseName.setText("Enterprise Name");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -115,9 +119,7 @@ public class UpdateHospitalStaffJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnBack)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnBack)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnAddHospitalStaff)
@@ -132,16 +134,19 @@ public class UpdateHospitalStaffJPanel extends javax.swing.JPanel {
                                     .addComponent(txtHospitalStaffPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtHospitalStaffPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtHospitalStaffUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtHospitalStaffName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtHospitalStaffName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblEnterpriseName))))
                         .addGap(80, 80, 80)
                         .addComponent(jLabel5)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(48, 48, 48)
-                .addComponent(btnBack)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack)
+                    .addComponent(lblEnterpriseName))
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -203,6 +208,11 @@ public class UpdateHospitalStaffJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter hospital staff phone Number!");
             return;
         }
+        User tempUser = new User();
+        if(!tempUser.validatePhoneNumber(txtHospitalStaffPhoneNo.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter phone 10 digits only!");
+            return;
+        }
         if(txtHospitalStaffPassword.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter hospital staff password!");
             return;
@@ -238,6 +248,7 @@ public class UpdateHospitalStaffJPanel extends javax.swing.JPanel {
                     }
                 }
             }
+            lblEnterpriseName.setText(this.currentEnterprise.getName());
     }//GEN-LAST:event_btnAddHospitalStaffActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -270,6 +281,7 @@ public class UpdateHospitalStaffJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblEnterpriseName;
     private javax.swing.JTextField txtHospitalStaffName;
     private javax.swing.JTextField txtHospitalStaffPassword;
     private javax.swing.JTextField txtHospitalStaffPhoneNo;

@@ -9,6 +9,7 @@ import business.db4outil.DB4OUtil;
 import business.config.EcoSystem;
 import business.enterprise.Enterprise;
 import business.network.Network;
+import business.user.User;
 import business.useraccount.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -56,6 +57,7 @@ public class UpdateDeliveryManJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         txtDeliveryManUsername = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        lblEnterpriseName = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -105,7 +107,9 @@ public class UpdateDeliveryManJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/delivery.gif"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/deliverymanadd.jpg"))); // NOI18N
+
+        lblEnterpriseName.setText("Enterprise Name");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -129,7 +133,8 @@ public class UpdateDeliveryManJPanel extends javax.swing.JPanel {
                                     .addComponent(txtDeliveryManPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtDeliveryManPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtDeliveryManUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDeliveryManName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtDeliveryManName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblEnterpriseName))))
                         .addGap(56, 56, 56)
                         .addComponent(jLabel5)))
                 .addGap(228, 228, 228))
@@ -138,7 +143,9 @@ public class UpdateDeliveryManJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(btnBack)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack)
+                    .addComponent(lblEnterpriseName))
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -157,10 +164,10 @@ public class UpdateDeliveryManJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(txtDeliveryManPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAddDeliveryMan))
                     .addComponent(jLabel5))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -194,6 +201,11 @@ public class UpdateDeliveryManJPanel extends javax.swing.JPanel {
         }
         if(txtDeliveryManPhoneNo.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter delivery man phone Number!");
+            return;
+        }
+        User tempUser = new User();
+        if(!tempUser.validatePhoneNumber(txtDeliveryManPhoneNo.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter phone 10 digits only!");
             return;
         }
         if(txtDeliveryManPassword.getText().isEmpty()){
@@ -231,6 +243,7 @@ public class UpdateDeliveryManJPanel extends javax.swing.JPanel {
                     }
                 }
             }
+            lblEnterpriseName.setText(this.currentEnterprise.getName());
     }//GEN-LAST:event_btnAddDeliveryManActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -267,6 +280,7 @@ public class UpdateDeliveryManJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblEnterpriseName;
     private javax.swing.JTextField txtDeliveryManName;
     private javax.swing.JTextField txtDeliveryManPassword;
     private javax.swing.JTextField txtDeliveryManPhoneNo;

@@ -9,6 +9,7 @@ import business.db4outil.DB4OUtil;
 import business.config.EcoSystem;
 import business.enterprise.Enterprise;
 import business.network.Network;
+import business.user.User;
 import business.useraccount.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -57,6 +58,7 @@ public class UpdatePackagerJPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        lblEnterpriseName = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -108,6 +110,8 @@ public class UpdatePackagerJPanel extends javax.swing.JPanel {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/foodpackager.png"))); // NOI18N
 
+        lblEnterpriseName.setText("Enterprise Name");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,7 +134,8 @@ public class UpdatePackagerJPanel extends javax.swing.JPanel {
                                     .addComponent(txtPackagerPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtPackagerPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtPackagerUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPackagerName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtPackagerName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblEnterpriseName))))
                         .addGap(92, 92, 92)
                         .addComponent(jLabel5)))
                 .addContainerGap(239, Short.MAX_VALUE))
@@ -138,8 +143,10 @@ public class UpdatePackagerJPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(btnBack)
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack)
+                    .addComponent(lblEnterpriseName))
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -158,10 +165,10 @@ public class UpdatePackagerJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(txtPackagerPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAddPackager))
                     .addComponent(jLabel5))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -216,6 +223,11 @@ public class UpdatePackagerJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter packager phone Number!");
             return;
         }
+        User tempUser = new User();
+        if(!tempUser.validatePhoneNumber(txtPackagerPhoneNo.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter phone 10 digits only!");
+            return;
+        }
         if(txtPackagerPassword.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter packager password!");
             return;
@@ -251,6 +263,7 @@ public class UpdatePackagerJPanel extends javax.swing.JPanel {
                     }
                 }
             }
+            lblEnterpriseName.setText(this.currentEnterprise.getName());
     }//GEN-LAST:event_btnAddPackagerActionPerformed
     public void isEnabled(boolean b){
         txtPackagerName.setEnabled(b);
@@ -268,6 +281,7 @@ public class UpdatePackagerJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblEnterpriseName;
     private javax.swing.JTextField txtPackagerName;
     private javax.swing.JTextField txtPackagerPassword;
     private javax.swing.JTextField txtPackagerPhoneNo;

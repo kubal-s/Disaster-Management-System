@@ -9,6 +9,7 @@ import business.db4outil.DB4OUtil;
 import business.config.EcoSystem;
 import business.enterprise.Enterprise;
 import business.network.Network;
+import business.user.User;
 import business.useraccount.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -58,6 +59,7 @@ public class UpdatePoliceOfficerJPanel extends javax.swing.JPanel {
         txtPoliceOfficerName = new javax.swing.JTextField();
         btnUpdatePoliceOfficer = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        lblEnterpriseName = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 240));
 
@@ -109,6 +111,8 @@ public class UpdatePoliceOfficerJPanel extends javax.swing.JPanel {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userinterface/assets/images/policeofficer.png"))); // NOI18N
 
+        lblEnterpriseName.setText("Enterprise Name");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,7 +135,8 @@ public class UpdatePoliceOfficerJPanel extends javax.swing.JPanel {
                                     .addComponent(txtPoliceOfficerPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtPoliceOfficerPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtPoliceOfficerUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPoliceOfficerName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtPoliceOfficerName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblEnterpriseName))))
                         .addGap(80, 80, 80)
                         .addComponent(jLabel5)))
                 .addContainerGap(148, Short.MAX_VALUE))
@@ -140,7 +145,9 @@ public class UpdatePoliceOfficerJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(btnBack)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack)
+                    .addComponent(lblEnterpriseName))
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -216,6 +223,11 @@ public class UpdatePoliceOfficerJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter police officer phone Number!");
             return;
         }
+        User tempUser = new User();
+        if(!tempUser.validatePhoneNumber(txtPoliceOfficerPhoneNo.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter phone 10 digits only!");
+            return;
+        }
         if(txtPoliceOfficerPassword.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter police officer password!");
             return;
@@ -251,6 +263,7 @@ public class UpdatePoliceOfficerJPanel extends javax.swing.JPanel {
                     }
                 }
             }
+            lblEnterpriseName.setText(this.currentEnterprise.getName());
     }//GEN-LAST:event_btnUpdatePoliceOfficerActionPerformed
 
     public void isEnabled(boolean b){
@@ -268,6 +281,7 @@ public class UpdatePoliceOfficerJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblEnterpriseName;
     private javax.swing.JTextField txtPoliceOfficerName;
     private javax.swing.JTextField txtPoliceOfficerPassword;
     private javax.swing.JTextField txtPoliceOfficerPhoneNo;
