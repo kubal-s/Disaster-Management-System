@@ -219,6 +219,11 @@ public class AddPoliceOfficerJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter police officer phone Number!");
             return;
         }
+        User tempUser = new User();
+        if(!tempUser.validatePhoneNumber(txtPoliceOfficerPhoneNo.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter phone 10 digits only!");
+            return;
+        }
         if(txtPoliceOfficerPassword.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter police officer password!");
             return;

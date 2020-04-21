@@ -207,6 +207,11 @@ public class AddDoctorJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter doctor phone Number!");
             return;
         }
+        User tempUser = new User();
+        if(!tempUser.validatePhoneNumber(txtDoctorPhoneNo.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter phone 10 digits only!");
+            return;
+        }
         if(txtDoctorPassword.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter doctor password!");
             return;

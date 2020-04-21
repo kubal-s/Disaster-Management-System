@@ -9,6 +9,7 @@ import business.db4outil.DB4OUtil;
 import business.config.EcoSystem;
 import business.enterprise.Enterprise;
 import business.network.Network;
+import business.user.User;
 import business.useraccount.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -220,6 +221,15 @@ public class UpdateVolunteerJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter volunteer phone Number!");
             return;
         }
+        
+        User tempUser = new User();
+        if(!tempUser.validatePhoneNumber(txtVolunteerPhoneNo.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter phone 10 digits only!");
+            return;
+        }
+
+        
+        
         if(txtVolunteerPassword.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter volunteer password!");
             return;

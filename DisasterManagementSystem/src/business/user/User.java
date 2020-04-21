@@ -18,7 +18,11 @@ public class User {
         id = count;
         count++;
     }
-
+    public boolean validatePhoneNumber(String num){
+        if(num.matches("\\d{10}"))
+            return true;
+        return false;
+    }
     public String getPhone() {
         return phone;
     }

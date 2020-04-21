@@ -219,6 +219,14 @@ public class AddVolunteerJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter volunteer phone Number!");
             return;
         }
+        
+        
+        User tempUser = new User();
+        if(!tempUser.validatePhoneNumber(txtVolunteerPhoneNo.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter phone 10 digits only!");
+            return;
+        }
+        
         if(txtVolunteerPassword.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter volunteer password!");
             return;

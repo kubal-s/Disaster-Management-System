@@ -292,6 +292,12 @@ public class VictimRegistrationJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter your phone no!");
             return;
         }
+        
+        User tempUser = new User();
+        if(!tempUser.validatePhoneNumber(victimPhoneTextField.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter phone 10 digits only!");
+            return;
+        }
         if(victimZipcodeTextField.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter zip code!");
             return;

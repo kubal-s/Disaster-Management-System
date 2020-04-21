@@ -209,6 +209,11 @@ public class AddHospitalStaffJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter hospital staff phone Number!");
             return;
         }
+        User tempUser = new User();
+        if(!tempUser.validatePhoneNumber(txtHospitalStaffPhoneNo.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter phone 10 digits only!");
+            return;
+        }
         if(txtHospitalStaffPassword.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter hospital staff password!");
             return;

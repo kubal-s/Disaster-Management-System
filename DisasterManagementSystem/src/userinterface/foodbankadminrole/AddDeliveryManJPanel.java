@@ -224,6 +224,11 @@ public class AddDeliveryManJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter delivery man phone Number!");
             return;
         }
+        User tempUser = new User();
+        if(!tempUser.validatePhoneNumber(txtDeliveryManPhoneNo.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter phone 10 digits only!");
+            return;
+        }
         if(txtDeliveryManPassword.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter delivery man password!");
             return;

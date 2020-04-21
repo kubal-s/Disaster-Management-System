@@ -9,6 +9,7 @@ import business.db4outil.DB4OUtil;
 import business.config.EcoSystem;
 import business.enterprise.Enterprise;
 import business.network.Network;
+import business.user.User;
 import business.useraccount.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -205,6 +206,11 @@ public class UpdateHospitalStaffJPanel extends javax.swing.JPanel {
         }
         if(txtHospitalStaffPhoneNo.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter hospital staff phone Number!");
+            return;
+        }
+        User tempUser = new User();
+        if(!tempUser.validatePhoneNumber(txtHospitalStaffPhoneNo.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter phone 10 digits only!");
             return;
         }
         if(txtHospitalStaffPassword.getText().isEmpty()){

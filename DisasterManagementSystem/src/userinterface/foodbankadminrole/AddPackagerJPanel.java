@@ -204,6 +204,12 @@ public class AddPackagerJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Please enter packager phone Number!");
             return;
         }
+        
+        User tempUser = new User();
+        if(!tempUser.validatePhoneNumber(txtPackagerPhoneNo.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter phone 10 digits only!");
+            return;
+        }
         if(txtPackagerPassword.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter packager password!");
             return;

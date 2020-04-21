@@ -9,6 +9,7 @@ import business.db4outil.DB4OUtil;
 import business.config.EcoSystem;
 import business.enterprise.Enterprise;
 import business.network.Network;
+import business.user.User;
 import business.useraccount.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -220,6 +221,11 @@ public class UpdatePoliceOfficerJPanel extends javax.swing.JPanel {
         }
         if(txtPoliceOfficerPhoneNo.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"Please enter police officer phone Number!");
+            return;
+        }
+        User tempUser = new User();
+        if(!tempUser.validatePhoneNumber(txtPoliceOfficerPhoneNo.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter phone 10 digits only!");
             return;
         }
         if(txtPoliceOfficerPassword.getText().isEmpty()){
