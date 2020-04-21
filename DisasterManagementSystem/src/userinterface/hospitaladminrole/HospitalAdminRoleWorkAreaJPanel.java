@@ -23,10 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import userinterface.request.PoliceToHospitalRequestDetailsJPanel;
 import userinterface.request.VictimRequestDetailsJPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
@@ -430,7 +427,11 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 }
                 cwr.setAssignedEnterprise(this.currentEnterprise);
                 JOptionPane.showMessageDialog(null, "Approved for treatment");
-            } else {
+            }
+            else if (cwr.getStatus().equals("cancelled")) {
+                JOptionPane.showMessageDialog(null, "Cannot process! request already cancelled");
+            }
+            else {
                 JOptionPane.showMessageDialog(null, "Already approved");
             }
             populateRequests();
@@ -452,6 +453,7 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             } else {
                 cwr.setStatus("submitted");
                 cwr.setAssignedEnterprise(null);
+                JOptionPane.showMessageDialog(null,"Request unassigned!");
             }
             populateRequests();
         }
@@ -477,6 +479,7 @@ public class HospitalAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 userProcessContainer.add("alertPolice", alertPoliceJPanel);
                 CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
                 cardLayout.next(this.userProcessContainer);
+                JOptionPane.showMessageDialog(null,"Request submitted to Police Departments!");
             } else {
                 JOptionPane.showMessageDialog(null, "Request not approved yet");
             }

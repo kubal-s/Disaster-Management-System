@@ -17,10 +17,7 @@ import javax.swing.JPanel;
 
 import javax.swing.event.MouseInputListener;
 
-/**
- *
- * @author Lingfeng
- */
+
 public class MainJFrame extends javax.swing.JFrame {
 
     /**

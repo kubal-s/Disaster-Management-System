@@ -25,10 +25,7 @@ import userinterface.request.HospitalToPoliceRequestDetailsJPanel;
 import userinterface.request.PoliceToHospitalRequestDetailsJPanel;
 import userinterface.request.VictimRequestDetailsJPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
@@ -234,6 +231,7 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             } else {
                 cwr.setStatus("submitted");
                 cwr.setAssignedEnterprise(null);
+                JOptionPane.showMessageDialog(null,"Request unassigned!");
             }
             populateRequests();
         }
@@ -259,6 +257,7 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 userProcessContainer.add("requestHospitalHelp", requestHospitalHelpJPanel);
                 CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
                 cardLayout.next(this.userProcessContainer);
+                JOptionPane.showMessageDialog(null,"Request submitted to hospitals!");
             }
             else{
                 JOptionPane.showMessageDialog(null, "Request not approved yet!");
@@ -284,7 +283,10 @@ public class PoliceAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                     ((HospitalToPoliceRequest)cwr).getVictimHelpRequest().setStatus("approved for investigation");
                 }
                 cwr.setAssignedEnterprise(this.currentEnterprise);
-                JOptionPane.showMessageDialog(null, "Approved for investigation");
+                JOptionPane.showMessageDialog(null, "Approved for investigation!");
+            }
+            else if (cwr.getStatus().equals("cancelled")) {
+                JOptionPane.showMessageDialog(null, "Cannot process! request already cancelled");
             }
             else{
                 JOptionPane.showMessageDialog(null, "Already approved");

@@ -6,10 +6,7 @@ package business.user;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author raunak
- */
+
 public class UserDirectory {
     
     private ArrayList<User> userList;

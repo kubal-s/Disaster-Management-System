@@ -13,10 +13,7 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Administrator
- */
+
 public class ManageUserAccountJPanel extends javax.swing.JPanel {
 
     /**

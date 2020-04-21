@@ -477,6 +477,7 @@ public class VictimWorkAreaJPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Cannot cancel completed request");
             } else {
                 cwr.setStatus("cancelled");
+                JOptionPane.showMessageDialog(null,"Request cancelled!");
                 initialize();
             }
         }

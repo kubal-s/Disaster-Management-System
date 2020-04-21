@@ -22,10 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author akhil
- */
+
 public class UpdateEnterpriseJPanel extends javax.swing.JPanel {
 
     /**

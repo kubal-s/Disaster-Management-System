@@ -11,10 +11,6 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author raunak
- */
 public class ManageUserJPanel extends javax.swing.JPanel {
 
     private OrganizationDirectory organizationDir;

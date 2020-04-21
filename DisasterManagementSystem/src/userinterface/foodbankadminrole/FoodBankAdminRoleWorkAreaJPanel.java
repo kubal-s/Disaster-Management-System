@@ -18,11 +18,9 @@ import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import userinterface.request.VictimRequestDetailsJPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
@@ -442,6 +440,9 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 cwr.setAssignedEnterprise(this.currentEnterprise);
                 JOptionPane.showMessageDialog(null, "Approved for packaging");
             }
+            else if (cwr.getStatus().equals("cancelled")) {
+                JOptionPane.showMessageDialog(null, "Cannot process! request already cancelled");
+            }
             else{
                 JOptionPane.showMessageDialog(null, "Already sent for packaging");
             }
@@ -461,8 +462,10 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
             if (cwr.getStatus().equals("completed")) {
                 JOptionPane.showMessageDialog(null, "Cannot cancel request already completed");
-            } else {
+            } 
+            else {
                 cwr.setStatus("submitted");
+                JOptionPane.showMessageDialog(null,"Request unassigned!");
                 cwr.setAssignedEnterprise(null);
             }
             populateRequests();
@@ -501,6 +504,10 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 userProcessContainer.add("raiseNGORequest", raiseNGORequestJPanel);
                 CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
                 cardLayout.next(this.userProcessContainer);
+                JOptionPane.showMessageDialog(null,"Request assigned to NGOs for delivery!");
+            }
+            else if (cwr.getStatus().equals("completed")) {
+                JOptionPane.showMessageDialog(null, "Request already completed");
             }
             else{
                 JOptionPane.showMessageDialog(null, "Request not ready for delivery");
@@ -512,6 +519,21 @@ public class FoodBankAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
         // TODO add your handling code here:
+        
+        int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to view details");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            JPanel victimRequestDetailsJPanel = new VictimRequestDetailsJPanel(userProcessContainer, cwr);
+            userProcessContainer.add("RequestDetails", victimRequestDetailsJPanel);
+            CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
+            cardLayout.next(this.userProcessContainer);
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnViewDetailsActionPerformed
     public void populatePackagers() {
         DefaultTableModel dtm = (DefaultTableModel) tblPackagersDirectory.getModel();

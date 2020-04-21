@@ -12,10 +12,7 @@ import Business.UserAccount.UserAccount;
 import javax.swing.JPanel;
 import userinterface.cityadminrole.CityAdminRoleWorkAreaJPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class CityAdminRole extends Role{
 
     

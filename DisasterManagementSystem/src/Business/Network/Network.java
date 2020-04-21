@@ -10,10 +10,6 @@ import Business.UserAccount.UserAccount;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author MyPC1
- */
 public class Network {
     private String name;
     private String cityName;

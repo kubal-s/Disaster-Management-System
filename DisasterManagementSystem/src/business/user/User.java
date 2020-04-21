@@ -6,10 +6,6 @@ package business.user;
 
 import business.address.Address;
 
-/**
- *
- * @author raunak
- */
 public class User {
     
     private String name;

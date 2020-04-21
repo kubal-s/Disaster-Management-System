@@ -19,11 +19,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import userinterface.request.VictimRequestDetailsJPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class ViewMyPackagingTasksJPanel extends javax.swing.JPanel {
 
     /**
@@ -160,6 +158,7 @@ public class ViewMyPackagingTasksJPanel extends javax.swing.JPanel {
                 cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
                 cwr.setStatus("ready for delivery");
                 populateRequests();
+                JOptionPane.showMessageDialog(null,"Successfully processed the request!");
             }
         }
         DB4OUtil.getInstance().storeSystem(ecosystem);
@@ -181,6 +180,20 @@ public class ViewMyPackagingTasksJPanel extends javax.swing.JPanel {
 
     private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
         // TODO add your handling code here:
+        int selectedRow = tblRequestDirectory.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a request to view details");
+        } else {
+            DefaultTableModel dtm = (DefaultTableModel) tblRequestDirectory.getModel();
+            int requestID = (int) (Integer) dtm.getValueAt(selectedRow, 0);
+            WorkRequest cwr = null;
+            cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
+            JPanel victimRequestDetailsJPanel = new VictimRequestDetailsJPanel(userProcessContainer, cwr);
+            userProcessContainer.add("RequestDetails", victimRequestDetailsJPanel);
+            CardLayout cardLayout = (CardLayout) userProcessContainer.getLayout();
+            cardLayout.next(this.userProcessContainer);
+        }
+        DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnViewDetailsActionPerformed
 
 

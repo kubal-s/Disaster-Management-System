@@ -23,10 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import userinterface.request.PoliceToHospitalRequestDetailsJPanel;
 import userinterface.request.VictimRequestDetailsJPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class HospitalStaffTasksJPanel extends javax.swing.JPanel {
 
     /**
@@ -159,6 +156,7 @@ public class HospitalStaffTasksJPanel extends javax.swing.JPanel {
                 ((PoliceToHospitalRequest) cwr).getVictimHelpRequest().setStatus("ready for doctors");
             }
             populateRequests();
+            JOptionPane.showMessageDialog(null,"Successfully processed the request!");
         }
         DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnProcessRequestActionPerformed

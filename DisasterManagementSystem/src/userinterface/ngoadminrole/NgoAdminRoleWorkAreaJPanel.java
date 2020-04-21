@@ -26,10 +26,7 @@ import userinterface.request.HospitalToPoliceRequestDetailsJPanel;
 import userinterface.request.PoliceToHospitalRequestDetailsJPanel;
 import userinterface.request.VictimRequestDetailsJPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class NgoAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
@@ -291,7 +288,11 @@ public class NgoAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
             cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
             if(cwr.getStatus().equals("submitted")){
                 cwr.setStatus("approved for processing by volunteers");
-                cwr.setAssignedEnterprise(this.currentEnterprise);                
+                cwr.setAssignedEnterprise(this.currentEnterprise);
+                JOptionPane.showMessageDialog(null,"Request approved!");
+            }
+            else if (cwr.getStatus().equals("cancelled")) {
+                JOptionPane.showMessageDialog(null, "Cannot process! request already cancelled");
             }
             else{
                 JOptionPane.showMessageDialog(null, "Already under processing");
@@ -314,6 +315,7 @@ public class NgoAdminRoleWorkAreaJPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Cannot cancel request already completed");
             } else {
                 cwr.setStatus("submitted");
+                JOptionPane.showMessageDialog(null,"Request unassigned!");
                 cwr.setAssignedEnterprise(null);
             }
             populateRequests();

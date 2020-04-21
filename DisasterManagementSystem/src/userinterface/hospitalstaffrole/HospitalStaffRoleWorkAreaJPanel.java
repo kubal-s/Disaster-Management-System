@@ -22,10 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import userinterface.request.PoliceToHospitalRequestDetailsJPanel;
 import userinterface.request.VictimRequestDetailsJPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class HospitalStaffRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
@@ -159,6 +156,7 @@ public class HospitalStaffRoleWorkAreaJPanel extends javax.swing.JPanel {
                 if (cwr instanceof PoliceToHospitalRequest) {
                     ((PoliceToHospitalRequest) cwr).getVictimHelpRequest().setStatus("processed by hospital staff " + hospitalStaffAccount.getUser().getName());
                 }
+                JOptionPane.showMessageDialog(null,"Request assigned to you!");
                 populateRequests();
             } else {
                 JOptionPane.showMessageDialog(null, "Request already assigned fot processing");

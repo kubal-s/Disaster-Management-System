@@ -8,10 +8,7 @@ import Business.UserAccount.UserAccount;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author raunak
- */
+
 public class WorkQueue {
     
     private ArrayList<WorkRequest> workRequestList;

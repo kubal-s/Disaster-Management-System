@@ -25,10 +25,7 @@ import userinterface.request.HospitalToPoliceRequestDetailsJPanel;
 import userinterface.request.PoliceToHospitalRequestDetailsJPanel;
 import userinterface.request.VictimRequestDetailsJPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class PoliceOfficerTasksJPanel extends javax.swing.JPanel {
 
     /**
@@ -163,6 +160,7 @@ public class PoliceOfficerTasksJPanel extends javax.swing.JPanel {
                 ((HospitalToPoliceRequest) cwr).getVictimHelpRequest().setStatus("completed");;
             }
             populateRequests();
+            JOptionPane.showMessageDialog(null,"Successfully processed the request!");
         }
         DB4OUtil.getInstance().storeSystem(ecosystem);
     }//GEN-LAST:event_btnProcessRequestActionPerformed

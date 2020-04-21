@@ -22,10 +22,7 @@ import userinterface.request.HospitalToPoliceRequestDetailsJPanel;
 import userinterface.request.PoliceToHospitalRequestDetailsJPanel;
 import userinterface.request.VictimRequestDetailsJPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class PoliceOfficerWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
@@ -159,6 +156,7 @@ public class PoliceOfficerWorkAreaJPanel extends javax.swing.JPanel {
                     ((HospitalToPoliceRequest)cwr).getVictimHelpRequest().setStatus("case investigated by " + policeOfficerAccount.getUser().getName());
                 }
                 populateRequests();
+                JOptionPane.showMessageDialog(null,"Request assigned to you!");
             } else {
                 JOptionPane.showMessageDialog(null, "Request already assigned for packaging");
             }

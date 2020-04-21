@@ -14,10 +14,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- *
- * @author MyPC1
- */
 public abstract class Enterprise extends Organization{
     
     private EnterpriseType enterpriseType;

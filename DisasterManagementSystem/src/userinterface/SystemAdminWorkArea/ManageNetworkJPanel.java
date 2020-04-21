@@ -11,10 +11,7 @@ import java.awt.Component;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author raunak
- */
+
 public class ManageNetworkJPanel extends javax.swing.JPanel {
 
     private JPanel userProcessContainer;

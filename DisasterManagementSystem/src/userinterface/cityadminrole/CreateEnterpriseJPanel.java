@@ -28,10 +28,7 @@ import javax.swing.table.DefaultTableModel;
  * and open the template in the editor.
  */
 
-/**
- *
- * @author akhil
- */
+
 public class CreateEnterpriseJPanel extends javax.swing.JPanel {
 
     /**

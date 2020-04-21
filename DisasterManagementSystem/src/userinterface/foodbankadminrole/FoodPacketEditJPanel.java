@@ -53,6 +53,8 @@ public class FoodPacketEditJPanel extends javax.swing.JPanel {
         txtFoodPackets = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 240));
+
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,7 +160,6 @@ public class FoodPacketEditJPanel extends javax.swing.JPanel {
             initialize();
         }
         catch(Exception e){
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null,"Please enter number to edit food packets");
             
         }

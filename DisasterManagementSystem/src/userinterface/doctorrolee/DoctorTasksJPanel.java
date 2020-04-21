@@ -23,10 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import userinterface.request.PoliceToHospitalRequestDetailsJPanel;
 import userinterface.request.VictimRequestDetailsJPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class DoctorTasksJPanel extends javax.swing.JPanel {
 
     /**
@@ -159,6 +156,7 @@ public class DoctorTasksJPanel extends javax.swing.JPanel {
             if (cwr instanceof PoliceToHospitalRequest) {
                 ((PoliceToHospitalRequest) cwr).getVictimHelpRequest().setStatus("completed");
             }
+            JOptionPane.showMessageDialog(null,"Successfully processed the request!");
             populateRequests();
         }
         DB4OUtil.getInstance().storeSystem(ecosystem);

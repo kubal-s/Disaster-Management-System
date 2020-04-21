@@ -15,10 +15,7 @@ import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class UpdateVolunteerJPanel extends javax.swing.JPanel {
 
     /**

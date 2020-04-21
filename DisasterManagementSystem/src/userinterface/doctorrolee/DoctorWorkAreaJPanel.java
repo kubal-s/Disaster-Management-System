@@ -155,6 +155,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                 if (cwr instanceof PoliceToHospitalRequest) {
                     ((PoliceToHospitalRequest) cwr).getVictimHelpRequest().setStatus("case assigned to Dr. " + doctorAccount.getUser().getName());
                 }
+                JOptionPane.showMessageDialog(null,"Request assigned to you!");
                 populateRequests();
             } else {
                 JOptionPane.showMessageDialog(null, "Request already assigned");

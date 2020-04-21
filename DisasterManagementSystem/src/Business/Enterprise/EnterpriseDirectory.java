@@ -8,10 +8,7 @@ package Business.Enterprise;
 import Business.Organization.OrganizationDirectory;
 import java.util.ArrayList;
 
-/**
- *
- * @author MyPC1
- */
+
 public class EnterpriseDirectory {
     private ArrayList<Enterprise> enterpriseList;
    

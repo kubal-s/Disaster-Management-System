@@ -21,10 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import userinterface.request.FoodBankToNGORequestDetailsJPanel;
 import userinterface.request.VictimRequestDetailsJPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class VolunteerWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
@@ -164,6 +161,7 @@ public class VolunteerWorkAreaJPanel extends javax.swing.JPanel {
                 if(((FoodBankToNGORequest)cwr).getVictimHelpRequest().getRequestedEnterprise().equals(Enterprise.EnterpriseType.FoodBank)){
                     ((FoodBankToNGORequest)cwr).getVictimHelpRequest().setStatus("delivered by "+volunteerAccount.getUser().getName());
                 }
+                JOptionPane.showMessageDialog(null,"Request assigned to you!");
                 populateRequests();
             }
             else{

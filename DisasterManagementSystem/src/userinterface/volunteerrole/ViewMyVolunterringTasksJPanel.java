@@ -22,10 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import userinterface.request.FoodBankToNGORequestDetailsJPanel;
 import userinterface.request.VictimRequestDetailsJPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class ViewMyVolunterringTasksJPanel extends javax.swing.JPanel {
 
     /**
@@ -156,6 +153,7 @@ public class ViewMyVolunterringTasksJPanel extends javax.swing.JPanel {
             WorkRequest cwr = null;
             cwr = ecosystem.getWorkQueue().getWorkRequestByID(requestID);
             cwr.setStatus("completed");
+            JOptionPane.showMessageDialog(null,"Successfully processed the request!");
             ((FoodBankToNGORequest)cwr).getVictimHelpRequest().setStatus("completed");
             populateRequests();
         }

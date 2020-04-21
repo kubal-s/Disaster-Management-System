@@ -19,10 +19,7 @@ import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-/**
- *
- * @author akhil
- */
+
 public class AddPackagerJPanel extends javax.swing.JPanel {
 
     /**
